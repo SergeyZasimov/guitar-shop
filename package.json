@@ -2,7 +2,9 @@
   "name": "guitar-shop",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "docker:up": "cd ./apps/backend && docker-compose up -d"
+  },
   "private": true,
   "dependencies": {
     "@nestjs/common": "^9.0.0",
