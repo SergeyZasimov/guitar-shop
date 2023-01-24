@@ -49,3 +49,8 @@ Content-Type: {{contentType}}
   "email": "test@email.local",
   "password": "secre"
 }
+
+### Check User Status
+GET {{baseUrl}}/auth/check-status {{protocol}}
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2NmOTU1NjNhZmEzY2YxM2ZiZGIyMjkiLCJ1c2VyTmFtZSI6IkpvaG4gU21pdGgiLCJlbWFpbCI6InRlc3RAZW1haWwubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwiaWF0IjoxNjc0NTgwMzg5LCJleHAiOjE2NzQ1ODA2ODl9.2w3yN3PMSUppINKJfisPCWOsHrSs_NLmwsBeuYO70N0

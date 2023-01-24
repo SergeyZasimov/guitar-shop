@@ -1,4 +1,4 @@
-import { CreateUser } from '@guitar-shop/core';
+import { NewUser } from '@guitar-shop/core';
 import {
   IsEmail,
   IsEmpty,
@@ -18,7 +18,7 @@ const {
   RoleForbidden,
 } = UserValidationMessage;
 
-export class CreateUserDto implements CreateUser {
+export class CreateUserDto implements NewUser {
   @Length(1, 15, { message: UserNameLengthNotValid })
   @IsNotEmpty({ message: UserNameRequired })
   public userName: string;

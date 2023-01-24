@@ -61,13 +61,12 @@ export class AuthService {
     return { access_token: accessToken };
   }
 
+  public async getUser(email: string): Promise<User | null> {
+    return this.checkUserExist(email);
+  }
+
   public async verifyUser(email: string, password: string): Promise<User> {
-    const existUser = await this.userRepository.findOne({ email });
-
-    if (!existUser) {
-      throw new NotFoundException(NotFound);
-    }
-
+    const existUser = await this.checkUserExist(email);
     const verify = await new UserEntity(existUser).comparePassword(password);
 
     if (!verify) {
@@ -75,5 +74,15 @@ export class AuthService {
     }
 
     return existUser;
+  }
+
+  private async checkUserExist(email: string): Promise<User | null> {
+    const user = await this.userRepository.findOne({ email });
+
+    if (!user) {
+      throw new NotFoundException(NotFound);
+    }
+
+    return user;
   }
 }

@@ -9,10 +9,12 @@ export type User = {
   registerAt?: Date;
 };
 
-export type CreateUser = {
+export type NewUser = {
   userName: string;
   email: string;
   password: string;
 };
 
-export type LoginUser = Omit<CreateUser, 'userName'>;
+export type LoginUser = Omit<NewUser, 'userName'>;
+
+export type ResponseUser = Omit<User, 'passwordHash' | 'registerAt'>;

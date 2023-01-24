@@ -5,6 +5,7 @@ import { getJwtConfig } from '../config/jwt.config';
 import { UserModule } from '../user/user.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
+import { JwtStrategy } from './strategies/jwt-auth.strategy';
 import { LocalStrategy } from './strategies/local-auth.strategy';
 
 @Module({
@@ -13,7 +14,7 @@ import { LocalStrategy } from './strategies/local-auth.strategy';
     PassportModule,
     JwtModule.registerAsync(getJwtConfig()),
   ],
-  providers: [AuthService, LocalStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}
