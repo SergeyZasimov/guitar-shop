@@ -1,6 +1,6 @@
 import { GuitarType } from '../constants';
 
-export interface Product {
+export type Product = {
   _id?: string;
   title: string;
   description: string;
@@ -12,4 +12,4 @@ export interface Product {
   totalRating?: number;
   addedAt?: Date;
   commentsCount?: number;
-}
+};

@@ -1,6 +1,6 @@
-import { User } from './user.interface';
+import { User } from './user.type';
 
-export interface Comment {
+export type Comment = {
   _id?: string;
   author: User;
   advantages: string;
@@ -8,4 +8,4 @@ export interface Comment {
   text: string;
   rating: number;
   createdAt?: Date;
-}
+};

@@ -2,11 +2,11 @@ import { CrudRepository } from '@guitar-shop/core';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UserEntity } from './user.entity';
+import { UserModel } from './user.model';
 
 @Injectable()
-export class UserRepository extends CrudRepository<UserEntity> {
-  constructor(@InjectModel(UserEntity.name) userModel: Model<UserEntity>) {
+export class UserRepository extends CrudRepository<UserModel> {
+  constructor(@InjectModel(UserModel.name) userModel: Model<UserModel>) {
     super(userModel);
   }
 }

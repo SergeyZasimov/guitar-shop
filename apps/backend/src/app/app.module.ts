@@ -6,6 +6,7 @@ import { validateEnvironments } from './config/env.validation';
 import { getMongoDbConfig } from './config/mongodb.config';
 import { mongodbOptions } from './config/namespaces';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserModule } from './user/user.module';
     }),
     MongooseModule.forRootAsync(getMongoDbConfig()),
     UserModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],

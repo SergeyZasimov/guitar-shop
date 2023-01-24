@@ -1,15 +1,15 @@
-import { Product } from './product.interface';
+import { Product } from './product.type';
 
-export interface OrderList {
+export type OrderList = {
   product: Product;
   price: number;
   quantity: number;
   cost: number;
-}
+};
 
-export interface OrderSummary {
+export type OrderSummary = {
   _id?: string;
   totalQuantity: number;
   totalCost: number;
   createdAt?: Date;
-}
+};
