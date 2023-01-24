@@ -5,6 +5,7 @@ import { ENV_FILE_PATH } from './app.constant';
 import { validateEnvironments } from './config/env.validation';
 import { getMongoDbConfig } from './config/mongodb.config';
 import { mongodbOptions } from './config/namespaces';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { mongodbOptions } from './config/namespaces';
       validate: validateEnvironments,
     }),
     MongooseModule.forRootAsync(getMongoDbConfig()),
+    UserModule,
   ],
   controllers: [],
   providers: [],
