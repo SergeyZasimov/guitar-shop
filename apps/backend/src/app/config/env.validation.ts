@@ -1,6 +1,8 @@
+import { JWT_SIGN_ALGORITHMS } from '@guitar-shop/core';
 import chalk from 'chalk';
 import { plainToInstance } from 'class-transformer';
 import {
+  IsEnum,
   IsInt,
   IsNotEmpty,
   IsString,
@@ -8,10 +10,16 @@ import {
   Min,
   validateSync,
 } from 'class-validator';
+import { Algorithm } from 'jsonwebtoken';
 import { EnvValidationMessage, VALID_PORT } from '../app.constant';
 
-const { StringRequired, Required, IntRequired, PortNotValid } =
-  EnvValidationMessage;
+const {
+  StringRequired,
+  Required,
+  IntRequired,
+  PortNotValid,
+  JwtAlgorithmsNotValid,
+} = EnvValidationMessage;
 
 class EnvironmentsConfig {
   @IsString({ message: StringRequired })
@@ -39,6 +47,19 @@ class EnvironmentsConfig {
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
   public MONGO_AUTH_BASE: string;
+
+  @IsString({ message: StringRequired })
+  @IsNotEmpty({ message: Required })
+  public JWT_AT_SECRET: string;
+
+  @IsString({ message: StringRequired })
+  @IsNotEmpty({ message: Required })
+  public JWT_AT_EXPIRES_IN: string;
+
+  @IsEnum(JWT_SIGN_ALGORITHMS, { message: JwtAlgorithmsNotValid })
+  @IsString({ message: StringRequired })
+  @IsNotEmpty({ message: Required })
+  public JWT_SIGN_ALGORITHM: Algorithm;
 }
 
 export function validateEnvironments(config: Record<string, unknown>) {

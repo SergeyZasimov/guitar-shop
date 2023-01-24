@@ -1,9 +1,11 @@
 import { registerAs } from '@nestjs/config';
-import { ConfigNamespace, MongodbConfig } from '../app.constant';
+import { ConfigNamespace, JwtOptions, MongodbOptions } from '../app.constant';
 
-const { Mongodb } = ConfigNamespace;
+const { Mongodb, Jwt } = ConfigNamespace;
 const { AuthDatabase, DatabaseName, Host, Password, Port, Username } =
-  MongodbConfig;
+  MongodbOptions;
+
+const { AccessTokenExpiresIn, AccessTokenSecret, SignAlgorithm } = JwtOptions;
 
 export const mongodbOptions = registerAs(Mongodb, () => ({
   [DatabaseName]: process.env.MONGO_DB,
@@ -12,4 +14,10 @@ export const mongodbOptions = registerAs(Mongodb, () => ({
   [Username]: process.env.MONGO_USER,
   [Password]: process.env.MONGO_PASSWORD,
   [AuthDatabase]: process.env.MONGO_AUTH_BASE,
+}));
+
+export const jwtOptions = registerAs(Jwt, () => ({
+  [AccessTokenSecret]: process.env.JWT_AT_SECRET,
+  [AccessTokenExpiresIn]: process.env.JWT_AT_EXPIRES_IN,
+  [SignAlgorithm]: process.env.JWT_SIGN_ALGORITHM,
 }));

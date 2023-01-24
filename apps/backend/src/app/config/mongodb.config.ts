@@ -1,11 +1,11 @@
 import { getMongoDbConnectionString } from '@guitar-shop/core';
 import { ConfigService } from '@nestjs/config/dist';
 import { MongooseModuleAsyncOptions } from '@nestjs/mongoose';
-import { ConfigNamespace, MongodbConfig } from '../app.constant';
+import { ConfigNamespace, MongodbOptions } from '../app.constant';
 
 const { Mongodb } = ConfigNamespace;
 const { AuthDatabase, DatabaseName, Host, Password, Port, Username } =
-  MongodbConfig;
+  MongodbOptions;
 
 export function getMongoDbConfig(): MongooseModuleAsyncOptions {
   return {

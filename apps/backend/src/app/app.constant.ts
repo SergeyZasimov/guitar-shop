@@ -7,9 +7,10 @@ export const VALID_PORT = {
 
 export enum ConfigNamespace {
   Mongodb = 'mongodb',
+  Jwt = 'jwt',
 }
 
-export enum MongodbConfig {
+export enum MongodbOptions {
   Username = 'username',
   Password = 'password',
   Host = 'host',
@@ -18,9 +19,16 @@ export enum MongodbConfig {
   DatabaseName = 'databaseName',
 }
 
+export enum JwtOptions {
+  AccessTokenSecret = 'accessTokenSecret',
+  AccessTokenExpiresIn = 'accessTokenExpiresIn',
+  SignAlgorithm = 'signAlgorithm',
+}
+
 export enum EnvValidationMessage {
   Required = 'required',
   StringRequired = 'must be string',
   IntRequired = 'must be integer',
   PortNotValid = 'port must be between 0 and 65535',
+  JwtAlgorithmsNotValid = 'jwt sign algorithm not supported',
 }

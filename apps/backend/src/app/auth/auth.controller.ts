@@ -1,6 +1,6 @@
-import { RequestWithUser } from '@guitar-shop/core';
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
+import { GetCurrentUser } from './decorators/get-current-user.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LocalAuthGuard } from './guards/local.guard';
 
@@ -15,8 +15,7 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  public async login(@Req() req: RequestWithUser) {
-    const { user } = req;
+  public async login(@GetCurrentUser() user) {
     return this.authService.login(user);
   }
 }

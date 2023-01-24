@@ -1,10 +1,11 @@
-import { User, UserRole } from '@guitar-shop/core';
+import { TokenPayload, TokenResponse, User, UserRole } from '@guitar-shop/core';
 import {
   ConflictException,
   ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../user/user.entity';
 import { UserRepository } from '../user/user.repository';
 import { DEFAULT_PASSWORD_HASH } from './auth.constant';
@@ -20,7 +21,10 @@ const { Conflict, NotFound, ForbiddenPassword } = UserExceptionMessage;
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly jwtService: JwtService
+  ) {}
 
   public async register(dto: CreateUserDto): Promise<User> {
     const { userName, email, password } = dto;
@@ -43,8 +47,18 @@ export class AuthService {
     return this.userRepository.create(newUserEntity);
   }
 
-  public async login(user: User): Promise<User> {
-    return user;
+  public async login(user: User): Promise<TokenResponse> {
+    const { _id, userName, email, role } = user;
+
+    const payload: TokenPayload = {
+      sub: _id,
+      userName,
+      email,
+      role,
+    };
+
+    const accessToken = await this.jwtService.signAsync(payload);
+    return { access_token: accessToken };
   }
 
   public async verifyUser(email: string, password: string): Promise<User> {
