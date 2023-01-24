@@ -9,7 +9,6 @@ import { UserEntity } from '../user/user.entity';
 import { UserRepository } from '../user/user.repository';
 import { DEFAULT_PASSWORD_HASH } from './auth.constant';
 import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
 
 export enum UserExceptionMessage {
   Conflict = 'Пользователь с таким email уже существует',
@@ -44,9 +43,11 @@ export class AuthService {
     return this.userRepository.create(newUserEntity);
   }
 
-  public async login(dto: LoginUserDto): Promise<User> {
-    const { email, password } = dto;
+  public async login(user: User): Promise<User> {
+    return user;
+  }
 
+  public async verifyUser(email: string, password: string): Promise<User> {
     const existUser = await this.userRepository.findOne({ email });
 
     if (!existUser) {

@@ -1,7 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { RequestWithUser } from '@guitar-shop/core';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
+import { LocalAuthGuard } from './guards/local.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -12,8 +13,10 @@ export class AuthController {
     return this.authService.register(dto);
   }
 
+  @UseGuards(LocalAuthGuard)
   @Post('/login')
-  public async login(@Body() dto: LoginUserDto) {
-    return this.authService.login(dto);
+  public async login(@Req() req: RequestWithUser) {
+    const { user } = req;
+    return this.authService.login(user);
   }
 }

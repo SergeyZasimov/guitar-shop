@@ -12,6 +12,17 @@ Content-Type: {{contentType}}
   "password": "secret"
 }
 
+### Register User Bad request
+POST {{baseUrl}}/auth/register {{protocol}}
+Content-Type: {{contentType}}
+
+{
+  "userName": "",
+  "email": "testemail.local",
+  "password": "secre",
+  "role": "admin"
+}
+
 ### Login User
 POST {{baseUrl}}/auth/login {{protocol}}
 Content-Type: {{contentType}}
@@ -19,4 +30,22 @@ Content-Type: {{contentType}}
 {
   "email": "test@email.local",
   "password": "secret"
+}
+
+### Login User Not Found
+POST {{baseUrl}}/auth/login {{protocol}}
+Content-Type: {{contentType}}
+
+{
+  "email": "test@email1.local",
+  "password": "secret"
+}
+
+### Login User Password Not Valid
+POST {{baseUrl}}/auth/login {{protocol}}
+Content-Type: {{contentType}}
+
+{
+  "email": "test@email.local",
+  "password": "secre"
 }
