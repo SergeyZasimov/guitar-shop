@@ -7,10 +7,10 @@ import {
 } from '@guitar-shop/core';
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { GetCurrentUser } from './decorators/get-current-user.decorator';
+import { GetCurrentUser } from '../decorators/get-current-user.decorator';
 import { CreateUserDto } from './dto/create-user.dto';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { LocalAuthGuard } from './guards/local-auth.guard';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { UserRdo } from './rdo/user.rdo';
 
 const { Auth } = RouteDomain;

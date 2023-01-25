@@ -17,7 +17,7 @@ const {
   PasswordLengthNotValid,
   RoleForbidden,
 } = UserValidationMessage;
-
+// TODO: убрать цифры, создать объект с ограничениями
 export class CreateUserDto implements NewUser {
   @Length(1, 15, { message: UserNameLengthNotValid })
   @IsNotEmpty({ message: UserNameRequired })

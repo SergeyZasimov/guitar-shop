@@ -1,4 +1,4 @@
-import { GuitarType } from '../constants';
+import { GuitarType, StringsNumber } from '../constants';
 
 export type Product = {
   _id?: string;
@@ -6,10 +6,21 @@ export type Product = {
   description: string;
   photo: string;
   guitarType: GuitarType;
-  article: number;
-  stringsNumber: number;
-  Price: number;
+  article: string;
+  stringsNumber: StringsNumber;
+  price: number;
   totalRating?: number;
   addedAt?: Date;
   commentsCount?: number;
 };
+
+export type NewProduct = Pick<
+  Product,
+  | 'title'
+  | 'description'
+  | 'photo'
+  | 'guitarType'
+  | 'article'
+  | 'stringsNumber'
+  | 'price'
+>;

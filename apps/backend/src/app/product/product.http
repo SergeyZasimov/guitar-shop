@@ -1,0 +1,31 @@
+@baseUrl = http://localhost:3333/api
+@contentType = application/json
+@protocol = HTTP/1.1
+
+### Create Product
+POST {{baseUrl}}/products {{protocol}}
+Content-Type: {{contentType}}
+
+{
+  "title": "Lorem ipsum dol",
+  "description": "Lorem ipsum dolor sit ame",
+  "guitarType": "акустика",
+  "article": "Lorem",
+  "stringsNumber": "4",
+  "price": 135,
+  "photo": "guitar-photo.jpg"
+}
+
+### Create Product Bad Request
+POST {{baseUrl}}/products {{protocol}}
+Content-Type: {{contentType}}
+
+{
+  "title": "Lorem ",
+  "description": "Lorem ",
+  "guitarType": "бас",
+  "article": "L",
+  "stringsNumber": "3",
+  "price": 35,
+  "photo": "guitar-photo.gif"
+}

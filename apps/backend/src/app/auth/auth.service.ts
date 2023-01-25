@@ -8,14 +8,8 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../user/user.entity';
 import { UserRepository } from '../user/user.repository';
-import { DEFAULT_PASSWORD_HASH } from './auth.constant';
+import { DEFAULT_PASSWORD_HASH, UserExceptionMessage } from './auth.constant';
 import { CreateUserDto } from './dto/create-user.dto';
-
-export enum UserExceptionMessage {
-  Conflict = 'Пользователь с таким email уже существует',
-  NotFound = 'Пользователь не найден',
-  ForbiddenPassword = 'Неверный пароль',
-}
 
 const { Conflict, NotFound, ForbiddenPassword } = UserExceptionMessage;
 

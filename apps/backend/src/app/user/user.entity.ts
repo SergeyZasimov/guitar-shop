@@ -5,7 +5,7 @@ import { SALT_ROUNDS } from './user.constant';
 export class UserEntity implements User {
   public userName: string;
   public email: string;
-  public passwordHash?: string;
+  public passwordHash: string;
   public role: UserRole;
 
   constructor(data: User) {
