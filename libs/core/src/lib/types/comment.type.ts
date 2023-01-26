@@ -23,3 +23,8 @@ export type Comment = {
   [CommentField.Rating]: number;
   [CommentField.CratedAt]?: Date;
 };
+
+export type NewComment = Omit<
+  Comment,
+  CommentField._Id | CommentField.CratedAt
+>;

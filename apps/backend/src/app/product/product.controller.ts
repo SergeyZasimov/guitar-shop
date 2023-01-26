@@ -25,6 +25,8 @@ const { UploadPhoto } = RoutePath;
 const { ProductId } = RouteParam;
 const { PHOTO_REQUIRED } = PRODUCT_VALIDATION_MESSAGE;
 
+// TODO: добавить rdo
+
 @Controller(Product)
 export class ProductController {
   constructor(private readonly productService: ProductService) {}

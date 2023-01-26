@@ -16,6 +16,7 @@ import {
   DEFAULT_PRODUCT_SORTING_TYPE,
 } from '../product.constant';
 
+// TODO: добавить сообщения об ошибках
 export class ProductsQueryDto implements ProductsQuery {
   @IsInt()
   @Transform(({ value }) => +value)
