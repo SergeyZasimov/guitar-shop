@@ -9,12 +9,6 @@ export abstract class CrudRepository<TEntity extends Document> {
     return this.entityModel.findOne(entityFilterQuery);
   }
 
-  public async find(
-    entityFilterQuery: FilterQuery<TEntity>
-  ): Promise<TEntity[] | null> {
-    return this.entityModel.find(entityFilterQuery);
-  }
-
   public async create(entityCreateData: Partial<TEntity>): Promise<TEntity> {
     return this.entityModel.create(entityCreateData);
   }
@@ -32,7 +26,7 @@ export abstract class CrudRepository<TEntity extends Document> {
 
   public async delete(
     entityFilterQuery: FilterQuery<TEntity>
-  ): Promise<void | null> {
-    this.entityModel.deleteOne(entityFilterQuery);
+  ): Promise<TEntity | null> {
+    return this.entityModel.findByIdAndDelete(entityFilterQuery);
   }
 }

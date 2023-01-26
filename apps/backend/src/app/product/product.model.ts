@@ -1,4 +1,10 @@
-import { GuitarType, Product, StringsNumber } from '@guitar-shop/core';
+import {
+  AVAILABLE_PHOTO_TYPE,
+  GuitarType,
+  Product,
+  ProductField,
+  StringsNumber,
+} from '@guitar-shop/core';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { PRODUCT_CONSTRAINT } from './product.constant';
@@ -16,48 +22,48 @@ export class ProductModel extends Document implements Product {
     minlength: TITLE.MIN,
     maxlength: TITLE.MAX,
   })
-  public title: string;
+  [ProductField.Title]: string;
 
   @Prop({
     required: true,
     minlength: DESCRIPTION.MIN,
     maxlength: DESCRIPTION.MAX,
   })
-  public description: string;
+  [ProductField.Description]: string;
 
   @Prop({
-    match: /[\w/-]+.(jpg|png|jpeg)$/,
+    match: AVAILABLE_PHOTO_TYPE,
     default: '',
   })
-  public photo: string;
+  [ProductField.Photo]: string;
 
   @Prop({
     required: true,
     type: String,
     enum: GUITAR_TYPE,
   })
-  public guitarType: GuitarType;
+  [ProductField.GuitarType]: GuitarType;
 
   @Prop({
     required: true,
     minlength: ARTICLE.MIN,
     maxlength: ARTICLE.MAX,
   })
-  public article: string;
+  [ProductField.Article]: string;
 
   @Prop({
     required: true,
     type: String,
     enum: STRINGS_NUMBER,
   })
-  public stringsNumber: StringsNumber;
+  [ProductField.StringsNumber]: StringsNumber;
 
   @Prop({
     required: true,
     min: PRICE.MIN,
     max: PRICE.MAX,
   })
-  public price: number;
+  [ProductField.Price]: number;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(ProductModel);

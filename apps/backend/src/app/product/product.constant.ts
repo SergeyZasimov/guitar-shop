@@ -2,9 +2,17 @@ import {
   AVAILABLE_GUITAR_TYPE,
   AVAILABLE_PHOTO_TYPE,
   AVAILABLE_STRINGS_NUMBERS,
+  ProductSortingOption,
+  SortType,
 } from '@guitar-shop/core';
 
 export const UPLOAD_FIELD_NAME = 'photo';
+
+export const DEFAULT_PRODUCT_LIMIT = 9;
+
+export const DEFAULT_SORTING_OPTION = ProductSortingOption.AddedAt;
+
+export const DEFAULT_SORTING_TYPE = SortType.Asc;
 
 export const PRODUCT_CONSTRAINT = {
   TITLE: {
