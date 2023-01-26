@@ -4,7 +4,7 @@ export type Product = {
   _id?: string;
   title: string;
   description: string;
-  photo: string;
+  photo?: string;
   guitarType: GuitarType;
   article: string;
   stringsNumber: StringsNumber;
@@ -16,11 +16,5 @@ export type Product = {
 
 export type NewProduct = Pick<
   Product,
-  | 'title'
-  | 'description'
-  | 'photo'
-  | 'guitarType'
-  | 'article'
-  | 'stringsNumber'
-  | 'price'
+  'title' | 'description' | 'guitarType' | 'article' | 'stringsNumber' | 'price'
 >;

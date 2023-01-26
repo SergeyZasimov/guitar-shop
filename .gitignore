@@ -40,3 +40,5 @@ Thumbs.db
 tasks.todo
 mongodb/
 *.env
+upload/
+static/

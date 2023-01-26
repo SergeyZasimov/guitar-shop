@@ -1,7 +1,10 @@
 import {
   AVAILABLE_GUITAR_TYPE,
+  AVAILABLE_PHOTO_TYPE,
   AVAILABLE_STRINGS_NUMBERS,
 } from '@guitar-shop/core';
+
+export const UPLOAD_FIELD_NAME = 'photo';
 
 export const PRODUCT_CONSTRAINT = {
   TITLE: {
@@ -26,15 +29,16 @@ export const PRODUCT_CONSTRAINT = {
   },
   GUITAR_TYPE: AVAILABLE_GUITAR_TYPE,
   STRINGS_NUMBER: AVAILABLE_STRINGS_NUMBERS,
+  PHOTO_TYPE: AVAILABLE_PHOTO_TYPE,
 } as const;
 
 export const PRODUCT_VALIDATION_MESSAGE = {
   TITLE_REQUIRED: 'Наименование товара - обязательное поле',
   DESCRIPTION_REQUIRED: 'Описание товара - обязательное поле',
-  PHOTO_REQUIRED: 'Фотография товара - обязательное поле',
   GUITAR_TYPE_REQUIRED: 'Тип гитары - обязательное поле',
   PRICE_REQUIRED: 'Цена товара - обязательное поле',
   ARTICLE_REQUIRED: 'Артикул - обязательное поле',
+  PHOTO_REQUIRED: 'Фотография товара - обязательное поле',
   STRINGS_NUMBER_REQUIRED: 'Количество струн - обязательное поле',
   TITLE_LENGTH_NOT_VALID: `Наименование товара должно быть строкой длиной от ${PRODUCT_CONSTRAINT.TITLE.MIN} до ${PRODUCT_CONSTRAINT.TITLE.MAX} символов`,
   DESCRIPTION_LENGTH_NOT_VALID: `Наименование товара должно быть строкой длиной от ${PRODUCT_CONSTRAINT.DESCRIPTION.MIN} до ${PRODUCT_CONSTRAINT.DESCRIPTION.MAX} символов`,
@@ -48,3 +52,8 @@ export const PRODUCT_VALIDATION_MESSAGE = {
     ', '
   )}`,
 } as const;
+
+export enum ProductExceptionMessage {
+  NotFound = 'Товар не найден',
+  Forbidden = 'Неверная роль пользователя',
+}

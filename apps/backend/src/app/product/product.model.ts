@@ -26,8 +26,8 @@ export class ProductModel extends Document implements Product {
   public description: string;
 
   @Prop({
-    required: true,
     match: /[\w/-]+.(jpg|png|jpeg)$/,
+    default: '',
   })
   public photo: string;
 

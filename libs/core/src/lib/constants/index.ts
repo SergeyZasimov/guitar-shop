@@ -1,5 +1,6 @@
 export * from './guitar-type.enum';
 export * from './jwt-sign-algorithms.constant';
+export * from './photo-type.constant';
 export * from './request-user.enum';
 export * from './route.enum';
 export * from './string-number.constant';

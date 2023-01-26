@@ -1,5 +1,5 @@
 import { GuitarType, NewProduct, StringsNumber } from '@guitar-shop/core';
-import { IsEnum, IsNotEmpty, Length, Matches, Max, Min } from 'class-validator';
+import { IsEnum, IsNotEmpty, Length, Max, Min } from 'class-validator';
 import {
   PRODUCT_CONSTRAINT,
   PRODUCT_VALIDATION_MESSAGE,
@@ -10,8 +10,6 @@ const {
   TITLE_LENGTH_NOT_VALID,
   DESCRIPTION_REQUIRED,
   DESCRIPTION_LENGTH_NOT_VALID,
-  PHOTO_REQUIRED,
-  PHOTO_NOT_VALID,
   GUITAR_TYPE_REQUIRED,
   GUITAR_TYPE_NOT_VALID,
   ARTICLE_NOT_VALID,
@@ -35,12 +33,6 @@ export class CreateProductDto implements NewProduct {
   })
   @IsNotEmpty({ message: DESCRIPTION_REQUIRED })
   public description: string;
-
-  @Matches(/[\w/-]+.(jpg|png|jpeg)$/, {
-    message: PHOTO_NOT_VALID,
-  })
-  @IsNotEmpty({ message: PHOTO_REQUIRED })
-  public photo: string;
 
   @IsEnum(GUITAR_TYPE, { message: GUITAR_TYPE_NOT_VALID })
   @IsNotEmpty({ message: GUITAR_TYPE_REQUIRED })

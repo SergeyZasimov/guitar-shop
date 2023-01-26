@@ -12,9 +12,9 @@ Content-Type: {{contentType}}
   "guitarType": "акустика",
   "article": "Lorem",
   "stringsNumber": "4",
-  "price": 135,
-  "photo": "guitar-photo.jpg"
+  "price": 135
 }
+
 
 ### Create Product Bad Request
 POST {{baseUrl}}/products {{protocol}}
@@ -26,6 +26,16 @@ Content-Type: {{contentType}}
   "guitarType": "бас",
   "article": "L",
   "stringsNumber": "3",
-  "price": 35,
-  "photo": "guitar-photo.gif"
+  "price": 35
 }
+
+### Upload Photo
+POST {{baseUrl}}/products/63d1515e54044183b0ecb2c9/upload-photo {{protocol}}
+Content-Type: multipart/form-data; boundary=Upload
+
+--Upload
+Content-Disposition: form-data; name="photo"; filename="add-item-1.png"
+Content-Type: image/png
+
+< ./markup/img/content/add-item-1.png
+--Upload--

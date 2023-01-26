@@ -6,23 +6,39 @@ export const VALID_PORT = {
 } as const;
 
 export enum ConfigNamespace {
+  App = 'app',
   Mongodb = 'mongodb',
   Jwt = 'jwt',
+  Multer = 'multer',
+  Static = 'static',
 }
 
-export enum MongodbOptions {
-  Username = 'username',
-  Password = 'password',
+export enum AppOption {
   Host = 'host',
   Port = 'port',
+}
+
+export enum MongodbOption {
+  Username = 'username',
+  Password = 'password',
+  DbHost = 'host',
+  DbPort = 'port',
   AuthDatabase = 'authDatabase',
   DatabaseName = 'databaseName',
 }
 
-export enum JwtOptions {
+export enum JwtOption {
   AccessTokenSecret = 'accessTokenSecret',
   AccessTokenExpiresIn = 'accessTokenExpiresIn',
   SignAlgorithm = 'signAlgorithm',
+}
+
+export enum MulterOption {
+  Storage = 'storage',
+}
+
+export enum StaticOption {
+  StaticDirectory = 'directory',
 }
 
 export enum EnvValidationMessage {

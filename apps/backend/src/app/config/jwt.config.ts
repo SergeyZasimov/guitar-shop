@@ -1,10 +1,10 @@
 import { ConfigService } from '@nestjs/config';
 import { JwtModuleAsyncOptions } from '@nestjs/jwt';
 import { Algorithm } from 'jsonwebtoken';
-import { ConfigNamespace, JwtOptions } from '../app.constant';
+import { ConfigNamespace, JwtOption } from '../app.constant';
 
 const { Jwt } = ConfigNamespace;
-const { AccessTokenExpiresIn, AccessTokenSecret, SignAlgorithm } = JwtOptions;
+const { AccessTokenExpiresIn, AccessTokenSecret, SignAlgorithm } = JwtOption;
 
 export function getJwtConfig(): JwtModuleAsyncOptions {
   return {

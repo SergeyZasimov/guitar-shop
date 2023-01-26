@@ -5,6 +5,7 @@ import {
   IsEnum,
   IsInt,
   IsNotEmpty,
+  IsOptional,
   IsString,
   Max,
   Min,
@@ -22,6 +23,16 @@ const {
 } = EnvValidationMessage;
 
 class EnvironmentsConfig {
+  @Min(VALID_PORT.MIN, { message: PortNotValid })
+  @Max(VALID_PORT.MAX, { message: PortNotValid })
+  @IsInt({ message: IntRequired })
+  @IsOptional()
+  public PORT: number;
+
+  @IsString({ message: StringRequired })
+  @IsOptional()
+  public HOST: string;
+
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
   public MONGO_DB: string;
@@ -60,6 +71,14 @@ class EnvironmentsConfig {
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
   public JWT_SIGN_ALGORITHM: Algorithm;
+
+  @IsString({ message: StringRequired })
+  @IsNotEmpty({ message: Required })
+  public UPLOAD_DESTINATION: string;
+
+  @IsString({ message: StringRequired })
+  @IsNotEmpty({ message: Required })
+  public STATIC_DIRECTORY: string;
 }
 
 export function validateEnvironments(config: Record<string, unknown>) {
