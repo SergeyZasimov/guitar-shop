@@ -1,4 +1,9 @@
-import { GuitarType, NewProduct, StringsNumber } from '@guitar-shop/core';
+import {
+  GuitarType,
+  NewProduct,
+  ProductField,
+  StringsNumber,
+} from '@guitar-shop/core';
 import { IsEnum, IsNotEmpty, Length, Max, Min } from 'class-validator';
 import {
   PRODUCT_CONSTRAINT,
@@ -26,28 +31,28 @@ const { TITLE, DESCRIPTION, GUITAR_TYPE, ARTICLE, STRINGS_NUMBER, PRICE } =
 export class CreateProductDto implements NewProduct {
   @Length(TITLE.MIN, TITLE.MAX, { message: TITLE_LENGTH_NOT_VALID })
   @IsNotEmpty({ message: TITLE_REQUIRED })
-  public title: string;
+  [ProductField.Title]: string;
 
   @Length(DESCRIPTION.MIN, DESCRIPTION.MAX, {
     message: DESCRIPTION_LENGTH_NOT_VALID,
   })
   @IsNotEmpty({ message: DESCRIPTION_REQUIRED })
-  public description: string;
+  [ProductField.Description]: string;
 
   @IsEnum(GUITAR_TYPE, { message: GUITAR_TYPE_NOT_VALID })
   @IsNotEmpty({ message: GUITAR_TYPE_REQUIRED })
-  public guitarType: GuitarType;
+  [ProductField.GuitarType]: GuitarType;
 
   @Length(ARTICLE.MIN, ARTICLE.MAX, { message: ARTICLE_NOT_VALID })
   @IsNotEmpty({ message: ARTICLE_REQUIRED })
-  public article: string;
+  [ProductField.Article]: string;
 
   @IsEnum(STRINGS_NUMBER, { message: STRINGS_NUMBER_NOT_VALID })
   @IsNotEmpty({ message: STRINGS_NUMBER_REQUIRED })
-  public stringsNumber: StringsNumber;
+  [ProductField.StringsNumber]: StringsNumber;
 
   @Max(PRICE.MAX, { message: PRICE_NOT_VALID })
   @Min(PRICE.MIN, { message: PRICE_NOT_VALID })
   @IsNotEmpty({ message: PRICE_REQUIRED })
-  public price: number;
+  [ProductField.Price]: number;
 }

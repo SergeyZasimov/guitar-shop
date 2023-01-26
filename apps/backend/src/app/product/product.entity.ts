@@ -1,13 +1,18 @@
-import { GuitarType, Product, StringsNumber } from '@guitar-shop/core';
+import {
+  GuitarType,
+  Product,
+  ProductField,
+  StringsNumber,
+} from '@guitar-shop/core';
 
 export class ProductEntity implements Product {
-  public title: string;
-  public description: string;
-  public photo: string;
-  public guitarType: GuitarType;
-  public article: string;
-  public stringsNumber: StringsNumber;
-  public price: number;
+  [ProductField.Title]: string;
+  [ProductField.Description]: string;
+  [ProductField.Photo]: string;
+  [ProductField.GuitarType]: GuitarType;
+  [ProductField.Article]: string;
+  [ProductField.StringsNumber]: StringsNumber;
+  [ProductField.Price]: number;
 
   constructor(data: Product) {
     this.title = data.title;

@@ -1,7 +1,8 @@
 import { GuitarType, StringsNumber } from '../constants';
 
 export enum ProductField {
-  Id = '_id',
+  _Id = '_id',
+  Id = 'id',
   Title = 'title',
   Description = 'description',
   Photo = 'photo',
@@ -15,7 +16,7 @@ export enum ProductField {
 }
 
 export type Product = {
-  [ProductField.Id]?: string;
+  [ProductField._Id]?: string;
   [ProductField.Title]: string;
   [ProductField.Description]: string;
   [ProductField.Photo]?: string;

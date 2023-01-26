@@ -1,28 +1,33 @@
 import {
   ProductFilterOption,
-  ProductQuery,
   ProductSortingOption,
+  ProductsQuery,
+  QueryField,
   SortType,
 } from '@guitar-shop/core';
 import { Transform } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional } from 'class-validator';
-import { DEFAULT_PRODUCT_LIMIT } from '../product.constant';
+import {
+  DEFAULT_PRODUCT_LIMIT,
+  DEFAULT_SORTING_OPTION,
+  DEFAULT_SORTING_TYPE,
+} from '../product.constant';
 
-export class ProductsQueryDto implements ProductQuery {
+export class ProductsQueryDto implements ProductsQuery {
   @IsInt()
   @Transform(({ value }) => +value)
   @IsOptional()
-  public limit?: number = DEFAULT_PRODUCT_LIMIT;
+  [QueryField.Limit]?: number = DEFAULT_PRODUCT_LIMIT;
 
   @IsEnum(ProductFilterOption)
   @IsOptional()
-  public filterOption?: ProductFilterOption;
+  [QueryField.FilterOption]?: ProductFilterOption;
 
   @IsEnum(ProductSortingOption)
   @IsOptional()
-  public sortingOption?: ProductSortingOption;
+  [QueryField.SortingOption]?: ProductSortingOption = DEFAULT_SORTING_OPTION;
 
   @IsEnum(SortType)
   @IsOptional()
-  public sortType?: SortType;
+  [QueryField.SortType]?: SortType = DEFAULT_SORTING_TYPE;
 }

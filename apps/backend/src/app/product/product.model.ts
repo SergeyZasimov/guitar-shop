@@ -1,5 +1,4 @@
 import {
-  AVAILABLE_PHOTO_TYPE,
   GuitarType,
   Product,
   ProductField,
@@ -9,8 +8,15 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { PRODUCT_CONSTRAINT } from './product.constant';
 
-const { ARTICLE, DESCRIPTION, GUITAR_TYPE, PRICE, STRINGS_NUMBER, TITLE } =
-  PRODUCT_CONSTRAINT;
+const {
+  ARTICLE,
+  DESCRIPTION,
+  GUITAR_TYPE,
+  PRICE,
+  STRINGS_NUMBER,
+  TITLE,
+  PHOTO_TYPE,
+} = PRODUCT_CONSTRAINT;
 
 @Schema({
   collection: 'products',
@@ -32,7 +38,7 @@ export class ProductModel extends Document implements Product {
   [ProductField.Description]: string;
 
   @Prop({
-    match: AVAILABLE_PHOTO_TYPE,
+    match: PHOTO_TYPE,
     default: '',
   })
   [ProductField.Photo]: string;

@@ -1,12 +1,12 @@
 import {
   AVAILABLE_GUITAR_TYPE,
-  AVAILABLE_PHOTO_TYPE,
   AVAILABLE_STRINGS_NUMBERS,
+  ProductField,
   ProductSortingOption,
   SortType,
 } from '@guitar-shop/core';
 
-export const UPLOAD_FIELD_NAME = 'photo';
+export const UPLOAD_FIELD_NAME = ProductField.Photo;
 
 export const DEFAULT_PRODUCT_LIMIT = 9;
 
@@ -35,9 +35,9 @@ export const PRODUCT_CONSTRAINT = {
     MIN: 0,
     MAX: 5,
   },
+  PHOTO_TYPE: /(jpg|jpeg|png)$/,
   GUITAR_TYPE: AVAILABLE_GUITAR_TYPE,
   STRINGS_NUMBER: AVAILABLE_STRINGS_NUMBERS,
-  PHOTO_TYPE: AVAILABLE_PHOTO_TYPE,
 } as const;
 
 export const PRODUCT_VALIDATION_MESSAGE = {
