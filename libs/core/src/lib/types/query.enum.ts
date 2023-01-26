@@ -1,15 +1,12 @@
 import { ProductField } from '.';
+import { GuitarType, StringsNumber } from '../constants';
 
 export enum QueryField {
   Limit = 'limit',
-  FilterOption = 'filterOption',
+  GuitarTypeFilter = ProductField.GuitarType,
+  StringsNumberFilter = ProductField.StringsNumber,
   SortingOption = 'sortingOption',
   SortType = 'sortType',
-}
-
-export enum ProductFilterOption {
-  GuitarType = ProductField.GuitarType,
-  StringsNumber = ProductField.StringsNumber,
 }
 
 export enum ProductSortingOption {
@@ -25,7 +22,8 @@ export enum SortType {
 
 export type ProductsQuery = {
   [QueryField.Limit]?: number;
-  [QueryField.FilterOption]?: ProductFilterOption;
+  [QueryField.GuitarTypeFilter]?: GuitarType;
+  [QueryField.StringsNumberFilter]?: StringsNumber;
   [QueryField.SortingOption]?: ProductSortingOption;
   [QueryField.SortType]?: SortType;
 };

@@ -10,9 +10,9 @@ export const UPLOAD_FIELD_NAME = ProductField.Photo;
 
 export const DEFAULT_PRODUCT_LIMIT = 9;
 
-export const DEFAULT_SORTING_OPTION = ProductSortingOption.AddedAt;
+export const DEFAULT_PRODUCT_SORTING_OPTION = ProductSortingOption.AddedAt;
 
-export const DEFAULT_SORTING_TYPE = SortType.Asc;
+export const DEFAULT_PRODUCT_SORTING_TYPE = SortType.Asc;
 
 export const PRODUCT_CONSTRAINT = {
   TITLE: {

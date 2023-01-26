@@ -16,6 +16,7 @@ import {
 import { getStaticConfig } from './config/static.config';
 import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { UserModule } from './user/user.module';
     UserModule,
     AuthModule,
     ProductModule,
+    CommentModule,
   ],
   controllers: [],
   providers: [],

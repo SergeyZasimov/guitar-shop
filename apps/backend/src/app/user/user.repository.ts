@@ -6,7 +6,9 @@ import { UserModel } from './user.model';
 
 @Injectable()
 export class UserRepository extends CrudRepository<UserModel> {
-  constructor(@InjectModel(UserModel.name) userModel: Model<UserModel>) {
+  constructor(
+    @InjectModel(UserModel.name) private readonly userModel: Model<UserModel>
+  ) {
     super(userModel);
   }
 }

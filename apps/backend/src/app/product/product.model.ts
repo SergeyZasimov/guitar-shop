@@ -1,4 +1,5 @@
 import {
+  DbCollection,
   GuitarType,
   Product,
   ProductField,
@@ -19,7 +20,7 @@ const {
 } = PRODUCT_CONSTRAINT;
 
 @Schema({
-  collection: 'products',
+  collection: DbCollection.Products,
   timestamps: true,
 })
 export class ProductModel extends Document implements Product {

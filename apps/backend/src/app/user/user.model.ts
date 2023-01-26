@@ -1,9 +1,9 @@
-import { User, UserField, UserRole } from '@guitar-shop/core';
+import { DbCollection, User, UserField, UserRole } from '@guitar-shop/core';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema({
-  collection: 'users',
+  collection: DbCollection.Users,
   timestamps: true,
 })
 export class UserModel extends Document implements User {

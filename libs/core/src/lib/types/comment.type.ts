@@ -1,11 +1,25 @@
+import { Product } from './product.type';
 import { User } from './user.type';
 
+export enum CommentField {
+  _Id = '_id',
+  Id = 'id',
+  Author = 'author',
+  Product = 'product',
+  Advantages = 'advantages',
+  Disadvantages = 'disadvantages',
+  Text = 'text',
+  Rating = 'rating',
+  CratedAt = 'createdAt',
+}
+
 export type Comment = {
-  _id?: string;
-  author: User;
-  advantages: string;
-  disadvantages: string;
-  text: string;
-  rating: number;
-  createdAt?: Date;
+  [CommentField._Id]?: string;
+  [CommentField.Author]: User;
+  [CommentField.Product]: Product;
+  [CommentField.Advantages]: string;
+  [CommentField.Disadvantages]: string;
+  [CommentField.Text]: string;
+  [CommentField.Rating]: number;
+  [CommentField.CratedAt]?: Date;
 };

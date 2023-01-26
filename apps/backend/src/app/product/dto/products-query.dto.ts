@@ -1,16 +1,19 @@
 import {
-  ProductFilterOption,
+  AVAILABLE_GUITAR_TYPE,
+  AVAILABLE_STRINGS_NUMBERS,
+  GuitarType,
   ProductSortingOption,
   ProductsQuery,
   QueryField,
   SortType,
+  StringsNumber,
 } from '@guitar-shop/core';
 import { Transform } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional } from 'class-validator';
 import {
   DEFAULT_PRODUCT_LIMIT,
-  DEFAULT_SORTING_OPTION,
-  DEFAULT_SORTING_TYPE,
+  DEFAULT_PRODUCT_SORTING_OPTION,
+  DEFAULT_PRODUCT_SORTING_TYPE,
 } from '../product.constant';
 
 export class ProductsQueryDto implements ProductsQuery {
@@ -19,15 +22,20 @@ export class ProductsQueryDto implements ProductsQuery {
   @IsOptional()
   [QueryField.Limit]?: number = DEFAULT_PRODUCT_LIMIT;
 
-  @IsEnum(ProductFilterOption)
+  @IsEnum(AVAILABLE_GUITAR_TYPE)
   @IsOptional()
-  [QueryField.FilterOption]?: ProductFilterOption;
+  [QueryField.GuitarTypeFilter]?: GuitarType;
+
+  @IsEnum(AVAILABLE_STRINGS_NUMBERS)
+  @IsOptional()
+  [QueryField.StringsNumberFilter]?: StringsNumber;
 
   @IsEnum(ProductSortingOption)
   @IsOptional()
-  [QueryField.SortingOption]?: ProductSortingOption = DEFAULT_SORTING_OPTION;
+  [QueryField.SortingOption]?: ProductSortingOption =
+    DEFAULT_PRODUCT_SORTING_OPTION;
 
   @IsEnum(SortType)
   @IsOptional()
-  [QueryField.SortType]?: SortType = DEFAULT_SORTING_TYPE;
+  [QueryField.SortType]?: SortType = DEFAULT_PRODUCT_SORTING_TYPE;
 }

@@ -1,4 +1,4 @@
-import { CrudRepository, Product } from '@guitar-shop/core';
+import { CrudRepository, Product, ProductField } from '@guitar-shop/core';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ProductsQueryDto } from './dto/products-query.dto';
@@ -12,10 +12,14 @@ export class ProductRepository extends CrudRepository<ProductModel> {
     super(productModel);
   }
 
-  public async find(query: ProductsQueryDto): Promise<Product[]> {
-    const { limit, filterOption, sortingOption, sortType } = query;
+  async find(query: ProductsQueryDto): Promise<Product[]> {
+    const { limit, guitarType, stringsNumber, sortingOption, sortType } = query;
     return this.productModel
-      .find({ [filterOption]: true })
+      .find()
+      .where({
+        [ProductField.GuitarType]: guitarType,
+        [ProductField.StringsNumber]: stringsNumber,
+      })
       .limit(limit)
       .sort({ [sortingOption]: sortType });
   }
