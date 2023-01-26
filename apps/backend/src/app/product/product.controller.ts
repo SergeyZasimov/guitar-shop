@@ -10,6 +10,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { PhotoFilterInterceptor } from '../interceptors/photo-file.interceptor';
+import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { CreateProductDto } from './dto/create-product.dto';
 import { PRODUCT_VALIDATION_MESSAGE } from './product.constant';
 import { ProductService } from './product.service';
@@ -31,7 +32,7 @@ export class ProductController {
   @UseInterceptors(PhotoFilterInterceptor())
   @Post(`:${ProductId}/${UploadPhoto}`)
   public async uploadPhoto(
-    @Param(ProductId) id: string,
+    @Param(ProductId, MongoidValidationPipe) id: string,
     @UploadedFile(
       new ParseFilePipe({
         exceptionFactory() {
