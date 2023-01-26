@@ -1,4 +1,4 @@
-import { User, UserRole } from '@guitar-shop/core';
+import { User, UserField, UserRole } from '@guitar-shop/core';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
@@ -12,19 +12,19 @@ export class UserModel extends Document implements User {
     minlength: 1,
     maxlength: 15,
   })
-  public userName: string;
+  [UserField.UserName]: string;
 
   @Prop({
     required: true,
     unique: true,
     immutable: true,
   })
-  public email: string;
+  [UserField.Email]: string;
 
   @Prop({
     required: true,
   })
-  public passwordHash: string;
+  [UserField.PasswordHash]: string;
 
   @Prop({
     required: true,
@@ -32,7 +32,7 @@ export class UserModel extends Document implements User {
     enum: UserRole,
     immutable: true,
   })
-  public role: UserRole;
+  [UserField.Role]: UserRole;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);

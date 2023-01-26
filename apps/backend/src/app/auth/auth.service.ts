@@ -8,8 +8,8 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { UserEntity } from '../user/user.entity';
 import { UserRepository } from '../user/user.repository';
-import { DEFAULT_PASSWORD_HASH, UserExceptionMessage } from './auth.constant';
 import { CreateUserDto } from './dto/create-user.dto';
+import { DEFAULT_PASSWORD_HASH, UserExceptionMessage } from '../user/user.constant';
 
 const { Conflict, NotFound, ForbiddenPassword } = UserExceptionMessage;
 

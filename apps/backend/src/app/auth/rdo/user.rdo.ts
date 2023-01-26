@@ -1,18 +1,18 @@
-import { ResponseUser, UserRole } from '@guitar-shop/core';
+import { ResponseUser, UserField, UserRole } from '@guitar-shop/core';
 import { Expose, Transform } from 'class-transformer';
 
 export class UserRdo implements ResponseUser {
-  @Expose({ name: '_id' })
+  @Expose({ name: UserField._Id })
   @Transform(({ obj }) => obj._id.toString())
-  public id: string;
+  [UserField.Id]: string;
 
   @Expose()
-  public userName: string;
+  [UserField.UserName]: string;
 
   @Expose()
-  public email: string;
+  [UserField.Email]: string;
 
   @Expose()
   @Transform(({ value }) => value.toString())
-  public role: UserRole;
+  [UserField.Role]: UserRole;
 }

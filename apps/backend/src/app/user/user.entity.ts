@@ -1,12 +1,12 @@
-import { User, UserRole } from '@guitar-shop/core';
+import { User, UserField, UserRole } from '@guitar-shop/core';
 import { compare, hash } from 'bcrypt';
 import { SALT_ROUNDS } from './user.constant';
 
 export class UserEntity implements User {
-  public userName: string;
-  public email: string;
-  public passwordHash: string;
-  public role: UserRole;
+  [UserField.UserName]: string;
+  [UserField.Email]: string;
+  [UserField.PasswordHash]: string;
+  [UserField.Role]: UserRole;
 
   constructor(data: User) {
     this.userName = data.userName;

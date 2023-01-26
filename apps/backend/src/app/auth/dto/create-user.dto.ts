@@ -1,4 +1,4 @@
-import { NewUser } from '@guitar-shop/core';
+import { NewUser, UserField } from '@guitar-shop/core';
 import {
   IsEmail,
   IsEmpty,
@@ -6,32 +6,37 @@ import {
   IsOptional,
   Length,
 } from 'class-validator';
-import { UserValidationMessage } from '../auth.constant';
+import {
+  USER_CONSTRAINT,
+  USER_VALIDATION_MESSAGE,
+} from '../../user/user.constant';
 
 const {
-  UserNameRequired,
-  UserNameLengthNotValid,
-  EmailRequired,
-  EmailNotValid,
-  PasswordRequired,
-  PasswordLengthNotValid,
-  RoleForbidden,
-} = UserValidationMessage;
-// TODO: убрать цифры, создать объект с ограничениями
+  EMAIL_NOT_VALID,
+  EMAIL_REQUIRED,
+  PASSWORD_LENGTH_NOT_VALID,
+  PASSWORD_REQUIRED,
+  ROLE_FORBIDDEN,
+  USERNAME_LENGTH_NOT_VALID,
+  USERNAME_REQUIRED,
+} = USER_VALIDATION_MESSAGE;
+
+const { USERNAME, PASSWORD } = USER_CONSTRAINT;
+
 export class CreateUserDto implements NewUser {
-  @Length(1, 15, { message: UserNameLengthNotValid })
-  @IsNotEmpty({ message: UserNameRequired })
-  public userName: string;
+  @Length(USERNAME.MIN, USERNAME.MAX, { message: USERNAME_LENGTH_NOT_VALID })
+  @IsNotEmpty({ message: USERNAME_REQUIRED })
+  [UserField.UserName]: string;
 
-  @IsEmail({}, { message: EmailNotValid })
-  @IsNotEmpty({ message: EmailRequired })
-  public email: string;
+  @IsEmail({}, { message: EMAIL_NOT_VALID })
+  @IsNotEmpty({ message: EMAIL_REQUIRED })
+  [UserField.Email]: string;
 
-  @Length(6, 12, { message: PasswordLengthNotValid })
-  @IsNotEmpty({ message: PasswordRequired })
-  public password: string;
+  @Length(PASSWORD.MIN, PASSWORD.MAX, { message: PASSWORD_LENGTH_NOT_VALID })
+  @IsNotEmpty({ message: PASSWORD_REQUIRED })
+  [UserField.Password]: string;
 
-  @IsEmpty({ message: RoleForbidden })
+  @IsEmpty({ message: ROLE_FORBIDDEN })
   @IsOptional()
-  public role: string;
+  [UserField.Role]: string;
 }

@@ -1,20 +1,34 @@
 import { UserRole } from '../constants';
 
+export enum UserField {
+  _Id = '_id',
+  Id = 'id',
+  UserName = 'userName',
+  Email = 'email',
+  PasswordHash = 'passwordHash',
+  Password = 'password',
+  Role = 'role',
+  RegisterAt = 'registerAt',
+}
+
 export type User = {
-  _id?: string;
-  userName: string;
-  email: string;
-  passwordHash?: string;
-  role: UserRole;
-  registerAt?: Date;
+  [UserField._Id]?: string;
+  [UserField.UserName]: string;
+  [UserField.Email]: string;
+  [UserField.PasswordHash]?: string;
+  [UserField.Role]: UserRole;
+  [UserField.RegisterAt]?: Date;
 };
 
 export type NewUser = {
-  userName: string;
-  email: string;
-  password: string;
+  [UserField.UserName]: string;
+  [UserField.Email]: string;
+  [UserField.Password]: string;
 };
 
-export type LoginUser = Omit<NewUser, 'userName'>;
+export type LoginUser = Omit<NewUser, UserField.UserName>;
 
-export type ResponseUser = Omit<User, 'passwordHash' | 'registerAt'>;
+export type ResponseUser = Omit<
+  User,
+  UserField.PasswordHash | UserField.RegisterAt
+>;
