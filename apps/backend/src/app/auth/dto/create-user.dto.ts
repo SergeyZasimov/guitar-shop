@@ -38,5 +38,5 @@ export class CreateUserDto implements NewUser {
 
   @IsEmpty({ message: ROLE_FORBIDDEN })
   @IsOptional()
-  [UserField.Role]: string;
+  [UserField.Role]?: string;
 }

@@ -5,7 +5,7 @@ import {
   Product,
   User,
 } from '@guitar-shop/core';
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { ProductModel } from '../product/product.model';
 import { UserModel } from '../user/user.model';
@@ -60,3 +60,5 @@ export class CommentModel extends Document implements Comment {
   })
   [CommentField.Rating]: number;
 }
+
+export const CommentSchema = SchemaFactory.createForClass(CommentModel);

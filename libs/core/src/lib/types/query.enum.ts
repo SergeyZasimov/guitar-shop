@@ -3,8 +3,8 @@ import { GuitarType, StringsNumber } from '../constants';
 
 export enum QueryField {
   Limit = 'limit',
-  GuitarTypeFilter = ProductField.GuitarType,
-  StringsNumberFilter = ProductField.StringsNumber,
+  GuitarTypeFilter = 'guitarType',
+  StringsNumberFilter = 'stringsNumber',
   SortingOption = 'sortingOption',
   SortType = 'sortType',
 }
