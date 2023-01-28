@@ -1,3 +1,4 @@
+export * from './command.enum';
 export * from './db-collection.enum';
 export * from './guitar-type.enum';
 export * from './jwt-sign-algorithms.constant';

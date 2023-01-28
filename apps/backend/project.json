@@ -24,6 +24,18 @@
         }
       }
     },
+    "cli-build": {
+      "executor": "@nrwl/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/backend/cli",
+        "main": "apps/backend/src/cli.ts",
+        "tsConfig": "apps/backend/tsconfig.app.json",
+        "webpackConfig": "apps/backend/webpack.config.js"
+      }
+    },
     "serve": {
       "executor": "@nrwl/js:node",
       "options": {

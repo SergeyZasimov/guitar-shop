@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "docker:up": "cd ./apps/backend && docker-compose up -d"
+    "docker:up": "cd ./apps/backend && docker-compose up -d",
+    "cli": "nx run backend:cli-build && node dist/apps/backend/cli/main.js"
   },
   "private": true,
   "dependencies": {
@@ -20,6 +21,7 @@
     "chalk": "^4.1.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+    "minimist": "^1.2.7",
     "mongoose": "^6.8.4",
     "multer": "^1.4.5-lts.1",
     "nanoid": "^2.1.11",
@@ -35,6 +37,7 @@
   },
   "devDependencies": {
     "@babel/preset-react": "^7.14.5",
+    "@faker-js/faker": "^7.6.0",
     "@nestjs/schematics": "^9.0.0",
     "@nestjs/testing": "^9.0.0",
     "@nrwl/cypress": "15.6.0",
