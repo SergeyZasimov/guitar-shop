@@ -1,4 +1,9 @@
-import { RouteDomain, RouteParam, RoutePath } from '@guitar-shop/core';
+import {
+  RouteDomain,
+  RouteParam,
+  RoutePath,
+  fillObject,
+} from '@guitar-shop/core';
 import {
   BadRequestException,
   Body,
@@ -17,15 +22,15 @@ import { PhotoFilterInterceptor } from '../interceptors/photo-file.interceptor';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductsQueryDto } from './dto/products-query.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 import { PRODUCT_VALIDATION_MESSAGE } from './product.constant';
 import { ProductService } from './product.service';
+import { ProductRdo } from './rdo/product.rdo';
 
 const { Product } = RouteDomain;
 const { UploadPhoto } = RoutePath;
 const { ProductId } = RouteParam;
 const { PHOTO_REQUIRED } = PRODUCT_VALIDATION_MESSAGE;
-
-// TODO: добавить rdo
 
 @Controller(Product)
 export class ProductController {
@@ -33,22 +38,12 @@ export class ProductController {
 
   @Post('')
   async create(@Body() dto: CreateProductDto) {
-    return this.productService.create(dto);
+    return fillObject(ProductRdo, await this.productService.create(dto));
   }
 
   @Get('')
   async getProducts(@Query() query: ProductsQueryDto) {
-    return this.productService.getProducts(query);
-  }
-
-  @Get(`:${ProductId}`)
-  async getProduct(@Param(ProductId, MongoidValidationPipe) id: string) {
-    return this.productService.getProduct(id);
-  }
-
-  @Delete(`:${ProductId}`)
-  async deleteProduct(@Param(ProductId, MongoidValidationPipe) id: string) {
-    return this.productService.deleteProduct(id);
+    return fillObject(ProductRdo, await this.productService.getProducts(query));
   }
 
   @UseInterceptors(PhotoFilterInterceptor())
@@ -64,6 +59,30 @@ export class ProductController {
     )
     file: Express.Multer.File
   ) {
-    return this.productService.uploadPhoto(id, file.filename);
+    return fillObject(
+      ProductRdo,
+      await this.productService.uploadPhoto(id, file.filename)
+    );
+  }
+
+  @Get(`:${ProductId}`)
+  async getProduct(@Param(ProductId, MongoidValidationPipe) id: string) {
+    return fillObject(ProductRdo, await this.productService.getProduct(id));
+  }
+
+  @Patch(`:${ProductId}`)
+  async updateProduct(
+    @Param(ProductId, MongoidValidationPipe) id: string,
+    @Body() dto: UpdateProductDto
+  ) {
+    return fillObject(
+      ProductRdo,
+      await this.productService.updateProduct(id, dto)
+    );
+  }
+
+  @Delete(`:${ProductId}`)
+  async deleteProduct(@Param(ProductId, MongoidValidationPipe) id: string) {
+    return fillObject(ProductRdo, await this.productService.deleteProduct(id));
   }
 }

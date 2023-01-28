@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { AppOption, ConfigNamespace } from '../app.constant';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductsQueryDto } from './dto/products-query.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 import { ProductExceptionMessage } from './product.constant';
 import { ProductEntity } from './product.entity';
 import { ProductRepository } from './product.repository';
@@ -32,8 +33,14 @@ export class ProductService {
     return await this.checkProductExist(id);
   }
 
+  async updateProduct(id: string, dto: UpdateProductDto): Promise<Product> {
+    const existProduct = await this.checkProductExist(id);
+    const updatedEntity = new ProductEntity({ ...existProduct, ...dto });
+    return this.productRepository.findOneAndUpdate({ _id: id }, updatedEntity);
+  }
+
   async deleteProduct(id: string): Promise<Product> {
-    const product = await this.productRepository.delete({ id });
+    const product = await this.productRepository.delete({ _id: id });
     if (!product) {
       throw new NotFoundException(NotFound);
     }
@@ -55,7 +62,7 @@ export class ProductService {
   }
 
   private async checkProductExist(id: string): Promise<Product> {
-    const product = await this.productRepository.findOne({ id });
+    const product = await this.productRepository.findOne({ _id: id });
     if (!product) {
       throw new NotFoundException(NotFound);
     }

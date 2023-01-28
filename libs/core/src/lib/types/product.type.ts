@@ -11,6 +11,7 @@ export enum ProductField {
   StringsNumber = 'stringsNumber',
   Price = 'price',
   TotalRating = 'totalRating',
+  CreatedAt = 'createdAt',
   AddedAt = 'addedAt',
   CommentsCount = 'commentsCount',
 }
@@ -25,7 +26,7 @@ export type Product = {
   [ProductField.StringsNumber]: StringsNumber;
   [ProductField.Price]: number;
   [ProductField.TotalRating]?: number;
-  [ProductField.AddedAt]?: Date;
+  [ProductField.CreatedAt]?: Date;
   [ProductField.CommentsCount]?: number;
 };
 

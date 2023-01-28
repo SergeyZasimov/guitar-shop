@@ -13,14 +13,23 @@ export class ProductRepository extends CrudRepository<ProductModel> {
   }
 
   async find(query: ProductsQueryDto): Promise<Product[]> {
-    const { limit, guitarType, stringsNumber, sortingOption, sortType } = query;
+    const { limit, page, guitarType, stringsNumber, sortingOption, sortType } =
+      query;
+
+    console.log(query);
+
+    const filterCondition = {};
+    stringsNumber
+      ? (filterCondition[ProductField.StringsNumber] = stringsNumber)
+      : null;
+    guitarType ? (filterCondition[ProductField.GuitarType] = guitarType) : null;
+
+    
+
     return this.productModel
-      .find()
-      .where({
-        [ProductField.GuitarType]: guitarType,
-        [ProductField.StringsNumber]: stringsNumber,
-      })
+      .find(filterCondition)
       .limit(limit)
+      .skip(limit * (page - 1))
       .sort({ [sortingOption]: sortType });
   }
 }

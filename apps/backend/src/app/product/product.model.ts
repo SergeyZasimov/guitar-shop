@@ -17,6 +17,7 @@ const {
   STRINGS_NUMBER,
   TITLE,
   PHOTO_TYPE,
+  RATING,
 } = PRODUCT_CONSTRAINT;
 
 @Schema({
@@ -71,6 +72,20 @@ export class ProductModel extends Document implements Product {
     max: PRICE.MAX,
   })
   [ProductField.Price]: number;
+
+  @Prop({
+    required: false,
+    default: 0,
+    min: RATING.MIN,
+    max: RATING.MAX,
+  })
+  [ProductField.TotalRating]: number;
+
+  @Prop({
+    required: false,
+    default: 0,
+  })
+  [ProductField.CommentsCount]: number;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(ProductModel);

@@ -30,7 +30,7 @@ Content-Type: {{contentType}}
 }
 
 ### Upload Photo
-POST {{baseUrl}}/products/63d1515e54044183b0ecb2c9/upload-photo {{protocol}}
+PATCH {{baseUrl}}/products/63d4d0a25ce884ec1634e9d7/upload-photo {{protocol}}
 Content-Type: multipart/form-data; boundary=Upload
 
 --Upload
@@ -39,3 +39,32 @@ Content-Type: image/png
 
 < ./markup/img/content/add-item-1.png
 --Upload--
+
+### Get Product
+GET {{baseUrl}}/products/63d4cac6c800c9a699b57438 {{protocol}}
+
+### Get Products
+GET {{baseUrl}}/products?guitarType=укулеле&stringsNumber=12 {{protocol}}
+
+### Get Products
+GET {{baseUrl}}/products?sortingOption=price&sortType=Asc {{protocol}}
+
+### Get Products
+GET {{baseUrl}}/products?page=2&limit=2{{protocol}}
+
+### Update Product
+PATCH {{baseUrl}}/products/63d4cac6c800c9a699b57438 {{protocol}}
+Content-Type: {{contentType}}
+
+{
+  "title": "Lorem ipsum dol",
+  "description": "Lorem ipsum dolor sit ame",
+  "guitarType": "акустика",
+  "article": "Lorem",
+  "stringsNumber": "4",
+  "price": 135
+}
+
+### Delete Product
+DELETE {{baseUrl}}/products/63d4cac6c800c9a699b57438 {{protocol}}
+

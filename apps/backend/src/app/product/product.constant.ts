@@ -8,11 +8,14 @@ import {
 
 export const UPLOAD_FIELD_NAME = ProductField.Photo;
 
+// TODO: заменить на объект DEFAULT
 export const DEFAULT_PRODUCT_LIMIT = 9;
+
+export const DEFAULT_PRODUCT_PAGE = 1;
 
 export const DEFAULT_PRODUCT_SORTING_OPTION = ProductSortingOption.AddedAt;
 
-export const DEFAULT_PRODUCT_SORTING_TYPE = SortType.Asc;
+export const DEFAULT_PRODUCT_SORTING_TYPE = SortType.Desc;
 
 export const PRODUCT_CONSTRAINT = {
   TITLE: {
@@ -59,6 +62,10 @@ export const PRODUCT_VALIDATION_MESSAGE = {
   STRINGS_NUMBER_NOT_VALID: `Количество струн должно быть ${PRODUCT_CONSTRAINT.STRINGS_NUMBER.join(
     ', '
   )}`,
+  LIMIT_NOT_VALID: 'Количество товаров на странице должно быть числом',
+  PAGE_NOT_VALID: 'Номер страницы должен быть числом',
+  SORTING_OPTION_NOT_VALID: 'Неверная сортировка списка товаров',
+  SORTING_TYPE_NOT_VALID: 'Неверное направление сортировки',
 } as const;
 
 export enum ProductExceptionMessage {
