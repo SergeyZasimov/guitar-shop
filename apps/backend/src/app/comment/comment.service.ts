@@ -1,16 +1,27 @@
-import { Comment } from '@guitar-shop/core';
+import { Comment, CommentField } from '@guitar-shop/core';
 import { Injectable } from '@nestjs/common';
+import { ProductService } from '../product/product.service';
 import { CommentEntity } from './comment.entity';
 import { CommentRepository } from './comment.repository';
 import { CreateCommentDto } from './dto/create-comment.dto';
 
 @Injectable()
 export class CommentService {
-  constructor(private readonly commentRepository: CommentRepository) {}
+  constructor(
+    private readonly commentRepository: CommentRepository,
+    private readonly productService: ProductService
+  ) {}
 
-  async create(dto: CreateCommentDto): Promise<Comment> {
-    const commentEntity = new CommentEntity(dto);
-    return this.commentRepository.create(commentEntity);
+  async create(productId: string, dto: CreateCommentDto): Promise<Comment> {
+    if (await this.productService.checkProductExist(productId)) {
+      const commentEntity = new CommentEntity({
+        ...dto,
+        [CommentField.Product]: productId,
+      });
+      const newComment = await this.commentRepository.create(commentEntity);
+      await this.productService.updateRating(newComment);
+      return this.commentRepository.findOne(newComment._id);
+    }
   }
 
   async getComments(productId: string): Promise<Comment[]> {

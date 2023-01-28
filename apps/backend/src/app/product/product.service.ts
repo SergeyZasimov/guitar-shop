@@ -1,4 +1,4 @@
-import { Product } from '@guitar-shop/core';
+import { Comment, Product } from '@guitar-shop/core';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AppOption, ConfigNamespace } from '../app.constant';
@@ -61,11 +61,16 @@ export class ProductService {
     return this.productRepository.findOneAndUpdate({ id }, updatedProduct);
   }
 
-  private async checkProductExist(id: string): Promise<Product> {
+  public async checkProductExist(id: string): Promise<Product> {
     const product = await this.productRepository.findOne({ _id: id });
     if (!product) {
       throw new NotFoundException(NotFound);
     }
     return product;
+  }
+
+  public async updateRating(comment: Comment): Promise<void> {
+    const {product, rating} = comment
+    await this.productRepository.updateRating(product, rating)
   }
 }

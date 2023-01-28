@@ -1,10 +1,4 @@
-import {
-  Comment,
-  CommentField,
-  DbCollection,
-  Product,
-  User,
-} from '@guitar-shop/core';
+import { Comment, CommentField, DbCollection } from '@guitar-shop/core';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
 import { ProductModel } from '../product/product.model';
@@ -23,14 +17,14 @@ export class CommentModel extends Document implements Comment {
     type: Types.ObjectId,
     ref: UserModel.name,
   })
-  [CommentField.Author]: User;
+  [CommentField.Author]: string;
 
   @Prop({
     required: true,
     type: Types.ObjectId,
     ref: ProductModel.name,
   })
-  [CommentField.Product]: Product;
+  [CommentField.Product]: string;
 
   @Prop({
     required: true,

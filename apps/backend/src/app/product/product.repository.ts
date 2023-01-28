@@ -16,20 +16,47 @@ export class ProductRepository extends CrudRepository<ProductModel> {
     const { limit, page, guitarType, stringsNumber, sortingOption, sortType } =
       query;
 
-    console.log(query);
-
     const filterCondition = {};
     stringsNumber
       ? (filterCondition[ProductField.StringsNumber] = stringsNumber)
       : null;
     guitarType ? (filterCondition[ProductField.GuitarType] = guitarType) : null;
 
-    
-
     return this.productModel
       .find(filterCondition)
       .limit(limit)
       .skip(limit * (page - 1))
       .sort({ [sortingOption]: sortType });
+  }
+
+  async updateRating(id: string, rating: number): Promise<void> {
+    await this.productModel.updateOne(
+      {
+        [ProductField._Id]: id,
+      },
+      [
+        {
+          $set: {
+            [ProductField.CommentsCount]: {
+              $sum: [`$${[ProductField.CommentsCount]}`, 1],
+            },
+          },
+        },
+        {
+          $set: {
+            [ProductField.TotalRating]: {
+              $ceil: [
+                {
+                  $divide: [
+                    { $sum: [`$${[ProductField.TotalRating]}`, rating] },
+                    `$${[ProductField.CommentsCount]}`,
+                  ],
+                },
+              ],
+            },
+          },
+        },
+      ]
+    );
   }
 }

@@ -1,10 +1,9 @@
-import { RouteDomain, RouteParam } from '@guitar-shop/core';
+import { RouteDomain, RouteParam, fillObject } from '@guitar-shop/core';
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
-
-// TODO: добавить rdo
+import { CommentRdo } from './rdo/comment.rdo';
 
 const { Comment } = RouteDomain;
 const { ProductId } = RouteParam;
@@ -13,13 +12,24 @@ const { ProductId } = RouteParam;
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
-  @Post('')
-  async create(@Body() dto: CreateCommentDto) {
-    return this.commentService.create(dto);
+  @Post(`:${ProductId}`)
+  async create(
+    @Param(ProductId, MongoidValidationPipe) productId: string,
+    @Body() dto: CreateCommentDto
+  ) {
+    return fillObject(
+      CommentRdo,
+      await this.commentService.create(productId, dto)
+    );
   }
 
   @Get(`:${ProductId}`)
-  async getComments(@Param(ProductId, MongoidValidationPipe) productId: string) {
-    return this.commentService.getComments(productId);
+  async getComments(
+    @Param(ProductId, MongoidValidationPipe) productId: string
+  ) {
+    return fillObject(
+      CommentRdo,
+      await this.commentService.getComments(productId)
+    );
   }
 }

@@ -1,0 +1,29 @@
+@baseUrl = http://localhost:3333/api
+@contentType = application/json
+@protocol = HTTP/1.1
+
+### Create Comment
+POST {{baseUrl}}/comments/63d519e0cfb70f20f8055c23 {{protocol}}
+Content-Type: {{contentType}}
+
+{
+  "author": "63d4fe8671ef317d80ccef43",
+  "advantages": "Lorem ipsum dolor sit amet, consectetuer adipiscing eli",
+  "disadvantages": "Lorem ipsum dolor sit amet, consectetuer adipiscing eli",
+  "text": "Lorem ipsum dolor sit amet, consectetuer adipiscing eli",
+  "rating": 3
+}
+
+### Get Comments By Product
+GET {{baseUrl}}/comments/63d4cac6c800c9a699b5743a {{protocol}}
+
+### Create Comment Bad Request
+POST {{baseUrl}}/comments/63d4cac6c800c9a699b5743a {{protocol}}
+Content-Type: {{contentType}}
+
+{
+  "advantages": "Lorem ",
+  "disadvantages": "Lorem ",
+  "text": "L",
+  "rating": 9
+}

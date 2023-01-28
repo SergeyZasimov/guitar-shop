@@ -1,8 +1,8 @@
-import { Comment, CommentField, Product, User } from '@guitar-shop/core';
+import { Comment, CommentField } from '@guitar-shop/core';
 
 export class CommentEntity implements Comment {
-  [CommentField.Author]: User;
-  [CommentField.Product]: Product;
+  [CommentField.Author]: string;
+  [CommentField.Product]: string;
   [CommentField.Advantages]: string;
   [CommentField.Disadvantages]: string;
   [CommentField.Text]: string;
