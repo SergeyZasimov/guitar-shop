@@ -1,5 +1,6 @@
 import { Order, OrderField, OrderItem } from '@guitar-shop/core';
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { NotifyService } from '../notify/notify.service';
 import { ProductService } from '../product/product.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { ORDER_EXCEPTION_MESSAGE } from './order.constant';
@@ -12,7 +13,8 @@ const { ORDER_NOT_FOUND } = ORDER_EXCEPTION_MESSAGE;
 export class OrderService {
   constructor(
     private readonly orderRepository: OrderRepository,
-    private readonly productService: ProductService
+    private readonly productService: ProductService,
+    private readonly notifyService: NotifyService
   ) {}
 
   async createOrder(userId: string, dto: CreateOrderDto) {
@@ -24,7 +26,13 @@ export class OrderService {
       orderList,
     });
 
-    return this.orderRepository.create(orderEntity);
+    const newOrder = await this.orderRepository.create(orderEntity);
+
+    if (newOrder) {
+      await this.notifyService.sendNewOrderNotify(newOrder.toJSON());
+    }
+
+    return newOrder;
   }
 
   async getOrders(): Promise<Order[]> {

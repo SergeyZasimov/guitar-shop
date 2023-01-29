@@ -3,12 +3,13 @@ import {
   AppOption,
   ConfigNamespace,
   JwtOption,
+  MailOption,
   MongodbOption,
   MulterOption,
   StaticOption,
 } from '../app.constant';
 
-const { Mongodb, Jwt, Multer, App, Static } = ConfigNamespace;
+const { Mongodb, Jwt, Multer, App, Static, Mail } = ConfigNamespace;
 
 const { Host, Port } = AppOption;
 
@@ -20,6 +21,8 @@ const { AccessTokenExpiresIn, AccessTokenSecret, SignAlgorithm } = JwtOption;
 const { Storage } = MulterOption;
 
 const { StaticDirectory } = StaticOption;
+
+const { MailFrom, MailHost, MailPort } = MailOption;
 
 export const appOption = registerAs(App, () => ({
   [Host]: process.env.HOST || 'localhost',
@@ -47,4 +50,10 @@ export const multerOptions = registerAs(Multer, () => ({
 
 export const staticOptions = registerAs(Static, () => ({
   [StaticDirectory]: process.env.STATIC_DIRECTORY,
+}));
+
+export const mailOptions = registerAs(Mail, () => ({
+  [MailHost]: process.env.MAIL_HOST,
+  [MailPort]: process.env.MAIL_PORT,
+  [MailFrom]: process.env.MAIL_FROM,
 }));

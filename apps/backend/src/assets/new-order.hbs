@@ -1,0 +1,31 @@
+<h3>Пользователь</h3>
+<dl>
+  <dt>Имя</dt>
+  <dd>{{order.user.userName}}</dd>
+  <dt>Email</dt>
+  <dd>{{order.user.email}}</dd>
+</dl>
+
+<h3>Список</h3>
+<table cellpadding='15'>
+  <tr>
+    <th>Товар</th>
+    <th>Цена</th>
+    <th>Количество</th>
+    <th>Итог</th>
+  </tr>
+  {{#each order.orderList}}
+    <tr>
+      <td>{{this.product.title}}</td>
+      <td>{{this.price}}</td>
+      <td align='center'>{{this.quantity}}</td>
+      <td>{{this.cost}}</td>
+    </tr>
+  {{/each}}
+</table>
+
+<h3>Итог</h3>
+<p>Общее количество: {{order.orderSummary.totalQuantity}}</p>
+<p>Общая стоимость: {{order.orderSummary.totalCost}}</p>
+<p>Дата заказа: {{order.createdAt}}</p>
+<p>ID заказа: {{order._id}}</p>

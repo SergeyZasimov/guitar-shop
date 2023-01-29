@@ -27,58 +27,72 @@ class EnvironmentsConfig {
   @Max(VALID_PORT.MAX, { message: PortNotValid })
   @IsInt({ message: IntRequired })
   @IsOptional()
-  public PORT: number;
+  PORT: number;
 
   @IsString({ message: StringRequired })
   @IsOptional()
-  public HOST: string;
+  HOST: string;
 
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
-  public MONGO_DB: string;
+  MONGO_DB: string;
 
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
-  public MONGO_HOST: string;
+  MONGO_HOST: string;
 
   @Min(VALID_PORT.MIN, { message: PortNotValid })
   @Max(VALID_PORT.MAX, { message: PortNotValid })
   @IsInt({ message: IntRequired })
   @IsNotEmpty({ message: Required })
-  public MONGO_PORT: number;
+  MONGO_PORT: number;
 
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
-  public MONGO_USER: string;
+  MONGO_USER: string;
 
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
-  public MONGO_PASSWORD: string;
+  MONGO_PASSWORD: string;
 
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
-  public MONGO_AUTH_BASE: string;
+  MONGO_AUTH_BASE: string;
 
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
-  public JWT_AT_SECRET: string;
+  JWT_AT_SECRET: string;
 
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
-  public JWT_AT_EXPIRES_IN: string;
+  JWT_AT_EXPIRES_IN: string;
 
   @IsEnum(JWT_SIGN_ALGORITHMS, { message: JwtAlgorithmsNotValid })
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
-  public JWT_SIGN_ALGORITHM: Algorithm;
+  JWT_SIGN_ALGORITHM: Algorithm;
 
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
-  public UPLOAD_DESTINATION: string;
+  UPLOAD_DESTINATION: string;
 
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
-  public STATIC_DIRECTORY: string;
+  STATIC_DIRECTORY: string;
+
+  @IsString({ message: StringRequired })
+  @IsNotEmpty({ message: Required })
+  MAIL_HOST: string;
+
+  @Min(VALID_PORT.MIN, { message: PortNotValid })
+  @Max(VALID_PORT.MAX, { message: PortNotValid })
+  @IsInt({ message: IntRequired })
+  @IsNotEmpty({ message: Required })
+  MAIL_PORT: number;
+
+  @IsString({ message: StringRequired })
+  @IsNotEmpty({ message: Required })
+  MAIL_FROM: string;
 }
 
 export function validateEnvironments(config: Record<string, unknown>) {

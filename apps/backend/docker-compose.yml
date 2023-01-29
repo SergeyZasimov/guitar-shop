@@ -18,8 +18,6 @@ services:
       timeout: 10s
       retries: 5
       start_period: 10s
-    networks:
-      - mongodb
 
   mongodb-express:
     image: mongo-express
@@ -32,9 +30,10 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: secret
       ME_CONFIG_MONGODB_AUTH_DATABASE: admin
       ME_CONFIG_MONGODB_URL: mongodb://root:secret@guitar-shop-mongodb:27017/
-    networks:
-      - mongodb
 
-networks:
-  mongodb:
-    driver: bridge
+  fakesmtp:
+    image: gessnerfl/fake-smtp-server
+    container_name: guitar-shop-fake-smtp
+    ports:
+      - 5025:5025
+      - 8083:5080

@@ -5,12 +5,15 @@ export const VALID_PORT = {
   MAX: 65535,
 } as const;
 
+export const MAIL_TEMPLATE_FOLDER = 'assets';
+
 export enum ConfigNamespace {
   App = 'app',
   Mongodb = 'mongodb',
   Jwt = 'jwt',
   Multer = 'multer',
   Static = 'static',
+  Mail = 'mail',
 }
 
 export enum AppOption {
@@ -39,6 +42,12 @@ export enum MulterOption {
 
 export enum StaticOption {
   StaticDirectory = 'directory',
+}
+
+export enum MailOption {
+  MailHost = 'host',
+  MailPort = 'port',
+  MailFrom = 'from',
 }
 
 export enum EnvValidationMessage {

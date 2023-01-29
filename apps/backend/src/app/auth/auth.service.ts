@@ -6,10 +6,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { NotifyService } from '../notify/notify.service';
+import {
+  DEFAULT_PASSWORD_HASH,
+  UserExceptionMessage,
+} from '../user/user.constant';
 import { UserEntity } from '../user/user.entity';
 import { UserRepository } from '../user/user.repository';
 import { CreateUserDto } from './dto/create-user.dto';
-import { DEFAULT_PASSWORD_HASH, UserExceptionMessage } from '../user/user.constant';
 
 const { Conflict, NotFound, ForbiddenPassword } = UserExceptionMessage;
 
@@ -17,7 +21,8 @@ const { Conflict, NotFound, ForbiddenPassword } = UserExceptionMessage;
 export class AuthService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    private readonly notifyService: NotifyService
   ) {}
 
   public async register(dto: CreateUserDto): Promise<User> {
@@ -29,16 +34,20 @@ export class AuthService {
       throw new ConflictException(Conflict);
     }
 
-    const newUser: User = {
+    const newUserEntity = await new UserEntity({
       userName,
       email,
       role: UserRole.Customer,
       passwordHash: DEFAULT_PASSWORD_HASH,
-    };
+    }).setPassword(password);
 
-    const newUserEntity = await new UserEntity(newUser).setPassword(password);
+    const newUser = await this.userRepository.create(newUserEntity);
 
-    return this.userRepository.create(newUserEntity);
+    if (newUser) {
+      await this.notifyService.sendRegisterNotify(newUser, password);
+    }
+
+    return newUser;
   }
 
   public async login(user: User): Promise<TokenResponse> {
