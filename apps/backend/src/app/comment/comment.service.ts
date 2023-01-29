@@ -25,7 +25,7 @@ export class CommentService {
       });
       const newComment = await this.commentRepository.create(commentEntity);
       await this.productService.updateRating(newComment);
-      return this.commentRepository.findOne(newComment._id);
+      return this.commentRepository.findOne(newComment[CommentField._Id]);
     }
   }
 

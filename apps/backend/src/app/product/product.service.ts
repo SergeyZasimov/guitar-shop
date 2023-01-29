@@ -72,7 +72,7 @@ export class ProductService {
 
   // TODO: изменить подсчет рейтинга
   public async updateRating(comment: Comment): Promise<void> {
-    const { product, rating } = comment;
-    await this.productRepository.updateRating(product, rating);
+    const { product } = comment;
+    await this.productRepository.updateRating(product);
   }
 }

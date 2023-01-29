@@ -1,6 +1,12 @@
-import { CrudRepository, Product, ProductField } from '@guitar-shop/core';
+import {
+  CommentField,
+  CrudRepository,
+  DbCollection,
+  Product,
+  ProductField,
+} from '@guitar-shop/core';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { ProductsQueryDto } from './dto/products-query.dto';
 import { ProductModel } from './product.model';
 
@@ -29,34 +35,41 @@ export class ProductRepository extends CrudRepository<ProductModel> {
       .sort({ [sortingOption]: sortType });
   }
 
-  async updateRating(id: string, rating: number): Promise<void> {
-    await this.productModel.updateOne(
+  async updateRating(id: string): Promise<void> {
+    const [result] = await this.productModel.aggregate([
       {
-        [ProductField._Id]: id,
+        $match: {
+          [ProductField._Id]: new Types.ObjectId(id),
+        },
       },
-      [
-        {
-          $set: {
-            [ProductField.CommentsCount]: {
-              $sum: [`$${[ProductField.CommentsCount]}`, 1],
+      {
+        $lookup: {
+          from: DbCollection.Comments,
+          pipeline: [
+            { $match: { $expr: { $eq: [`$${CommentField.Product}`, id] } } },
+            { $project: { [CommentField.Rating]: 1 } },
+          ],
+          as: 'comments',
+        },
+      },
+      {
+        $set: {
+          [ProductField.CommentsCount]: {
+            $size: '$comments.rating',
+          },
+          [ProductField.TotalRating]: {
+            $ceil: {
+              $avg: '$comments.rating',
             },
           },
         },
-        {
-          $set: {
-            [ProductField.TotalRating]: {
-              $ceil: [
-                {
-                  $divide: [
-                    { $sum: [`$${[ProductField.TotalRating]}`, rating] },
-                    `$${[ProductField.CommentsCount]}`,
-                  ],
-                },
-              ],
-            },
-          },
-        },
-      ]
+      },
+      { $unset: 'comments' },
+    ]);
+
+    await this.productModel.findOneAndUpdate(
+      { [ProductField._Id]: id },
+      result
     );
   }
 }
