@@ -14,4 +14,5 @@ export enum RoutePath {
 
 export enum RouteParam {
   ProductId = 'id',
+  OrderId = 'id',
 }

@@ -51,6 +51,7 @@ export class ProductService {
     const host = this.configService.get<string>(`${App}.${Host}`);
     const port = this.configService.get<string>(`${App}.${Port}`);
 
+    // TODO: перенести в entity
     const photoPath = `http://${host}:${port}/${photo}`;
 
     const existProduct = await this.checkProductExist(id);
@@ -70,7 +71,7 @@ export class ProductService {
   }
 
   public async updateRating(comment: Comment): Promise<void> {
-    const {product, rating} = comment
-    await this.productRepository.updateRating(product, rating)
+    const { product, rating } = comment;
+    await this.productRepository.updateRating(product, rating);
   }
 }

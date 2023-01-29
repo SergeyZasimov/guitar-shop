@@ -1,0 +1,49 @@
+@baseUrl = http://localhost:3333/api
+@contentType = application/json
+@protocol = HTTP/1.1
+
+### Create Order
+POST {{baseUrl}}/orders {{protocol}}
+Content-Type: {{contentType}}
+
+{
+  "user": "63d519e0cfb70f20f8055c1b",
+  "orderList": [
+    {
+      "product": "63d519e0cfb70f20f8055c1d",
+      "quantity": 2
+    },
+    {
+      "product": "63d519e0cfb70f20f8055c1f",
+      "quantity": 2
+    }
+  ]
+}
+
+### Create Order Bad Request
+POST {{baseUrl}}/orders {{protocol}}
+Content-Type: {{contentType}}
+
+{
+  "user": "63d519e0cfb70f20f8055c1",
+  "orderList": [
+    {
+      "product": "63d519e0cfb70f20f8055c1d",
+      "quantity": 0
+    },
+    {
+      "product": "63d519e0cfb70f20f8055c1",
+      "quantity": 2
+    }
+  ]
+}
+
+### Get Orders
+GET {{baseUrl}}/orders {{protocol}}
+
+### Get Order
+GET {{baseUrl}}/orders/63d5e36de9cd0d236513bbc2 {{protocol}}
+
+### Delete Order
+DELETE  {{baseUrl}}/orders/63d5e329e70e8524d3412706 {{protocol}}
+

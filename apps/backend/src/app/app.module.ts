@@ -18,6 +18,7 @@ import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
 import { CommentModule } from './comment/comment.module';
 import { CliModule } from './cli/cli.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { CliModule } from './cli/cli.module';
     ProductModule,
     CommentModule,
     CliModule,
+    OrderModule,
   ],
   controllers: [],
   providers: [],

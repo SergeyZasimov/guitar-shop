@@ -29,5 +29,5 @@ export class CommentRdo implements Comment {
   [CommentField.Rating]: number;
 
   @Expose()
-  [CommentField.CratedAt]?: Date;
+  [CommentField.CratedAt]: Date;
 }
