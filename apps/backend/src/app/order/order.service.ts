@@ -15,11 +15,12 @@ export class OrderService {
     private readonly productService: ProductService
   ) {}
 
-  async createOrder(dto: CreateOrderDto) {
+  async createOrder(userId: string, dto: CreateOrderDto) {
     const orderList = await this.getPricesForOrderList(dto.orderList);
 
     const orderEntity = new OrderEntity({
       ...dto,
+      [OrderField.User]: userId,
       orderList,
     });
 

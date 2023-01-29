@@ -7,7 +7,7 @@ export enum CommentField {
   Disadvantages = 'disadvantages',
   Text = 'text',
   Rating = 'rating',
-  CratedAt = 'createdAt',
+  CreatedAt = 'createdAt',
 }
 
 export type Comment = {
@@ -18,10 +18,13 @@ export type Comment = {
   [CommentField.Disadvantages]: string;
   [CommentField.Text]: string;
   [CommentField.Rating]: number;
-  [CommentField.CratedAt]?: Date;
+  [CommentField.CreatedAt]?: Date;
 };
 
 export type NewComment = Omit<
   Comment,
-  CommentField._Id | CommentField.CratedAt | CommentField.Product
+  | CommentField._Id
+  | CommentField.CreatedAt
+  | CommentField.Product
+  | CommentField.Author
 >;

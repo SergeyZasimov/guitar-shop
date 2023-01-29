@@ -12,11 +12,16 @@ export class CommentService {
     private readonly productService: ProductService
   ) {}
 
-  async create(productId: string, dto: CreateCommentDto): Promise<Comment> {
+  async create(
+    productId: string,
+    userId: string,
+    dto: CreateCommentDto
+  ): Promise<Comment> {
     if (await this.productService.checkProductExist(productId)) {
       const commentEntity = new CommentEntity({
         ...dto,
         [CommentField.Product]: productId,
+        [CommentField.Author]: userId,
       });
       const newComment = await this.commentRepository.create(commentEntity);
       await this.productService.updateRating(newComment);

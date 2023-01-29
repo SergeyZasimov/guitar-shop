@@ -2,6 +2,7 @@ import {
   RouteDomain,
   RouteParam,
   RoutePath,
+  UserRole,
   fillObject,
 } from '@guitar-shop/core';
 import {
@@ -16,8 +17,12 @@ import {
   Post,
   Query,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { Role } from '../decorators/role.decorator';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { RoleGuard } from '../guards/role.guard';
 import { PhotoFilterInterceptor } from '../interceptors/photo-file.interceptor';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -36,6 +41,8 @@ const { PHOTO_REQUIRED } = PRODUCT_VALIDATION_MESSAGE;
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Role(UserRole.Admin)
   @Post('')
   async create(@Body() dto: CreateProductDto) {
     return fillObject(ProductRdo, await this.productService.create(dto));
@@ -46,6 +53,8 @@ export class ProductController {
     return fillObject(ProductRdo, await this.productService.getProducts(query));
   }
 
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Role(UserRole.Admin)
   @UseInterceptors(PhotoFilterInterceptor())
   @Patch(`:${ProductId}/${UploadPhoto}`)
   async uploadPhoto(
@@ -70,6 +79,8 @@ export class ProductController {
     return fillObject(ProductRdo, await this.productService.getProduct(id));
   }
 
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Role(UserRole.Admin)
   @Patch(`:${ProductId}`)
   async updateProduct(
     @Param(ProductId, MongoidValidationPipe) id: string,
@@ -81,6 +92,8 @@ export class ProductController {
     );
   }
 
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Role(UserRole.Admin)
   @Delete(`:${ProductId}`)
   async deleteProduct(@Param(ProductId, MongoidValidationPipe) id: string) {
     return fillObject(ProductRdo, await this.productService.deleteProduct(id));

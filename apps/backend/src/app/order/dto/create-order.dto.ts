@@ -17,19 +17,6 @@ const {
   QUANTITY_REQUIRED,
 } = ORDER_VALIDATION_MESSAGE;
 
-export class CreateOrderDto implements NewOrder {
-  @IsMongoId()
-  @IsNotEmpty()
-  [OrderField.User]: string;
-
-  @ValidateNested({
-    each: true,
-  })
-  @Type(() => CreateOrderItemDto)
-  @IsNotEmpty({ message: ORDER_LIST_REQUIRED })
-  [OrderField.OrderList]: CreateOrderItemDto[];
-}
-
 export class CreateOrderItemDto implements NewOrderItem {
   @IsMongoId({
     message: (args: ValidationArguments) => {
@@ -45,4 +32,13 @@ export class CreateOrderItemDto implements NewOrderItem {
   })
   @IsNotEmpty({ message: QUANTITY_REQUIRED })
   [OrderField.Quantity]: number;
+}
+
+export class CreateOrderDto implements NewOrder {
+  @ValidateNested({
+    each: true,
+  })
+  @Type(() => CreateOrderItemDto)
+  @IsNotEmpty({ message: ORDER_LIST_REQUIRED })
+  [OrderField.OrderList]: CreateOrderItemDto[];
 }

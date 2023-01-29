@@ -5,9 +5,9 @@
 ### Create Order
 POST {{baseUrl}}/orders {{protocol}}
 Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q2MGE2ZWExMjI1ZjIxMDE5OTkyOWMiLCJ1c2VyTmFtZSI6IkpvaG4gU21pdGgiLCJlbWFpbCI6InRlc3RAZW1haWwubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwiaWF0IjoxNjc0OTg4NTc3LCJleHAiOjE2NzQ5OTIxNzd9.F7SGSyeWsuypWv0voTf1PMVk5xNF5gs0jTQzXIJHpdk
 
 {
-  "user": "63d519e0cfb70f20f8055c1b",
   "orderList": [
     {
       "product": "63d519e0cfb70f20f8055c1d",
@@ -23,9 +23,9 @@ Content-Type: {{contentType}}
 ### Create Order Bad Request
 POST {{baseUrl}}/orders {{protocol}}
 Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q2MGE2ZWExMjI1ZjIxMDE5OTkyOWMiLCJ1c2VyTmFtZSI6IkpvaG4gU21pdGgiLCJlbWFpbCI6InRlc3RAZW1haWwubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwiaWF0IjoxNjc0OTcyNTI3LCJleHAiOjE2NzQ5NzYxMjd9.s12KDzEgUcEhyeCQcC3IyI48kM8sJ4Ogb0F_Edi9IQo
 
 {
-  "user": "63d519e0cfb70f20f8055c1",
   "orderList": [
     {
       "product": "63d519e0cfb70f20f8055c1d",
@@ -40,10 +40,13 @@ Content-Type: {{contentType}}
 
 ### Get Orders
 GET {{baseUrl}}/orders {{protocol}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q1MTllMGNmYjcwZjIwZjgwNTVjMWIiLCJ1c2VyTmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5sb2NhbCIsInJvbGUiOiLQsNC00LzQuNC90LjRgdGC0YDQsNGC0L7RgCIsImlhdCI6MTY3NDk3MzU1MywiZXhwIjoxNjc0OTc3MTUzfQ.ebZks3D1EWT_qW6rWaewOzqx6OasyE_l5qin1fEbNDA
 
 ### Get Order
-GET {{baseUrl}}/orders/63d5e36de9cd0d236513bbc2 {{protocol}}
+GET {{baseUrl}}/orders/63d64c31cf7b574acb34fd00 {{protocol}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q1MTllMGNmYjcwZjIwZjgwNTVjMWIiLCJ1c2VyTmFtZSI6ImFkbWluIiwiZW1haWwiOiJhZG1pbkBhZG1pbi5sb2NhbCIsInJvbGUiOiLQsNC00LzQuNC90LjRgdGC0YDQsNGC0L7RgCIsImlhdCI6MTY3NDk4ODYyNiwiZXhwIjoxNjc0OTkyMjI2fQ.rdTPtClils8nb0AMGRGYGds4gf4Lwl9WW0i6aiscpFE
 
 ### Delete Order
 DELETE  {{baseUrl}}/orders/63d5e329e70e8524d3412706 {{protocol}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q2MGE2ZWExMjI1ZjIxMDE5OTkyOWMiLCJ1c2VyTmFtZSI6IkpvaG4gU21pdGgiLCJlbWFpbCI6InRlc3RAZW1haWwubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwiaWF0IjoxNjc0OTcyNTI3LCJleHAiOjE2NzQ5NzYxMjd9.s12KDzEgUcEhyeCQcC3IyI48kM8sJ4Ogb0F_Edi9IQo
 

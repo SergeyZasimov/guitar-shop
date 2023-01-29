@@ -33,10 +33,7 @@ export type Order = {
   [OrderField.CreateAt]?: Date;
 };
 
-export type NewOrder = {
-  [OrderField.User]: string;
-  [OrderField.OrderList]: NewOrderItem[];
-};
+export type NewOrder = Pick<Order, OrderField.OrderList>;
 
 export type NewOrderItem = Pick<
   OrderItem,

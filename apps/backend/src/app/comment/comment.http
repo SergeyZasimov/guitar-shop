@@ -5,13 +5,13 @@
 ### Create Comment
 POST {{baseUrl}}/comments/63d519e0cfb70f20f8055c23 {{protocol}}
 Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q2MGE2ZWExMjI1ZjIxMDE5OTkyOWMiLCJ1c2VyTmFtZSI6IkpvaG4gU21pdGgiLCJlbWFpbCI6InRlc3RAZW1haWwubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwiaWF0IjoxNjc0OTg4MTA1LCJleHAiOjE2NzQ5OTE3MDV9.Lp4_bMZ3nr8u_8wyE5YmfSDGzQpXlLgtddWsHLNsQZc
 
 {
-  "author": "63d4fe8671ef317d80ccef43",
   "advantages": "Lorem ipsum dolor sit amet, consectetuer adipiscing eli",
   "disadvantages": "Lorem ipsum dolor sit amet, consectetuer adipiscing eli",
   "text": "Lorem ipsum dolor sit amet, consectetuer adipiscing eli",
-  "rating": 3
+  "rating": 5
 }
 
 ### Get Comments By Product
@@ -20,6 +20,7 @@ GET {{baseUrl}}/comments/63d4cac6c800c9a699b5743a {{protocol}}
 ### Create Comment Bad Request
 POST {{baseUrl}}/comments/63d4cac6c800c9a699b5743a {{protocol}}
 Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q2MGE2ZWExMjI1ZjIxMDE5OTkyOWMiLCJ1c2VyTmFtZSI6IkpvaG4gU21pdGgiLCJlbWFpbCI6InRlc3RAZW1haWwubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwiaWF0IjoxNjc0OTcyNTI3LCJleHAiOjE2NzQ5NzYxMjd9.s12KDzEgUcEhyeCQcC3IyI48kM8sJ4Ogb0F_Edi9IQo
 
 {
   "advantages": "Lorem ",

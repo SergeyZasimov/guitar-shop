@@ -1,5 +1,5 @@
 import { CommentField, NewComment } from '@guitar-shop/core';
-import { IsMongoId, IsNotEmpty, Length, Max, Min } from 'class-validator';
+import { IsNotEmpty, Length, Max, Min } from 'class-validator';
 import {
   COMMENT_CONSTRAINT,
   COMMENT_VALIDATION_MESSAGE,
@@ -14,10 +14,6 @@ const {
 } = COMMENT_VALIDATION_MESSAGE;
 
 export class CreateCommentDto implements NewComment {
-  @IsMongoId()
-  @IsNotEmpty()
-  [CommentField.Author]: string;
-
   @Length(ADVANTAGES.MIN, ADVANTAGES.MAX, {
     message: ADVANTAGES_LENGTH_NOT_VALID,
   })

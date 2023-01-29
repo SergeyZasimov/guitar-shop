@@ -32,7 +32,7 @@ export class CommentRepository extends CrudRepository<CommentModel> {
     return this.commentModel
       .find({ [CommentField.Product]: productId })
       .limit(DEFAULT_COMMENT_LIMIT)
-      .sort({ [CommentField.CratedAt]: DEFAULT_COMMENT_SORT_TYPE })
+      .sort({ [CommentField.CreatedAt]: DEFAULT_COMMENT_SORT_TYPE })
       .populate([CommentField.Author, CommentField.Product]);
   }
 }
