@@ -1,10 +1,27 @@
+import { Breadcrumbs, CatalogFilter, CatalogSort, Footer, Header, Pagination, ProductList } from '../../components';
+import { useAppSelector } from '../../hooks/store.hooks';
+import { getProducts } from '../../store/features/product/product-slice';
 
-export interface MainPageProps { }
 
-export function MainPage(props: MainPageProps) {
+export function MainPage() {
+  const products = useAppSelector(getProducts);
+
   return (
-    <div>
-      <h1>Welcome to MainPage!</h1>
+    <div className="wrapper">
+      <Header />
+      <main className="page-content">
+        <div className="container">
+          <h1 className="page-content__title title title--bigger">Каталог гитар</h1>
+          <Breadcrumbs />
+          <div className="catalog">
+            <CatalogFilter />
+            <CatalogSort />
+            <ProductList products={ products } />
+            <Pagination />
+          </div>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import {
   CommentField,
-  CrudRepository,
   DbCollection,
   Product,
   ProductField,
@@ -9,6 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { ProductsQueryDto } from './dto/products-query.dto';
 import { ProductModel } from './product.model';
+import { CrudRepository } from '../interfaces/repository.abstract';
 
 export class ProductRepository extends CrudRepository<ProductModel> {
   constructor(

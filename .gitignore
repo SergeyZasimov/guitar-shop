@@ -42,3 +42,8 @@ mongodb/
 *.env
 upload/
 static/
+css/
+img/
+favicon/
+fonts/
+markup/

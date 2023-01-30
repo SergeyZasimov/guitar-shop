@@ -23,6 +23,7 @@ async function bootstrap() {
   const port = config.get<number>(`${App}.${Port}`);
   const host = config.get<string>(`${App}.${Host}`);
 
+  app.enableCors();
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://${host}:${port}/${globalPrefix}`

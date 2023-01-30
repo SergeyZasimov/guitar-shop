@@ -8,3 +8,10 @@ export const AUTHORIZATION = {
   FIELD: 'Authorization',
   BEARER: 'Bearer',
 };
+
+export enum StoreNamespace {
+  ProductStore = 'product',
+  UserStore = 'user',
+  CommentStore = 'comment',
+  OrderStore = 'order',
+}

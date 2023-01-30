@@ -1,6 +1,7 @@
-import { Comment, CommentField, CrudRepository } from '@guitar-shop/core';
+import { Comment, CommentField } from '@guitar-shop/core';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
+import { CrudRepository } from '../interfaces/repository.abstract';
 import {
   DEFAULT_COMMENT_LIMIT,
   DEFAULT_COMMENT_SORT_TYPE,

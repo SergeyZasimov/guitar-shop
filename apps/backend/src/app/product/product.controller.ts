@@ -32,12 +32,12 @@ import { PRODUCT_VALIDATION_MESSAGE } from './product.constant';
 import { ProductService } from './product.service';
 import { ProductRdo } from './rdo/product.rdo';
 
-const { Product } = RouteDomain;
+const { ProductDomain } = RouteDomain;
 const { UploadPhoto } = RoutePath;
 const { ProductId } = RouteParam;
 const { PHOTO_REQUIRED } = PRODUCT_VALIDATION_MESSAGE;
 
-@Controller(Product)
+@Controller(ProductDomain)
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
