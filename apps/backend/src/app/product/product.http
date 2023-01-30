@@ -49,7 +49,7 @@ GET {{baseUrl}}/products/63d4cac6c800c9a699b57438 {{protocol}}
 GET {{baseUrl}}/products?guitarType=укулеле&stringsNumber=12 {{protocol}}
 
 ### Get Products
-GET {{baseUrl}}/products?sortingOption=price&sortType=Asc {{protocol}}
+GET {{baseUrl}}/products?sortingOption=price&sortType=desc {{protocol}}
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q2MGE2ZWExMjI1ZjIxMDE5OTkyOWMiLCJ1c2VyTmFtZSI6IkpvaG4gU21pdGgiLCJlbWFpbCI6InRlc3RAZW1haWwubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwiaWF0IjoxNjc0OTcyNTI3LCJleHAiOjE2NzQ5NzYxMjd9.s12KDzEgUcEhyeCQcC3IyI48kM8sJ4Ogb0F_Edi9IQo
 
 ### Get Products

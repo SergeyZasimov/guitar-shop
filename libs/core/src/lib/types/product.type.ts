@@ -18,6 +18,7 @@ export enum ProductField {
 
 export type Product = {
   [ProductField._Id]?: string;
+  [ProductField.Id]?: string;
   [ProductField.Title]: string;
   [ProductField.Description]: string;
   [ProductField.Photo]?: string;

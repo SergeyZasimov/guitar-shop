@@ -15,13 +15,12 @@ export enum ProductSortingOption {
   Rating = ProductField.TotalRating,
   AddedAt = ProductField.CreatedAt,
 }
-
 export enum SortType {
-  Asc = 1,
-  Desc = -1,
+  Asc = 'asc',
+  Desc = 'desc',
 }
 
-export type ProductsQuery = {
+export type ProductQuery = {
   [QueryField.Limit]?: number;
   [QueryField.Page]?: number;
   [QueryField.GuitarTypeFilter]?: GuitarType;

@@ -1,7 +1,8 @@
 import {
+  DEFAULT_PRODUCT_SORTING,
   GuitarType,
+  ProductQuery,
   ProductSortingOption,
-  ProductsQuery,
   QueryField,
   SortType,
   StringsNumber,
@@ -11,8 +12,6 @@ import { IsEnum, IsInt, IsOptional } from 'class-validator';
 import {
   DEFAULT_PRODUCT_LIMIT,
   DEFAULT_PRODUCT_PAGE,
-  DEFAULT_PRODUCT_SORTING_OPTION,
-  DEFAULT_PRODUCT_SORTING_TYPE,
   PRODUCT_CONSTRAINT,
   PRODUCT_VALIDATION_MESSAGE,
 } from '../product.constant';
@@ -27,7 +26,7 @@ const {
   PAGE_NOT_VALID,
 } = PRODUCT_VALIDATION_MESSAGE;
 
-export class ProductsQueryDto implements ProductsQuery {
+export class ProductsQueryDto implements ProductQuery {
   @IsInt({ message: LIMIT_NOT_VALID })
   @Transform(({ value }) => parseInt(value))
   @IsOptional()
@@ -49,9 +48,10 @@ export class ProductsQueryDto implements ProductsQuery {
   @IsEnum(ProductSortingOption, { message: SORTING_OPTION_NOT_VALID })
   @IsOptional()
   [QueryField.SortingOption]?: ProductSortingOption =
-    DEFAULT_PRODUCT_SORTING_OPTION;
+    DEFAULT_PRODUCT_SORTING[QueryField.SortingOption];
 
   @IsEnum(SortType, { message: SORTING_TYPE_NOT_VALID })
   @IsOptional()
-  [QueryField.SortType]?: SortType = DEFAULT_PRODUCT_SORTING_TYPE;
+  [QueryField.SortType]?: SortType =
+    DEFAULT_PRODUCT_SORTING[QueryField.SortType];
 }

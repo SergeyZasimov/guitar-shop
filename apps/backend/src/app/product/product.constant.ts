@@ -2,8 +2,6 @@ import {
   AVAILABLE_GUITAR_TYPE,
   AVAILABLE_STRINGS_NUMBERS,
   ProductField,
-  ProductSortingOption,
-  SortType,
 } from '@guitar-shop/core';
 
 export const UPLOAD_FIELD_NAME = ProductField.Photo;
@@ -12,10 +10,6 @@ export const UPLOAD_FIELD_NAME = ProductField.Photo;
 export const DEFAULT_PRODUCT_LIMIT = 9;
 
 export const DEFAULT_PRODUCT_PAGE = 1;
-
-export const DEFAULT_PRODUCT_SORTING_OPTION = ProductSortingOption.AddedAt;
-
-export const DEFAULT_PRODUCT_SORTING_TYPE = SortType.Desc;
 
 export const PRODUCT_CONSTRAINT = {
   TITLE: {

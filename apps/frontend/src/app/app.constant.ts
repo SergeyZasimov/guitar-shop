@@ -15,3 +15,19 @@ export enum StoreNamespace {
   CommentStore = 'comment',
   OrderStore = 'order',
 }
+
+export const MAX_RATING = 5;
+
+export const RATING_EXPRESSION = [
+  'Нет оценок',
+  'Дрова',
+  'Плохо',
+  'Удовлетворительно',
+  'Хорошо',
+  'Отлично',
+] as const;
+
+export enum ActionType {
+  FetchProducts = 'product/fetch',
+  SortProducts = 'product/sort',
+}
