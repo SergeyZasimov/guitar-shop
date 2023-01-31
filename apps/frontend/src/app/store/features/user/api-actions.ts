@@ -1,19 +1,21 @@
 import {
+  AuthUser,
   LoginUser,
   NewUser,
+  ResponseUser,
   RouteDomain,
   RoutePath,
-  TokenResponse,
   User,
 } from '@guitar-shop/core';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { ActionType, SUCCESS_MESSAGE } from '../../../app.constant';
+import { ActionType, AppRoute, SUCCESS_MESSAGE } from '../../../app.constant';
 import { setToken } from '../../../services/token.service';
 import { AsyncThunkOptionField } from '../../../types/store.types';
+import { redirectToRoute } from '../../actions/reditect-to-route.action';
 
 const { Auth } = RouteDomain;
-const { Register, Login } = RoutePath;
+const { Register, Login, CheckStatus } = RoutePath;
 
 export const registerUser = createAsyncThunk<
   User,
@@ -26,17 +28,25 @@ export const registerUser = createAsyncThunk<
 });
 
 export const loginUser = createAsyncThunk<
-  void,
+  ResponseUser,
   LoginUser,
   AsyncThunkOptionField
->(ActionType.LoginUser, async (user, { extra: api }) => {
+>(ActionType.LoginUser, async (authUser, { dispatch, extra: api }) => {
   const {
-    data: { access_token },
-  } = await api.post<TokenResponse>(`${Auth}/${Login}`, user);
+    data: { user, access_token },
+  } = await api.post<AuthUser>(`${Auth}/${Login}`, authUser);
   setToken(access_token);
   toast.success(SUCCESS_MESSAGE.SUCCESS_LOGIN(user.email));
+  dispatch(redirectToRoute(AppRoute.Root));
+  return user;
 });
 
-// john smith
-// test@user.com
-// secret
+export const checkUser = createAsyncThunk<
+  ResponseUser,
+  undefined,
+  AsyncThunkOptionField
+>(ActionType.CheckUser, async (_, { extra: api }) => {
+  const { data } = await api.get<ResponseUser>(`${Auth}/${CheckStatus}`);
+  toast.success(SUCCESS_MESSAGE.SUCCESS_LOGIN(data.email));
+  return data;
+});

@@ -27,7 +27,7 @@ export function ProductCard({ product }: ProductCardProps): JSX.Element {
         <div className="rate product-card__rate">
           {
             Array.from({ length: MAX_RATING }, (_, index) => (
-              <svg width="12" height="11" aria-hidden="true">
+              <svg key={ index } width="12" height="11" aria-hidden="true">
                 <use xlinkHref={ setStarLink(index) }></use>
               </svg>
             ))

@@ -25,7 +25,7 @@ export type ProductState = {
 };
 
 export type UserState = {
-  user: User;
+  user: User | null;
   status: LoadingStatus;
   error: string;
 };

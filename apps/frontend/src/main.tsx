@@ -1,14 +1,17 @@
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { store } from './app/store';
 
 import { App } from './app/app';
+import { HistoryRouter } from './app/components/history-router/history-router';
+import { browserHistory } from './app/services/browser-history.service';
 import { fetchProducts } from './app/store/features/product/api-actions';
+import { checkUser } from './app/store/features/user/api-actions';
 
+store.dispatch(checkUser());
 store.dispatch(fetchProducts());
 
 const root = ReactDOM.createRoot(
@@ -17,10 +20,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <StrictMode>
     <Provider store={ store }>
-      <BrowserRouter>
+      <HistoryRouter history={ browserHistory }>
         <ToastContainer />
         <App />
-      </BrowserRouter>
+      </HistoryRouter>
     </Provider>
   </StrictMode>
 );

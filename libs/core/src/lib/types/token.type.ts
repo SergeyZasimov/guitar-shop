@@ -5,6 +5,6 @@ export type TokenPayload = {
   role: string;
 };
 
-export type TokenResponse = {
+export type AccessToken = {
   access_token: string;
 };

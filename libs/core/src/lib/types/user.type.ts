@@ -32,3 +32,8 @@ export type ResponseUser = Omit<
   User,
   UserField.PasswordHash | UserField.RegisterAt
 >;
+
+export type AuthUser = {
+  user: ResponseUser;
+  access_token: string;
+};

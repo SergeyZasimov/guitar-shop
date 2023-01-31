@@ -30,10 +30,12 @@ export const RATING_EXPRESSION = [
 ] as const;
 
 export enum ActionType {
+  RedirectToRoute = 'app/redirectToRoute',
   FetchProducts = 'product/fetch',
   QueryProducts = 'product/query',
   RegisterUser = 'user/register',
   LoginUser = 'user/login',
+  CheckUser = 'user/checkStatus',
 }
 
 export enum AppRoute {

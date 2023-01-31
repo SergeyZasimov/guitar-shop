@@ -61,5 +61,4 @@ Content-Type: {{contentType}}
 
 ### Check User Status
 GET {{baseUrl}}/auth/check-status {{protocol}}
-Content-Type: {{contentType}}
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q2MGE2ZWExMjI1ZjIxMDE5OTkyOWMiLCJ1c2VyTmFtZSI6IkpvaG4gU21pdGgiLCJlbWFpbCI6InRlc3RAZW1haWwubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwiaWF0IjoxNjc0OTcyMTUyLCJleHAiOjE2NzQ5NzI0NTJ9.5LUANLPQlR57QtrQULwhXAMCvP8SeadLvQmEhVNnQu4

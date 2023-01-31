@@ -6,11 +6,12 @@ import {
   fillObject,
 } from '@guitar-shop/core';
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
-import { AuthService } from './auth.service';
 import { GetCurrentUser } from '../decorators/get-current-user.decorator';
-import { CreateUserDto } from './dto/create-user.dto';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
+import { AuthService } from './auth.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { AuthUserRdo } from './rdo/auth-user.rdo';
 import { UserRdo } from './rdo/user.rdo';
 
 const { Auth } = RouteDomain;
@@ -29,7 +30,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post(Login)
   public async login(@GetCurrentUser() user: User) {
-    return this.authService.login(user);
+    return fillObject(AuthUserRdo, await this.authService.login(user));
   }
 
   @UseGuards(JwtAuthGuard)

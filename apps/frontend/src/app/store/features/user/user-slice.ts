@@ -1,10 +1,11 @@
 import { User } from '@guitar-shop/core';
 import { createSlice } from '@reduxjs/toolkit';
-import { INITIAL_USER_STATE, StoreNamespace } from '../../../app.constant';
+import { StoreNamespace } from '../../../app.constant';
 import { LoadingStatus, State, UserState } from '../../../types/store.types';
+import { checkUser, loginUser } from './api-actions';
 
 const initialState: UserState = {
-  user: INITIAL_USER_STATE,
+  user: null,
   status: LoadingStatus.Idle,
   error: '',
 };
@@ -13,10 +14,18 @@ export const userSlice = createSlice({
   name: StoreNamespace.UserStore,
   initialState,
   reducers: {},
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(loginUser.fulfilled, (state, { payload }) => {
+        state.user = payload;
+      })
+      .addCase(checkUser.fulfilled, (state, { payload }) => {
+        state.user = payload;
+      });
+  },
 });
 
 export default userSlice.reducer;
 
-export const getUser = (state: State): User =>
+export const getUser = (state: State): User | null =>
   state[StoreNamespace.UserStore].user;

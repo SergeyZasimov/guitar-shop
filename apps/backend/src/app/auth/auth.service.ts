@@ -1,4 +1,4 @@
-import { TokenPayload, TokenResponse, User, UserRole } from '@guitar-shop/core';
+import { AuthUser, TokenPayload, User, UserRole } from '@guitar-shop/core';
 import {
   ConflictException,
   ForbiddenException,
@@ -50,7 +50,7 @@ export class AuthService {
     return newUser;
   }
 
-  public async login(user: User): Promise<TokenResponse> {
+  public async login(user: User): Promise<AuthUser> {
     const { _id, userName, email, role } = user;
 
     const payload: TokenPayload = {
@@ -61,7 +61,7 @@ export class AuthService {
     };
 
     const accessToken = await this.jwtService.signAsync(payload);
-    return { access_token: accessToken };
+    return { user, access_token: accessToken };
   }
 
   public async getUser(email: string): Promise<User | null> {

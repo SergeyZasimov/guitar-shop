@@ -1,9 +1,13 @@
 import { Link, NavLink } from 'react-router-dom';
 import { AppRoute } from '../../app.constant';
+import { useAppSelector } from '../../hooks/store.hooks';
+import { getUser } from '../../store/features/user/user-slice';
 
 export function Header(): JSX.Element {
+  const user = useAppSelector(getUser);
+
   return (
-    <header className="header" id="header">
+    <header className={ `header ${user && "header--logged-empty"}` } id="header">
       <div className="container">
         <div className="header__wrapper">
           <Link to={ AppRoute.Root } className="header__logo logo">
@@ -36,7 +40,7 @@ export function Header(): JSX.Element {
             </ul>
           </nav>
           <div className="header__container">
-            <span className="header__user-name">Имя</span>
+            <span className={ user?.userName ? '' : "header__user-name" }>{ user?.userName }</span>
             <Link className="header__link" to={ AppRoute.Login } aria-label="Перейти в личный кабинет">
               <svg className="header__link-icon" width="12" height="14" aria-hidden="true">
                 <use xlinkHref="#icon-account"></use>

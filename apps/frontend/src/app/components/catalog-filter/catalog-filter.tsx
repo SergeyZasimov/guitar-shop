@@ -41,7 +41,7 @@ export function CatalogFilter({ onFilterChange, onPriceRangeChange, onResetFilte
         <legend className="catalog-filter__block-title">Тип гитар</legend>
         {
           AVAILABLE_GUITAR_TYPE.map((type) => (
-            <div className="form-checkbox catalog-filter__block-item">
+            <div key={ type } className="form-checkbox catalog-filter__block-item">
               <input
                 className="visually-hidden"
                 type="checkbox"
