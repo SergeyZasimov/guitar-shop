@@ -30,28 +30,26 @@ export class ProductRepository extends CrudRepository<ProductModel> {
     } = query;
 
     // TODO: убрать
-    console.log(query);
+    // console.log(query);
 
     const filterCondition = {};
 
-    stringsNumber
-      ? (filterCondition[ProductField.StringsNumber] = stringsNumber)
-      : null;
+    stringsNumber &&
+      (filterCondition[ProductField.StringsNumber] = stringsNumber);
 
-    guitarType ? (filterCondition[ProductField.GuitarType] = guitarType) : null;
+    guitarType && (filterCondition[ProductField.GuitarType] = guitarType);
 
-    priceRange
-      ? (filterCondition[ProductField.Price] = {
-          $gte: priceRange[0],
-          $lte: priceRange[1],
-        })
-      : null;
+    priceRange &&
+      (filterCondition[ProductField.Price] = {
+        $gte: priceRange[0],
+        $lte: priceRange[1],
+      });
 
     return this.productModel
       .find(filterCondition)
+      .sort({ [sortingOption]: sortType })
       .limit(limit)
-      .skip(limit * (page - 1))
-      .sort({ [sortingOption]: sortType });
+      .skip(limit * (page - 1));
   }
 
   async updateRating(id: string): Promise<void> {

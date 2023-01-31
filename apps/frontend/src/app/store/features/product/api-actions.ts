@@ -20,6 +20,8 @@ export const queryProducts = createAsyncThunk<
   string,
   AsyncThunkOptionField
 >(QueryProducts, async (queryString, { extra: api }) => {
+  // TODO: log
+  console.log(queryString);
   const { data } = await api.get<Product[]>(`${ProductDomain}?${queryString}`);
   return data;
 });

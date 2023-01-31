@@ -3,6 +3,7 @@ export * from './catalog-filter/catalog-filter';
 export * from './catalog-sort/catalog-sort';
 export * from './footer/footer';
 export * from './header/header';
+export * from './layout/layout';
 export * from './pagination/pagination';
 export * from './product-card/product-card';
 export * from './product-list/product-list';

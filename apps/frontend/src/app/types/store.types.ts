@@ -1,4 +1,4 @@
-import { Product } from '@guitar-shop/core';
+import { Product, User } from '@guitar-shop/core';
 import { AxiosInstance } from 'axios';
 import { store } from '../store';
 
@@ -22,4 +22,10 @@ export type ProductState = {
   products: Product[];
   status: LoadingStatus;
   isError: boolean;
+};
+
+export type UserState = {
+  user: User;
+  status: LoadingStatus;
+  error: string;
 };

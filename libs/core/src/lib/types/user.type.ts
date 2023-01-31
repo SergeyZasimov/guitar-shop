@@ -16,7 +16,7 @@ export type User = {
   [UserField.UserName]: string;
   [UserField.Email]: string;
   [UserField.PasswordHash]?: string;
-  [UserField.Role]: UserRole;
+  [UserField.Role]?: UserRole;
   [UserField.RegisterAt]?: Date;
 };
 

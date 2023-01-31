@@ -1,5 +1,6 @@
 export * from './cli-command.interface';
 export * from './comment.type';
+export * from './error.type';
 export * from './order.type';
 export * from './product.type';
 export * from './query.enum';

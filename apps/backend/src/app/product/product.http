@@ -46,7 +46,7 @@ Content-Type: image/png
 GET {{baseUrl}}/products/63d4cac6c800c9a699b57438 {{protocol}}
 
 ### Get Products
-GET {{baseUrl}}/products?stringsNumber=4,6&guitarType=ukulele {{protocol}}
+GET {{baseUrl}}/products {{protocol}}
 
 ### Get Products
 GET {{baseUrl}}/products?priceRange=1000,500000 {{protocol}}

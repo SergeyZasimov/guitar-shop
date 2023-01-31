@@ -1,3 +1,5 @@
+import { User } from '@guitar-shop/core';
+
 export const BACKEND_URL = 'http://localhost:3333/api/';
 
 export const REQUEST_TIMEOUT = 5000;
@@ -30,4 +32,23 @@ export const RATING_EXPRESSION = [
 export enum ActionType {
   FetchProducts = 'product/fetch',
   QueryProducts = 'product/query',
+  RegisterUser = 'user/register',
+  LoginUser = 'user/login',
 }
+
+export enum AppRoute {
+  Root = '/',
+  Register = '/register',
+  Login = '/login',
+}
+
+export const INITIAL_USER_STATE: User = {
+  userName: '',
+  email: '',
+};
+
+export const SUCCESS_MESSAGE = {
+  SUCCESS_REGISTER:
+    'Вы успешно зарегистрировались. На почту выслано письмо с логином и паролем.',
+  SUCCESS_LOGIN: (login: string) => `Вы успешно вошли под логином ${login}`,
+};
