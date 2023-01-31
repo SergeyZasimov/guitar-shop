@@ -23,8 +23,8 @@ export enum SortType {
 export type ProductQuery = {
   [QueryField.Limit]?: number;
   [QueryField.Page]?: number;
-  [QueryField.GuitarTypeFilter]?: GuitarType;
-  [QueryField.StringsNumberFilter]?: StringsNumber;
+  [QueryField.GuitarTypeFilter]?: GuitarType[];
+  [QueryField.StringsNumberFilter]?: StringsNumber[];
   [QueryField.SortingOption]?: ProductSortingOption;
   [QueryField.SortType]?: SortType;
 };

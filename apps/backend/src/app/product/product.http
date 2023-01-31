@@ -46,7 +46,7 @@ Content-Type: image/png
 GET {{baseUrl}}/products/63d4cac6c800c9a699b57438 {{protocol}}
 
 ### Get Products
-GET {{baseUrl}}/products?guitarType=укулеле&stringsNumber=12 {{protocol}}
+GET {{baseUrl}}/products?stringsNumber=&guitarType=ukulele {{protocol}}
 
 ### Get Products
 GET {{baseUrl}}/products?sortingOption=price&sortType=desc {{protocol}}

@@ -22,6 +22,9 @@ export class ProductRepository extends CrudRepository<ProductModel> {
     const { limit, page, guitarType, stringsNumber, sortingOption, sortType } =
       query;
 
+    // TODO: убрать
+    console.log(query);
+
     const filterCondition = {};
     stringsNumber
       ? (filterCondition[ProductField.StringsNumber] = stringsNumber)

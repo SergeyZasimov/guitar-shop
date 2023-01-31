@@ -1,13 +1,12 @@
-import { ProductSortingOption, SortType } from '@guitar-shop/core';
+import { ProductQuery, ProductSortingOption, QueryField, SortType } from '@guitar-shop/core';
 
 export interface CatalogSortProps {
   sortOption: ProductSortingOption;
   sortType: SortType;
-  onChangeSortOption: (option: ProductSortingOption) => void;
-  onChangeSortType: (type: SortType) => void;
+  onSortChange: (newQuery: ProductQuery) => void;
 }
 
-export function CatalogSort({ onChangeSortOption, onChangeSortType, sortOption, sortType }: CatalogSortProps): JSX.Element {
+export function CatalogSort({ sortOption, sortType, onSortChange }: CatalogSortProps): JSX.Element {
 
   const setSortOptionActive = (option: ProductSortingOption): string => {
     return (sortOption !== ProductSortingOption.AddedAt && sortOption === option)
@@ -31,12 +30,12 @@ export function CatalogSort({ onChangeSortOption, onChangeSortType, sortOption, 
         <button
           className={ `catalog-sort__type-button ${setSortOptionActive(ProductSortingOption.Price)}` }
           aria-label="по цене"
-          onClick={ () => onChangeSortOption(ProductSortingOption.Price) }
+          onClick={ () => onSortChange({ [ QueryField.SortingOption ]: ProductSortingOption.Price }) }
         >по цене</button>
         <button
           className={ `catalog-sort__type-button ${setSortOptionActive(ProductSortingOption.Rating)}` }
           aria-label="по популярности"
-          onClick={ () => onChangeSortOption(ProductSortingOption.Rating) }
+          onClick={ () => onSortChange({ [ QueryField.SortingOption ]: ProductSortingOption.Rating }) }
         >по популярности</button>
       </div>
 
@@ -44,12 +43,12 @@ export function CatalogSort({ onChangeSortOption, onChangeSortType, sortOption, 
         <button
           className={ `catalog-sort__order-button catalog-sort__order-button--up ${setSortTypeActive(SortType.Asc)}` }
           aria-label="По возрастанию"
-          onClick={ () => onChangeSortType(SortType.Asc) }
+          onClick={ () => onSortChange({ [ QueryField.SortType ]: SortType.Asc }) }
         ></button>
         <button
           className={ `catalog-sort__order-button catalog-sort__order-button--down ${setSortTypeActive(SortType.Desc)}` }
           aria-label="По убыванию"
-          onClick={ () => onChangeSortType(SortType.Desc) }
+          onClick={ () => onSortChange({ [ QueryField.SortType ]: SortType.Desc }) }
         ></button>
       </div>
 

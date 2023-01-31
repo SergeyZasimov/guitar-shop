@@ -6,11 +6,6 @@ import {
 
 export const UPLOAD_FIELD_NAME = ProductField.Photo;
 
-// TODO: заменить на объект DEFAULT
-export const DEFAULT_PRODUCT_LIMIT = 9;
-
-export const DEFAULT_PRODUCT_PAGE = 1;
-
 export const PRODUCT_CONSTRAINT = {
   TITLE: {
     MIN: 10,
@@ -33,7 +28,7 @@ export const PRODUCT_CONSTRAINT = {
     MAX: 5,
   },
   PHOTO_TYPE: /(jpg|jpeg|png)$/,
-  GUITAR_TYPE: AVAILABLE_GUITAR_TYPE,
+  GUITAR_TYPE: Object.values(AVAILABLE_GUITAR_TYPE),
   STRINGS_NUMBER: AVAILABLE_STRINGS_NUMBERS,
 } as const;
 

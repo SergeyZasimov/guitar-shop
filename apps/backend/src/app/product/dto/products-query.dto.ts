@@ -1,5 +1,5 @@
 import {
-  DEFAULT_PRODUCT_SORTING,
+  DEFAULT_PRODUCT_QUERY,
   GuitarType,
   ProductQuery,
   ProductSortingOption,
@@ -8,15 +8,11 @@ import {
   StringsNumber,
 } from '@guitar-shop/core';
 import { Transform } from 'class-transformer';
-import { IsEnum, IsInt, IsOptional } from 'class-validator';
-import {
-  DEFAULT_PRODUCT_LIMIT,
-  DEFAULT_PRODUCT_PAGE,
-  PRODUCT_CONSTRAINT,
-  PRODUCT_VALIDATION_MESSAGE,
-} from '../product.constant';
+import { IsEnum, IsInt, IsOptional, Validate } from 'class-validator';
+import { GuitarTypeValidator } from '../../validators/guitar-type.validator';
+import { StringsNumberValidator } from '../../validators/strings-number.validator';
+import { PRODUCT_VALIDATION_MESSAGE } from '../product.constant';
 
-const { GUITAR_TYPE, STRINGS_NUMBER } = PRODUCT_CONSTRAINT;
 const {
   GUITAR_TYPE_NOT_VALID,
   STRINGS_NUMBER_NOT_VALID,
@@ -30,28 +26,29 @@ export class ProductsQueryDto implements ProductQuery {
   @IsInt({ message: LIMIT_NOT_VALID })
   @Transform(({ value }) => parseInt(value))
   @IsOptional()
-  [QueryField.Limit]?: number = DEFAULT_PRODUCT_LIMIT;
+  [QueryField.Limit]?: number = DEFAULT_PRODUCT_QUERY[QueryField.Limit];
 
   @IsInt({ message: PAGE_NOT_VALID })
   @Transform(({ value }) => parseInt(value))
   @IsOptional()
-  [QueryField.Page]?: number = DEFAULT_PRODUCT_PAGE;
+  [QueryField.Page]?: number = DEFAULT_PRODUCT_QUERY[QueryField.Page];
 
-  @IsEnum(GUITAR_TYPE, { message: GUITAR_TYPE_NOT_VALID })
+  @Validate(GuitarTypeValidator, { message: GUITAR_TYPE_NOT_VALID })
+  @Transform(({ value }) => value.split(','))
   @IsOptional()
-  [QueryField.GuitarTypeFilter]?: GuitarType;
+  [QueryField.GuitarTypeFilter]?: GuitarType[];
 
-  @IsEnum(STRINGS_NUMBER, { message: STRINGS_NUMBER_NOT_VALID })
+  @Validate(StringsNumberValidator, { message: STRINGS_NUMBER_NOT_VALID })
+  @Transform(({ value }) => value.split(','))
   @IsOptional()
-  [QueryField.StringsNumberFilter]?: StringsNumber;
+  [QueryField.StringsNumberFilter]?: StringsNumber[];
 
   @IsEnum(ProductSortingOption, { message: SORTING_OPTION_NOT_VALID })
   @IsOptional()
   [QueryField.SortingOption]?: ProductSortingOption =
-    DEFAULT_PRODUCT_SORTING[QueryField.SortingOption];
+    DEFAULT_PRODUCT_QUERY[QueryField.SortingOption];
 
   @IsEnum(SortType, { message: SORTING_TYPE_NOT_VALID })
   @IsOptional()
-  [QueryField.SortType]?: SortType =
-    DEFAULT_PRODUCT_SORTING[QueryField.SortType];
+  [QueryField.SortType]?: SortType = DEFAULT_PRODUCT_QUERY[QueryField.SortType];
 }

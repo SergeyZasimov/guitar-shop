@@ -1,34 +1,47 @@
-import { DEFAULT_PRODUCT_SORTING, ProductQuery, ProductSortingOption, QueryField, SortType } from '@guitar-shop/core';
+import { DEFAULT_PRODUCT_QUERY, ProductQuery, QueryField } from '@guitar-shop/core';
 import { useEffect, useState } from 'react';
 import { Breadcrumbs, CatalogFilter, CatalogSort, Footer, Header, Pagination, ProductList } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { sortProducts } from '../../store/features/product/api-actions';
 import { getProducts } from '../../store/features/product/product-slice';
-
+import { FilterProperty, FilterPropertyValue } from '../../types/component.type';
+import { checkValueInCollection, createQueryString } from '../../utils';
 
 export function MainPage() {
   const products = useAppSelector(getProducts);
   const dispatch = useAppDispatch();
 
-  const [ sort, setSort ] = useState(DEFAULT_PRODUCT_SORTING);
+  const [ query, setQuery ] = useState<ProductQuery>({});
 
-  const createQueryString = (query: ProductQuery): string => {
-    return `?${Object.entries(query)
-      .map(([ key, value ]) => `${key}=${value}`)
-      .join('&')}`;
-  };
+  const [ sort, setSort ] = useState({
+    [ QueryField.SortType ]: DEFAULT_PRODUCT_QUERY[ QueryField.SortType ],
+    [ QueryField.SortingOption ]: DEFAULT_PRODUCT_QUERY[ QueryField.SortingOption ]
+  });
 
-  const handleChangeSortOption = (option: ProductSortingOption) => {
-    setSort({ ...sort, [ QueryField.SortingOption ]: option });
-  };
+  const handleFilterChange =
+    (property: FilterProperty, value: FilterPropertyValue): void => {
+      let newQuery = { ...query };
+      let filterCollection: typeof value[] = query[ property ] || [];
+      if (filterCollection) {
+        filterCollection = checkValueInCollection<typeof value>(filterCollection, value);
+        if (filterCollection.length === 0) {
+          delete newQuery[ property ];
+        } else {
+          newQuery = { ...newQuery, [ property ]: filterCollection };
+        }
+      }
+      setQuery({ ...newQuery });
+    };
 
-  const handleChangeSortType = (type: SortType) => {
-    setSort({ ...sort, [ QueryField.SortType ]: type });
+  const handleSortChange = (newQuery: ProductQuery): void => {
+    setSort({ ...sort, ...newQuery });
+    setQuery({ ...query, ...newQuery });
+
   };
 
   useEffect(() => {
-    dispatch(sortProducts(createQueryString({ ...sort })));
-  }, [ sort ]);
+    dispatch(sortProducts(createQueryString({ ...query })));
+  }, [ query ]);
 
   return (
     <div className="wrapper">
@@ -38,8 +51,15 @@ export function MainPage() {
           <h1 className="page-content__title title title--bigger">Каталог гитар</h1>
           <Breadcrumbs />
           <div className="catalog">
-            <CatalogFilter />
-            <CatalogSort sortOption={ sort.sortingOption } sortType={ sort.sortType } onChangeSortOption={ handleChangeSortOption } onChangeSortType={ handleChangeSortType } />
+            <CatalogFilter
+              onFilterChange={ handleFilterChange }
+            />
+
+            <CatalogSort
+              sortOption={ sort[ QueryField.SortingOption ] }
+              sortType={ sort[ QueryField.SortType ] }
+              onSortChange={ handleSortChange }
+            />
             <ProductList products={ products } />
             <Pagination />
           </div>
@@ -50,4 +70,4 @@ export function MainPage() {
   );
 }
 
-export default MainPage;
+export default MainPage;;;

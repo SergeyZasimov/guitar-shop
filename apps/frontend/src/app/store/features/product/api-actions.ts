@@ -20,6 +20,6 @@ export const sortProducts = createAsyncThunk<
   string,
   AsyncThunkOptionField
 >(SortProducts, async (queryString, { extra: api }) => {
-  const { data } = await api.get<Product[]>(`${ProductDomain}${queryString}`);
+  const { data } = await api.get<Product[]>(`${ProductDomain}?${queryString}`);
   return data;
 });
