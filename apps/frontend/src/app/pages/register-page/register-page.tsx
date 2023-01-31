@@ -81,11 +81,16 @@ export function AuthPage() {
               <p className="input-login__error">Заполните поле</p>
             </div>
             <div className={ `input-login ${user.password ? 'input-login--no-error' : ''}` }>
-              <label htmlFor="password">Придумайте пароль</label><span>
+              {
+                isLoginPage
+                  ? <label htmlFor={ UserField.Password }>Введите пароль</label>
+                  : <label htmlFor={ UserField.Password }>Придумайте пароль</label>
+              }
+              <span>
                 <input
                   type={ isPasswordShow ? "text" : "password" }
                   placeholder="• • • • • • • • • • • •"
-                  id="password"
+                  id={ UserField.Password }
                   name={ UserField.Password }
                   autoComplete="off"
                   value={ user.password }
@@ -96,7 +101,8 @@ export function AuthPage() {
                   <svg width="14" height="8" aria-hidden="true">
                     <use xlinkHref="#icon-eye"></use>
                   </svg>
-                </button></span>
+                </button>
+              </span>
               <p className="input-login__error">Заполните поле</p>
             </div>
             <button className="button login__button button--medium" type="submit">

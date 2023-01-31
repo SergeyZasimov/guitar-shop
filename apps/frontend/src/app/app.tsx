@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from './app.constant';
 import { Layout } from './components';
-import { AuthPage, MainPage } from './pages';
+import { AuthPage, CartPage, MainPage } from './pages';
 
 
 
@@ -14,6 +14,8 @@ export function App() {
         />
         <Route path={ AppRoute.Register } element={ <AuthPage /> } />
         <Route path={ AppRoute.Login } element={ <AuthPage /> } />
+        <Route path={ AppRoute.Login } element={ <AuthPage /> } />
+        <Route path={ AppRoute.Cart } element={ <CartPage /> } />
       </Route>
     </Routes>
   );

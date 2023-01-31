@@ -40,6 +40,7 @@ export enum AppRoute {
   Root = '/',
   Register = '/register',
   Login = '/login',
+  Cart = '/cart',
 }
 
 export const INITIAL_USER_STATE: User = {
