@@ -8,6 +8,7 @@ export enum QueryField {
   StringsNumberFilter = 'stringsNumber',
   SortingOption = 'sortingOption',
   SortType = 'sortType',
+  PriceRange = 'priceRange',
 }
 
 export enum ProductSortingOption {
@@ -20,6 +21,8 @@ export enum SortType {
   Desc = 'desc',
 }
 
+export type PriceRange = [number | null, number | null];
+
 export type ProductQuery = {
   [QueryField.Limit]?: number;
   [QueryField.Page]?: number;
@@ -27,4 +30,5 @@ export type ProductQuery = {
   [QueryField.StringsNumberFilter]?: StringsNumber[];
   [QueryField.SortingOption]?: ProductSortingOption;
   [QueryField.SortType]?: SortType;
+  [QueryField.PriceRange]?: PriceRange;
 };

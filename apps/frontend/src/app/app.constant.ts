@@ -29,5 +29,5 @@ export const RATING_EXPRESSION = [
 
 export enum ActionType {
   FetchProducts = 'product/fetch',
-  SortProducts = 'product/sort',
+  QueryProducts = 'product/query',
 }

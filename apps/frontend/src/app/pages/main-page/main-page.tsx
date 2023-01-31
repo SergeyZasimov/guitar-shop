@@ -1,8 +1,8 @@
-import { DEFAULT_PRODUCT_QUERY, ProductQuery, QueryField } from '@guitar-shop/core';
+import { DEFAULT_PRODUCT_QUERY, PriceRange, ProductQuery, QueryField } from '@guitar-shop/core';
 import { useEffect, useState } from 'react';
 import { Breadcrumbs, CatalogFilter, CatalogSort, Footer, Header, Pagination, ProductList } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { sortProducts } from '../../store/features/product/api-actions';
+import { queryProducts } from '../../store/features/product/api-actions';
 import { getProducts } from '../../store/features/product/product-slice';
 import { FilterProperty, FilterPropertyValue } from '../../types/component.type';
 import { checkValueInCollection, createQueryString } from '../../utils';
@@ -18,29 +18,46 @@ export function MainPage() {
     [ QueryField.SortingOption ]: DEFAULT_PRODUCT_QUERY[ QueryField.SortingOption ]
   });
 
-  const handleFilterChange =
-    (property: FilterProperty, value: FilterPropertyValue): void => {
-      let newQuery = { ...query };
-      let filterCollection: typeof value[] = query[ property ] || [];
-      if (filterCollection) {
-        filterCollection = checkValueInCollection<typeof value>(filterCollection, value);
-        if (filterCollection.length === 0) {
-          delete newQuery[ property ];
-        } else {
-          newQuery = { ...newQuery, [ property ]: filterCollection };
-        }
+  const [ priceRange, setPriceRange ] = useState<PriceRange>([ null, null ]);
+
+  const handlePriceRangeChange = (price: number, index: number) => {
+    const newPrice = isNaN(price) ? null : price;
+    setPriceRange((prevState: PriceRange) => {
+      prevState[ index ] = newPrice;
+      return [ ...prevState ];
+    });
+    const newQuery = { [ QueryField.PriceRange ]: priceRange };
+    setQuery({ ...query, ...newQuery });
+  };
+
+  const handleFilterChange = (
+    property: FilterProperty,
+    value: FilterPropertyValue
+  ): void => {
+    let newQuery = { ...query };
+    let filterCollection: typeof value[] = query[ property ] || [];
+    if (filterCollection) {
+      filterCollection = checkValueInCollection<typeof value>(filterCollection, value);
+      if (filterCollection.length === 0) {
+        delete newQuery[ property ];
+      } else {
+        newQuery = { ...newQuery, [ property ]: filterCollection };
       }
-      setQuery({ ...newQuery });
-    };
+    }
+    setQuery({ ...newQuery });
+  };
 
   const handleSortChange = (newQuery: ProductQuery): void => {
     setSort({ ...sort, ...newQuery });
     setQuery({ ...query, ...newQuery });
+  };
 
+  const handleResetFilters = () => {
+    setQuery({});
   };
 
   useEffect(() => {
-    dispatch(sortProducts(createQueryString({ ...query })));
+    dispatch(queryProducts(createQueryString({ ...query })));
   }, [ query ]);
 
   return (
@@ -52,7 +69,9 @@ export function MainPage() {
           <Breadcrumbs />
           <div className="catalog">
             <CatalogFilter
+              onPriceRangeChange={ handlePriceRangeChange }
               onFilterChange={ handleFilterChange }
+              onResetFilters={ handleResetFilters }
             />
 
             <CatalogSort

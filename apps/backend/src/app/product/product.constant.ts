@@ -55,6 +55,7 @@ export const PRODUCT_VALIDATION_MESSAGE = {
   PAGE_NOT_VALID: 'Номер страницы должен быть числом',
   SORTING_OPTION_NOT_VALID: 'Неверная сортировка списка товаров',
   SORTING_TYPE_NOT_VALID: 'Неверное направление сортировки',
+  PRICE_RANGE_NOT_VALID: `Ценовой диапазон должен быть задан двумя числами от ${PRODUCT_CONSTRAINT.PRICE.MIN} до ${PRODUCT_CONSTRAINT.PRICE.MAX}`,
 } as const;
 
 export enum ProductExceptionMessage {

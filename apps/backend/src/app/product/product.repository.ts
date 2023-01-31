@@ -19,17 +19,33 @@ export class ProductRepository extends CrudRepository<ProductModel> {
   }
 
   async find(query: ProductsQueryDto): Promise<Product[]> {
-    const { limit, page, guitarType, stringsNumber, sortingOption, sortType } =
-      query;
+    const {
+      limit,
+      page,
+      guitarType,
+      stringsNumber,
+      sortingOption,
+      sortType,
+      priceRange,
+    } = query;
 
     // TODO: убрать
     console.log(query);
 
     const filterCondition = {};
+
     stringsNumber
       ? (filterCondition[ProductField.StringsNumber] = stringsNumber)
       : null;
+
     guitarType ? (filterCondition[ProductField.GuitarType] = guitarType) : null;
+
+    priceRange
+      ? (filterCondition[ProductField.Price] = {
+          $gte: priceRange[0],
+          $lte: priceRange[1],
+        })
+      : null;
 
     return this.productModel
       .find(filterCondition)

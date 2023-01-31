@@ -2,7 +2,7 @@ import { Product } from '@guitar-shop/core';
 import { createSlice } from '@reduxjs/toolkit';
 import { StoreNamespace } from '../../../app.constant';
 import { LoadingStatus, ProductState, State } from '../../../types/store.types';
-import { fetchProducts, sortProducts } from './api-actions';
+import { fetchProducts, queryProducts } from './api-actions';
 
 const initialState: ProductState = {
   products: [],
@@ -19,7 +19,7 @@ export const productSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, { payload }) => {
         state.products = payload;
       })
-      .addCase(sortProducts.fulfilled, (state, { payload }) => {
+      .addCase(queryProducts.fulfilled, (state, { payload }) => {
         state.products = payload;
       });
   },
