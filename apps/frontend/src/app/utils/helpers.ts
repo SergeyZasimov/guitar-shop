@@ -14,3 +14,10 @@ export const checkValueInCollection = <T>(collection: T[], value: T) => {
     ? collection.filter((item: T) => item !== value)
     : collection.concat(value);
 };
+
+export const formatPrice = (price: number | undefined): string => {
+  if (price) {
+    return price.toLocaleString('ru-RU');
+  }
+  return '';
+};

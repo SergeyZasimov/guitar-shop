@@ -23,6 +23,8 @@ export class ProductRdo implements Product {
   @Expose()
   @Transform(({ value }) => value.toString())
   [ProductField.GuitarType]: GuitarType;
+
+  @Expose()
   [ProductField.Article]: string;
 
   @Expose()

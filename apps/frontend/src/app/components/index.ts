@@ -7,3 +7,4 @@ export * from './layout/layout';
 export * from './pagination/pagination';
 export * from './product-card/product-card';
 export * from './product-list/product-list';
+export * from './rating-stars/rating-stars';

@@ -20,6 +20,7 @@ export enum LoadingStatus {
 
 export type ProductState = {
   products: Product[];
+  product: Product | null;
   status: LoadingStatus;
   isError: boolean;
 };

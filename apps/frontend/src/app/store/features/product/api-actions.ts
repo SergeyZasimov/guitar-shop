@@ -4,7 +4,7 @@ import { ActionType } from '../../../app.constant';
 import { AsyncThunkOptionField } from '../../../types/store.types';
 
 const { ProductDomain } = RouteDomain;
-const { FetchProducts, QueryProducts } = ActionType;
+const { FetchProducts, QueryProducts, FetchProduct } = ActionType;
 
 export const fetchProducts = createAsyncThunk<
   Product[],
@@ -23,5 +23,14 @@ export const queryProducts = createAsyncThunk<
   // TODO: log
   // console.log(queryString);
   const { data } = await api.get<Product[]>(`${ProductDomain}?${queryString}`);
+  return data;
+});
+
+export const fetchProduct = createAsyncThunk<
+  Product,
+  string,
+  AsyncThunkOptionField
+>(FetchProduct, async (productId, { extra: api }) => {
+  const { data } = await api.get<Product>(`${ProductDomain}/${productId}`);
   return data;
 });
