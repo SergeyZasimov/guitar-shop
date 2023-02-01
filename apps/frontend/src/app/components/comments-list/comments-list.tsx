@@ -1,9 +1,8 @@
 import { CommentResponse } from '@guitar-shop/core';
 import { useState } from 'react';
-import { DEFAULT_COMMENTS_COUNT } from '../../app.constant';
 import { CommentItem } from '../comment-item/comment-item';
+import { COMMENT_LIST_OFFSET } from '../../app.constant';
 
-const COMMENT_LIST_OFFSET = 3;
 
 export interface CommentsListProps {
   comments: CommentResponse[];
@@ -33,7 +32,7 @@ export function CommentsList({ comments, onClickAddComment }: CommentsListProps)
         comments.slice(0, listSize).map((comment) => <CommentItem key={ comment.id } comment={ comment } />)
       }
       {
-        comments.length >= DEFAULT_COMMENTS_COUNT &&
+        comments.length >= COMMENT_LIST_OFFSET &&
         comments.length !== comments.slice(0, listSize).length &&
         <button
           className="button button--medium reviews__more-button"

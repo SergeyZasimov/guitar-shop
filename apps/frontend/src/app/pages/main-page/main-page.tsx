@@ -1,6 +1,6 @@
 import { DEFAULT_PRODUCT_QUERY, PriceRange, ProductQuery, QueryField } from '@guitar-shop/core';
 import { useEffect, useState } from 'react';
-import { Breadcrumbs, CatalogFilter, CatalogSort, Pagination, ProductList } from '../../components';
+import { Breadcrumbs, CartAddModal, CatalogFilter, CatalogSort, Pagination, ProductList } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { queryProducts } from '../../store/features/product/api-actions';
 import { getProducts } from '../../store/features/product/product-slice';
@@ -60,32 +60,36 @@ export function MainPage() {
     setQuery({});
   };
 
+
+
   useEffect(() => {
     dispatch(queryProducts(createQueryString({ ...query })));
   }, [ query ]);
 
   return (
-    <main className="page-content">
-      <div className="container">
-        <h1 className="page-content__title title title--bigger">Каталог гитар</h1>
-        <Breadcrumbs />
-        <div className="catalog">
-          <CatalogFilter
-            onPriceRangeChange={ handlePriceRangeChange }
-            onFilterChange={ handleFilterChange }
-            onResetFilters={ handleResetFilters }
-          />
+    <>
+      <main className="page-content">
+        <div className="container">
+          <h1 className="page-content__title title title--bigger">Каталог гитар</h1>
+          <Breadcrumbs />
+          <div className="catalog">
+            <CatalogFilter
+              onPriceRangeChange={ handlePriceRangeChange }
+              onFilterChange={ handleFilterChange }
+              onResetFilters={ handleResetFilters }
+            />
 
-          <CatalogSort
-            sortOption={ sort[ QueryField.SortingOption ] }
-            sortType={ sort[ QueryField.SortType ] }
-            onSortChange={ handleSortChange }
-          />
-          <ProductList products={ products } />
-          <Pagination />
+            <CatalogSort
+              sortOption={ sort[ QueryField.SortingOption ] }
+              sortType={ sort[ QueryField.SortType ] }
+              onSortChange={ handleSortChange }
+            />
+            <ProductList products={ products } />
+            <Pagination />
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </>
   );
 }
 

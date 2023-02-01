@@ -6,12 +6,11 @@ import { RatingStars } from '../rating-stars/rating-stars';
 
 export interface ProductCardProps {
   product: Product;
+  onAddProductClick: (product: Product) => void;
 }
 
-export function ProductCard({ product }: ProductCardProps): JSX.Element {
+export function ProductCard({ product, onAddProductClick }: ProductCardProps): JSX.Element {
   const { photo, title, totalRating, price, commentsCount } = product;
-
-
 
   return (
     <div className="product-card">
@@ -29,7 +28,12 @@ export function ProductCard({ product }: ProductCardProps): JSX.Element {
       </div>
       <div className="product-card__buttons">
         <Link className="button button--mini" to={ `${AppRoute.Product}/${product.id}` }>Подробнее</Link>
-        <a className="button button--red button--mini button--add-to-cart" href="#">Купить</a>
+        <a
+          className="button button--red button--mini button--add-to-cart"
+          onClick={ () => onAddProductClick(product) }
+        >
+          Купить
+        </a>
       </div>
     </div>
   );

@@ -6,7 +6,8 @@ export const REQUEST_TIMEOUT = 5000;
 
 export const ACCESS_TOKEN_KEY_NAME = 'guitar-shop-token';
 export const MAX_RATING = 5;
-export const DEFAULT_COMMENTS_COUNT = 3;
+export const COMMENT_LIST_OFFSET = 3;
+export const DEFAULT_ADD_TO_CART_QUANTITY = 1;
 
 export const AUTHORIZATION = {
   FIELD: 'Authorization',
@@ -16,8 +17,7 @@ export const AUTHORIZATION = {
 export enum StoreNamespace {
   ProductStore = 'product',
   UserStore = 'user',
-  CommentStore = 'comment',
-  OrderStore = 'order',
+  CartStore = 'cart',
 }
 
 export const RATING_EXPRESSION = [
@@ -28,6 +28,12 @@ export const RATING_EXPRESSION = [
   'Хорошо',
   'Отлично',
 ] as const;
+
+export const GUITAR_TYPE_EXPRESSION = {
+  acoustic: 'Акустическая гитара',
+  electric: 'Электрогитара',
+  ukulele: 'Укулеле',
+} as const;
 
 export enum ActionType {
   RedirectBack = 'app/redirectBack',

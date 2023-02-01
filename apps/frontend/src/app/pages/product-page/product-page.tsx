@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { RatingStarsLocation } from '../../app.constant';
-import { CommentAddModal, CommentsList, EnterModal, RatingStars } from '../../components';
+import { Navigate, useParams } from 'react-router-dom';
+import { AppRoute, GUITAR_TYPE_EXPRESSION, RatingStarsLocation } from '../../app.constant';
+import { CartAddModal, CommentAddModal, CommentsList, EnterModal, RatingStars, SuccessReviewModal } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { fetchComments, fetchProduct } from '../../store/features/product/api-actions';
 import { getComments, getProduct } from '../../store/features/product/product-slice';
@@ -20,6 +20,8 @@ export function ProductPage(): JSX.Element {
   const [ isDescriptionShow, setIsDescriptionShow ] = useState<boolean>(false);
   const [ isAddCommentModalOpen, setIsAddCommentModalOpen ] = useState<boolean>(false);
   const [ isEnterModalOpen, setIsEnterModalOpen ] = useState<boolean>(false);
+  const [ isSuccessReviewModalOpen, setIsSuccessReviewModalOpen ] = useState<boolean>(false);
+  const [ isCartAddModalOpen, setIsCartAddModalOpen ] = useState<boolean>(false);
 
 
   const handleOpenAddCommentClick = (): void => {
@@ -30,12 +32,24 @@ export function ProductPage(): JSX.Element {
     setIsAddCommentModalOpen(true);
   };
 
-  const handleCloseAddReviewModalClick = (): void => {
+  const handleCloseAddReviewModalClick = () => {
     setIsAddCommentModalOpen(false);
   };
 
-  const handleCloseEnterModalClick = (): void => {
+  const handleCloseEnterModalClick = () => {
     setIsEnterModalOpen(false);
+  };
+
+  const handleSuccessReviewModalShow = () => {
+    setIsSuccessReviewModalOpen(true);
+  };
+
+  const handleCloseSuccessReviewModalClick = () => {
+    setIsSuccessReviewModalOpen(false);
+  };
+
+  const handleCloseCartAddModalClick = () => {
+    setIsCartAddModalOpen(false);
   };
 
 
@@ -46,10 +60,32 @@ export function ProductPage(): JSX.Element {
     }
   }, [ productId ]);
 
+  if (!product) {
+    return <Navigate to={ AppRoute.Root } />;
+  }
+
   return (
     <>
-      <CommentAddModal productId={ product?.id } productTitle={ product?.title } isOpen={ isAddCommentModalOpen } onClickCloseModal={ handleCloseAddReviewModalClick } />
-      <EnterModal isOpen={ isEnterModalOpen } onClickCloseModal={ handleCloseEnterModalClick } />
+      <EnterModal
+        isOpen={ isEnterModalOpen }
+        onClickCloseModal={ handleCloseEnterModalClick }
+      />
+      <CommentAddModal
+        productId={ product.id }
+        productTitle={ product.title }
+        isOpen={ isAddCommentModalOpen }
+        onClickCloseModal={ handleCloseAddReviewModalClick }
+        onSuccessReview={ handleSuccessReviewModalShow }
+      />
+      <SuccessReviewModal
+        isOpen={ isSuccessReviewModalOpen }
+        onClickCloseModal={ handleCloseSuccessReviewModalClick }
+      />
+      <CartAddModal
+        isOpen={ isCartAddModalOpen }
+        onClickCloseModal={ handleCloseCartAddModalClick }
+        product={ product }
+      />
       <main className="page-content">
         <div className="container">
           <h1 className="page-content__title title title--bigger">Товар</h1>
@@ -62,13 +98,13 @@ export function ProductPage(): JSX.Element {
             </li>
           </ul>
           <div className="product-container">
-            <img className="product-container__img" src={ product?.photo } width="90" height="235" alt={ product?.title } />
+            <img className="product-container__img" src={ product.photo } width="90" height="235" alt={ product.title } />
             <div className="product-container__info-wrapper">
-              <h2 className="product-container__title title title--big title--uppercase">{ product?.title }</h2>
+              <h2 className="product-container__title title title--big title--uppercase">{ product.title }</h2>
               <div className="rate product-container__rating">
                 <RatingStars
-                  rating={ product?.totalRating }
-                  commentsCount={ product?.commentsCount }
+                  rating={ product.totalRating }
+                  commentsCount={ product.commentsCount }
                   location={ RatingStarsLocation.Product } />
               </div>
               <div className="tabs">
@@ -89,24 +125,28 @@ export function ProductPage(): JSX.Element {
                       </tr>
                       <tr className="tabs__table-row">
                         <td className="tabs__title">Тип:</td>
-                        <td className="tabs__value">Электрогитара</td>
+                        <td className="tabs__value">{ GUITAR_TYPE_EXPRESSION[ product.guitarType ] }</td>
                       </tr>
                       <tr className="tabs__table-row">
                         <td className="tabs__title">Количество струн:</td>
-                        <td className="tabs__value">{ product?.stringsNumber } струнная</td>
+                        <td className="tabs__value">{ product.stringsNumber } струнная</td>
                       </tr>
                     </tbody>
                   </table>
                   <p className={ `tabs__product-description ${!isDescriptionShow ? 'hidden' : ''} ` }>
-                    { product?.description }
+                    { product.description }
                   </p>
                 </div>
               </div>
             </div>
             <div className="product-container__price-wrapper">
               <p className="product-container__price-info product-container__price-info--title">Цена:</p>
-              <p className="product-container__price-info product-container__price-info--value">{ formatPrice(product?.price) } ₽</p>
-              <a className="button button--red button--big product-container__button">Добавить в корзину</a>
+              <p className="product-container__price-info product-container__price-info--value">{ formatPrice(product.price) } ₽</p>
+              <a
+                className="button button--red button--big product-container__button"
+                onClick={ () => setIsCartAddModalOpen(true) }
+              >Добавить в корзину
+              </a>
             </div>
           </div>
           <CommentsList

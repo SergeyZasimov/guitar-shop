@@ -32,6 +32,8 @@ export type UserState = {
   error: string;
 };
 
-export type CommentState = {
-  comments: CommentResponse[];
+export type CartCommodity = {
+  product: Product;
+  quantity: number;
 };
+

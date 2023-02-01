@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { ActionType, SUCCESS_MESSAGE } from '../../../app.constant';
 import { setToken } from '../../../services/token.service';
 import { AsyncThunkOptionField } from '../../../types/store.types';
-import { redirectBack } from '../../actions/reditect-to-route.action';
+import { redirectBack } from '../../actions/reditect-back.action';
 
 const { Auth } = RouteDomain;
 const { Register, Login, CheckStatus } = RoutePath;

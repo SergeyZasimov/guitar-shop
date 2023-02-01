@@ -3,9 +3,9 @@ import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
 import FocusLock from 'react-focus-lock';
 import { MAX_RATING, ModalClass } from '../../app.constant';
 import { useAppDispatch } from '../../hooks/store.hooks';
+import { createComment } from '../../store/features/product/api-actions';
 import { ModalProps } from '../../types/component.type';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
-import { createComment } from '../../store/features/product/api-actions';
 
 const initialNewComment: NewComment = {
   advantages: '',
@@ -18,6 +18,7 @@ const initialNewComment: NewComment = {
 export interface CommentAddModalProps extends ModalProps {
   productId: string | undefined;
   productTitle: string | undefined;
+  onSuccessReview: () => void;
 }
 
 export function CommentAddModal(props: CommentAddModalProps): JSX.Element {
@@ -43,6 +44,7 @@ export function CommentAddModal(props: CommentAddModalProps): JSX.Element {
     }
 
     props.onClickCloseModal();
+    props.onSuccessReview();
   };
 
   useEffect(() => {
