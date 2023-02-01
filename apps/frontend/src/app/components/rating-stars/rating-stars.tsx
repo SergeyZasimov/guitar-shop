@@ -1,13 +1,14 @@
-import { AppRoute, MAX_RATING, RATING_EXPRESSION } from '../../app.constant';
+import { MAX_RATING, RATING_EXPRESSION, RatingStarsLocation } from '../../app.constant';
 
 const STAR_SIZE = {
-  [ AppRoute.Root ]: { width: "12", height: "11" },
-  [ AppRoute.Product ]: { width: "14", height: "14" }
+  [ RatingStarsLocation.Catalog ]: { width: "12", height: "12" },
+  [ RatingStarsLocation.Product ]: { width: "14", height: "14" },
+  [ RatingStarsLocation.Comment ]: { width: "16", height: "16" },
 };
 
 export interface RatingStarsProps {
   rating: number | undefined,
-  commentsCount: number | undefined;
+  commentsCount?: number | undefined;
   location: keyof typeof STAR_SIZE;
 }
 
@@ -33,8 +34,10 @@ export function RatingStars({ rating, commentsCount, location }: RatingStarsProp
         ))
       }
       <p className="visually-hidden">Рейтинг: { getRatingExpression(rating) }</p>
-      <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{ commentsCount }</p>
-
+      {
+        location !== RatingStarsLocation.Comment &&
+        <p className="rate__count"><span className="visually-hidden">Всего оценок:</span>{ commentsCount }</p>
+      }
     </>
   );
 }

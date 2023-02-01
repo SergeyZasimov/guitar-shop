@@ -32,8 +32,8 @@ export class CommentRepository extends CrudRepository<CommentModel> {
   async find(productId: string): Promise<Comment[]> {
     return this.commentModel
       .find({ [CommentField.Product]: productId })
-      .limit(DEFAULT_COMMENT_LIMIT)
       .sort({ [CommentField.CreatedAt]: DEFAULT_COMMENT_SORT_TYPE })
+      .limit(DEFAULT_COMMENT_LIMIT)
       .populate([CommentField.Author, CommentField.Product]);
   }
 }

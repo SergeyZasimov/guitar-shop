@@ -1,7 +1,7 @@
 export enum RouteDomain {
   Auth = 'auth',
   ProductDomain = 'products',
-  Comment = 'comments',
+  CommentDomain = 'comments',
   Order = 'orders',
 }
 

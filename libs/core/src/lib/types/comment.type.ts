@@ -1,3 +1,5 @@
+import { User } from './user.type';
+
 export enum CommentField {
   _Id = '_id',
   Id = 'id',
@@ -12,7 +14,8 @@ export enum CommentField {
 
 export type Comment = {
   [CommentField._Id]?: string;
-  [CommentField.Author]: string;
+  [CommentField.Id]?: string;
+  [CommentField.Author]: User | string;
   [CommentField.Product]: string;
   [CommentField.Advantages]: string;
   [CommentField.Disadvantages]: string;

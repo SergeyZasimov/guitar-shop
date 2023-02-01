@@ -12,10 +12,10 @@ import { CommentService } from './comment.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentRdo } from './rdo/comment.rdo';
 
-const { Comment } = RouteDomain;
+const { CommentDomain } = RouteDomain;
 const { ProductId } = RouteParam;
 
-@Controller(Comment)
+@Controller(CommentDomain)
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 

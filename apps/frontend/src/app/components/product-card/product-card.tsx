@@ -1,6 +1,6 @@
 import { Product } from '@guitar-shop/core';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../app.constant';
+import { AppRoute, RatingStarsLocation } from '../../app.constant';
 import { formatPrice } from '../../utils';
 import { RatingStars } from '../rating-stars/rating-stars';
 
@@ -18,7 +18,10 @@ export function ProductCard({ product }: ProductCardProps): JSX.Element {
       <img src={ photo } width="75" height="190" alt={ title } />
       <div className="product-card__info">
         <div className="rate product-card__rate">
-          <RatingStars rating={ totalRating } commentsCount={ commentsCount } location={ AppRoute.Root } />
+          <RatingStars
+            rating={ totalRating }
+            commentsCount={ commentsCount }
+            location={ RatingStarsLocation.Product } />
         </div>
         <p className="product-card__title">{ title }</p>
         <p className="product-card__price"><span className="visually-hidden">Цена:</span>{ formatPrice(price) } ₽

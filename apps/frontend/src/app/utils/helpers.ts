@@ -1,3 +1,6 @@
+import dayjs from 'dayjs';
+import 'dayjs/locale/ru';
+
 export const createQueryString = (query: Record<string, unknown>): string => {
   return `${Object.entries(query)
     .map(([key, value]) => {
@@ -20,4 +23,8 @@ export const formatPrice = (price: number | undefined): string => {
     return price.toLocaleString('ru-RU');
   }
   return '';
+};
+
+export const formateDate = (date: Date | undefined) => {
+  return dayjs(date).locale('ru').format('D MMMM');
 };
