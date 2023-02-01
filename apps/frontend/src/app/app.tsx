@@ -1,8 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from './app.constant';
 import { Layout } from './components';
-import { AuthPage, CartPage, MainPage } from './pages';
-import ProductPage from './pages/product-page/product-page';
+import { AuthPage, CartPage, MainPage, ProductPage } from './pages';
 
 
 

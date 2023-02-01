@@ -1,14 +1,21 @@
-import { Product } from '@guitar-shop/core';
+import { CommentResponse, Product } from '@guitar-shop/core';
 import { createSlice } from '@reduxjs/toolkit';
 import { StoreNamespace } from '../../../app.constant';
 import { LoadingStatus, ProductState, State } from '../../../types/store.types';
-import { fetchProduct, fetchProducts, queryProducts } from './api-actions';
+import {
+  createComment,
+  fetchComments,
+  fetchProduct,
+  fetchProducts,
+  queryProducts,
+} from './api-actions';
 
 const initialState: ProductState = {
   products: [],
   product: null,
   status: LoadingStatus.Idle,
   isError: false,
+  comments: [],
 };
 
 export const productSlice = createSlice({
@@ -25,6 +32,13 @@ export const productSlice = createSlice({
       })
       .addCase(fetchProduct.fulfilled, (state, { payload }) => {
         state.product = payload;
+      })
+      .addCase(fetchComments.fulfilled, (state, { payload }) => {
+        state.comments = payload;
+      })
+      .addCase(createComment.fulfilled, (state, { payload }) => {
+        state.product = payload.product;
+        state.comments.unshift(payload);
       });
   },
 });
@@ -36,3 +50,6 @@ export const getProducts = (state: State): Product[] =>
 
 export const getProduct = (state: State): Product | null =>
   state[StoreNamespace.ProductStore].product;
+
+export const getComments = (state: State): CommentResponse[] =>
+  state[StoreNamespace.ProductStore].comments;

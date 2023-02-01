@@ -1,4 +1,4 @@
-import { Comment, Product, User } from '@guitar-shop/core';
+import { CommentResponse, Product, User } from '@guitar-shop/core';
 import { AxiosInstance } from 'axios';
 import { store } from '../store';
 
@@ -23,6 +23,7 @@ export type ProductState = {
   product: Product | null;
   status: LoadingStatus;
   isError: boolean;
+  comments: CommentResponse[];
 };
 
 export type UserState = {
@@ -32,5 +33,5 @@ export type UserState = {
 };
 
 export type CommentState = {
-  comments: Comment[];
+  comments: CommentResponse[];
 };

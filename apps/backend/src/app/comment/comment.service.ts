@@ -9,18 +9,13 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 export class CommentService {
   constructor(
     private readonly commentRepository: CommentRepository,
-    private readonly productService: ProductService
+    private readonly productService: ProductService,
   ) {}
 
-  async create(
-    productId: string,
-    userId: string,
-    dto: CreateCommentDto
-  ): Promise<Comment> {
-    if (await this.productService.checkProductExist(productId)) {
+  async create(userId: string, dto: CreateCommentDto): Promise<Comment> {
+    if (await this.productService.checkProductExist(dto.product)) {
       const commentEntity = new CommentEntity({
         ...dto,
-        [CommentField.Product]: productId,
         [CommentField.Author]: userId,
       });
       const newComment = await this.commentRepository.create(commentEntity);

@@ -1,20 +1,20 @@
-import { Comment, CommentField } from '@guitar-shop/core';
+import { CommentField, CommentResponse, Product, User } from '@guitar-shop/core';
 import { Expose, Transform, Type } from 'class-transformer';
 import { UserRdo } from '../../auth/rdo/user.rdo';
 import { ProductRdo } from '../../product/rdo/product.rdo';
 
-export class CommentRdo implements Comment {
+export class CommentRdo implements CommentResponse {
   @Expose({ name: CommentField._Id })
   @Transform(({ obj }) => obj._id.toString())
   [CommentField.Id]: string;
 
   @Expose()
   @Type(() => UserRdo)
-  [CommentField.Author]: string;
+  [CommentField.Author]: User;
 
   @Expose()
   @Type(() => ProductRdo)
-  [CommentField.Product]: string;
+  [CommentField.Product]: Product;
 
   @Expose()
   [CommentField.Advantages]: string;

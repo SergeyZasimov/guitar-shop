@@ -1,39 +1,41 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { ERROR_MESSAGE, RatingStarsLocation } from '../../app.constant';
-import { CommentAddModal, CommentsList, RatingStars } from '../../components';
+import { RatingStarsLocation } from '../../app.constant';
+import { CommentAddModal, CommentsList, EnterModal, RatingStars } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { fetchComments } from '../../store/features/comment/api-actions';
-import { getComments } from '../../store/features/comment/comment-slice';
-import { fetchProduct } from '../../store/features/product/api-actions';
-import { getProduct } from '../../store/features/product/product-slice';
+import { fetchComments, fetchProduct } from '../../store/features/product/api-actions';
+import { getComments, getProduct } from '../../store/features/product/product-slice';
 import { getUser } from '../../store/features/user/user-slice';
 import { formatPrice } from '../../utils';
 
 export function ProductPage(): JSX.Element {
   const { productId } = useParams();
+
   const dispatch = useAppDispatch();
+
   const product = useAppSelector(getProduct);
   const comments = useAppSelector(getComments);
   const user = useAppSelector(getUser);
 
-
-  const [ isDescriptionShow, setIsDescriptionShow ] = useState(false);
-
+  const [ isDescriptionShow, setIsDescriptionShow ] = useState<boolean>(false);
   const [ isAddCommentModalOpen, setIsAddCommentModalOpen ] = useState<boolean>(false);
+  const [ isEnterModalOpen, setIsEnterModalOpen ] = useState<boolean>(false);
 
-  const handleAddCommentClick = () => {
+
+  const handleOpenAddCommentClick = (): void => {
     if (!user) {
-      toast.error(ERROR_MESSAGE.UNAUTHORIZED);
+      setIsEnterModalOpen(true);
       return;
     }
-
     setIsAddCommentModalOpen(true);
   };
 
-  const handleClickCloseModal = () => {
+  const handleCloseAddReviewModalClick = (): void => {
     setIsAddCommentModalOpen(false);
+  };
+
+  const handleCloseEnterModalClick = (): void => {
+    setIsEnterModalOpen(false);
   };
 
 
@@ -46,7 +48,8 @@ export function ProductPage(): JSX.Element {
 
   return (
     <>
-      <CommentAddModal isOpen={ isAddCommentModalOpen } onClickCloseModal={handleClickCloseModal} />
+      <CommentAddModal productId={ product?.id } productTitle={ product?.title } isOpen={ isAddCommentModalOpen } onClickCloseModal={ handleCloseAddReviewModalClick } />
+      <EnterModal isOpen={ isEnterModalOpen } onClickCloseModal={ handleCloseEnterModalClick } />
       <main className="page-content">
         <div className="container">
           <h1 className="page-content__title title title--bigger">Товар</h1>
@@ -103,12 +106,12 @@ export function ProductPage(): JSX.Element {
             <div className="product-container__price-wrapper">
               <p className="product-container__price-info product-container__price-info--title">Цена:</p>
               <p className="product-container__price-info product-container__price-info--value">{ formatPrice(product?.price) } ₽</p>
-              <a className="button button--red button--big product-container__button" href="#">Добавить в корзину</a>
+              <a className="button button--red button--big product-container__button">Добавить в корзину</a>
             </div>
           </div>
           <CommentsList
             comments={ comments }
-            onClickAddComment={ handleAddCommentClick }
+            onClickAddComment={ handleOpenAddCommentClick }
           />
         </div>
       </main >
@@ -116,4 +119,4 @@ export function ProductPage(): JSX.Element {
   );
 }
 
-export default ProductPage;
+

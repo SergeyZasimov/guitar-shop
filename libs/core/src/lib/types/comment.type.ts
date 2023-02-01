@@ -1,3 +1,4 @@
+import { Product } from './product.type';
 import { User } from './user.type';
 
 export enum CommentField {
@@ -15,7 +16,7 @@ export enum CommentField {
 export type Comment = {
   [CommentField._Id]?: string;
   [CommentField.Id]?: string;
-  [CommentField.Author]: User | string;
+  [CommentField.Author]: string;
   [CommentField.Product]: string;
   [CommentField.Advantages]: string;
   [CommentField.Disadvantages]: string;
@@ -26,8 +27,16 @@ export type Comment = {
 
 export type NewComment = Omit<
   Comment,
-  | CommentField._Id
-  | CommentField.CreatedAt
-  | CommentField.Product
-  | CommentField.Author
+  CommentField._Id | CommentField.Id | CommentField.CreatedAt | CommentField.Author
 >;
+
+export type CommentResponse = {
+  [CommentField.Id]: string;
+  [CommentField.Author]: User;
+  [CommentField.Product]: Product;
+  [CommentField.Advantages]: string;
+  [CommentField.Disadvantages]: string;
+  [CommentField.Text]: string;
+  [CommentField.Rating]: number;
+  [CommentField.CreatedAt]: Date;
+};

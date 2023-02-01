@@ -28,4 +28,5 @@ export const COMMENT_VALIDATION_MESSAGE = {
   DISADVANTAGES_LENGTH_NOT_VALID: `Недостатки товара должны быть строкой длиной от ${COMMENT_CONSTRAINT.DISADVANTAGES.MIN} до ${COMMENT_CONSTRAINT.DISADVANTAGES.MAX}`,
   TEXT_LENGTH_NOT_VALID: `Текст комментария должен быть строкой длиной от ${COMMENT_CONSTRAINT.TEXT.MIN} до ${COMMENT_CONSTRAINT.TEXT.MAX}`,
   RATING_NOT_VALID: `Оценка товара должна быть цифрой от ${COMMENT_CONSTRAINT.RATING.MIN} до ${COMMENT_CONSTRAINT.RATING.MAX}`,
+  PRODUCT_ID_NOT_VALID: 'Неверный ID товара',
 };

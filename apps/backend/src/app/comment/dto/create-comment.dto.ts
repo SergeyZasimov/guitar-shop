@@ -1,9 +1,6 @@
 import { CommentField, NewComment } from '@guitar-shop/core';
-import { IsNotEmpty, Length, Max, Min } from 'class-validator';
-import {
-  COMMENT_CONSTRAINT,
-  COMMENT_VALIDATION_MESSAGE,
-} from '../comment.constant';
+import { IsMongoId, IsNotEmpty, Length, Max, Min } from 'class-validator';
+import { COMMENT_CONSTRAINT, COMMENT_VALIDATION_MESSAGE } from '../comment.constant';
 
 const { RATING, TEXT, ADVANTAGES, DISADVANTAGES } = COMMENT_CONSTRAINT;
 const {
@@ -11,6 +8,7 @@ const {
   DISADVANTAGES_LENGTH_NOT_VALID,
   RATING_NOT_VALID,
   TEXT_LENGTH_NOT_VALID,
+  PRODUCT_ID_NOT_VALID,
 } = COMMENT_VALIDATION_MESSAGE;
 
 export class CreateCommentDto implements NewComment {
@@ -34,4 +32,8 @@ export class CreateCommentDto implements NewComment {
   @Min(RATING.MIN, { message: RATING_NOT_VALID })
   @IsNotEmpty()
   [CommentField.Rating]: number;
+
+  @IsMongoId({ message: PRODUCT_ID_NOT_VALID })
+  @IsNotEmpty()
+  [CommentField.Product]: string;
 }

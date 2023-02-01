@@ -9,10 +9,10 @@ import {
 } from '@guitar-shop/core';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
-import { ActionType, AppRoute, SUCCESS_MESSAGE } from '../../../app.constant';
+import { ActionType, SUCCESS_MESSAGE } from '../../../app.constant';
 import { setToken } from '../../../services/token.service';
 import { AsyncThunkOptionField } from '../../../types/store.types';
-import { redirectToRoute } from '../../actions/reditect-to-route.action';
+import { redirectBack } from '../../actions/reditect-to-route.action';
 
 const { Auth } = RouteDomain;
 const { Register, Login, CheckStatus } = RoutePath;
@@ -37,7 +37,7 @@ export const loginUser = createAsyncThunk<
   } = await api.post<AuthUser>(`${Auth}/${Login}`, authUser);
   setToken(access_token);
   toast.success(SUCCESS_MESSAGE.SUCCESS_LOGIN(user.email));
-  dispatch(redirectToRoute(AppRoute.Root));
+  dispatch(redirectBack());
   return user;
 });
 

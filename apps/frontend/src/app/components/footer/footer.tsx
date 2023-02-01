@@ -1,5 +1,5 @@
 
-
+// TODO: href
 export function Footer() {
   return (
     <footer className="footer">
@@ -31,15 +31,15 @@ export function Footer() {
           <section className="footer__nav-section footer__nav-section--links">
             <h2 className="footer__nav-title footer__nav-title--links">Информация</h2>
             <ul className="footer__nav-list">
-              <li className="footer__nav-list-item"><a className="link footer__nav-link" href="#top">Где купить?</a>
+              <li className="footer__nav-list-item"><a className="link footer__nav-link">Где купить?</a>
               </li>
-              <li className="footer__nav-list-item"><a className="link footer__nav-link" href="#top">Блог</a>
+              <li className="footer__nav-list-item"><a className="link footer__nav-link">Блог</a>
               </li>
-              <li className="footer__nav-list-item"><a className="link footer__nav-link" href="#top">Вопрос - ответ</a>
+              <li className="footer__nav-list-item"><a className="link footer__nav-link">Вопрос - ответ</a>
               </li>
-              <li className="footer__nav-list-item"><a className="link footer__nav-link" href="#top">Возврат</a>
+              <li className="footer__nav-list-item"><a className="link footer__nav-link">Возврат</a>
               </li>
-              <li className="footer__nav-list-item"><a className="link footer__nav-link" href="#top">Сервис-центры</a>
+              <li className="footer__nav-list-item"><a className="link footer__nav-link">Сервис-центры</a>
               </li>
             </ul>
           </section>

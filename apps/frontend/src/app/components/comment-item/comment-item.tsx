@@ -1,10 +1,10 @@
-import { Comment, User } from '@guitar-shop/core';
+import { Comment, CommentResponse, User } from '@guitar-shop/core';
 import { RatingStarsLocation } from '../../app.constant';
 import { formateDate } from '../../utils';
 import { RatingStars } from '../rating-stars/rating-stars';
 
 export interface CommentItemProps {
-  comment: Comment;
+  comment: CommentResponse;
 }
 
 export function CommentItem({ comment }: CommentItemProps) {

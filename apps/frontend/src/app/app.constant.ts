@@ -30,7 +30,7 @@ export const RATING_EXPRESSION = [
 ] as const;
 
 export enum ActionType {
-  RedirectToRoute = 'app/redirectToRoute',
+  RedirectBack = 'app/redirectBack',
   FetchProducts = 'product/fetchProducts',
   FetchProduct = 'product/fetchProduct',
   QueryProducts = 'product/query',
@@ -38,6 +38,7 @@ export enum ActionType {
   LoginUser = 'user/login',
   CheckUser = 'user/checkStatus',
   FetchComments = 'comment/fetchComments',
+  CreateComment = 'comment/createComments',
 }
 
 export enum AppRoute {
@@ -57,6 +58,16 @@ export enum RatingStarsLocation {
   Catalog = 'catalog',
   Product = 'product',
   Comment = 'comment',
+}
+
+export enum ModalClass {
+  CartAdd = 'modal-cart--add',
+  CartDelete = 'modal-cart--delete',
+  SuccessAdd = 'modal-success--add',
+  SuccessReview = 'modal-success--review',
+  SuccessSend = 'modal-success--send',
+  Review = 'modal-review',
+  Enter = 'modal-enter',
 }
 
 export const SUCCESS_MESSAGE = {

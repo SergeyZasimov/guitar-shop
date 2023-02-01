@@ -11,7 +11,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q5MDNjY
   "advantages": "Lorem ipsum dolor sit amet, consectetuer adipiscing eli",
   "disadvantages": "Lorem ipsum dolor sit amet, consectetuer adipiscing eli",
   "text": "Lorem ipsum dolor sit amet, consectetuer adipiscing eli",
-  "rating": 5
+  "rating": 5,
+  "product": "63d89a2ac8a662656eb38790s"
 }
 
 ### Get Comments By Product

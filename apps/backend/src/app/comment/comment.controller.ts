@@ -20,15 +20,14 @@ export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post(`:${ProductId}`)
+  @Post('')
   async create(
-    @Param(ProductId, MongoidValidationPipe) productId: string,
     @GetCurrentUser(RequestUser.Sub) userId: string,
     @Body() dto: CreateCommentDto
   ) {
     return fillObject(
       CommentRdo,
-      await this.commentService.create(productId, userId, dto)
+      await this.commentService.create(userId, dto)
     );
   }
 

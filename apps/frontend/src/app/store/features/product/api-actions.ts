@@ -1,9 +1,9 @@
-import { Product, RouteDomain } from '@guitar-shop/core';
+import { CommentResponse, NewComment, Product, RouteDomain } from '@guitar-shop/core';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionType } from '../../../app.constant';
 import { AsyncThunkOptionField } from '../../../types/store.types';
 
-const { ProductDomain } = RouteDomain;
+const { ProductDomain, CommentDomain } = RouteDomain;
 const { FetchProducts, QueryProducts, FetchProduct } = ActionType;
 
 export const fetchProducts = createAsyncThunk<
@@ -15,22 +15,38 @@ export const fetchProducts = createAsyncThunk<
   return data;
 });
 
-export const queryProducts = createAsyncThunk<
-  Product[],
+export const queryProducts = createAsyncThunk<Product[], string, AsyncThunkOptionField>(
+  QueryProducts,
+  async (queryString, { extra: api }) => {
+    // TODO: log
+    // console.log(queryString);
+    const { data } = await api.get<Product[]>(`${ProductDomain}?${queryString}`);
+    return data;
+  },
+);
+
+export const fetchProduct = createAsyncThunk<Product, string, AsyncThunkOptionField>(
+  FetchProduct,
+  async (productId, { extra: api }) => {
+    const { data } = await api.get<Product>(`${ProductDomain}/${productId}`);
+    return data;
+  },
+);
+
+export const fetchComments = createAsyncThunk<
+  CommentResponse[],
   string,
   AsyncThunkOptionField
->(QueryProducts, async (queryString, { extra: api }) => {
-  // TODO: log
-  // console.log(queryString);
-  const { data } = await api.get<Product[]>(`${ProductDomain}?${queryString}`);
+>(ActionType.FetchComments, async (productId, { extra: api }) => {
+  const { data } = await api.get<CommentResponse[]>(`${CommentDomain}/${productId}`);
   return data;
 });
 
-export const fetchProduct = createAsyncThunk<
-  Product,
-  string,
+export const createComment = createAsyncThunk<
+  CommentResponse,
+  NewComment,
   AsyncThunkOptionField
->(FetchProduct, async (productId, { extra: api }) => {
-  const { data } = await api.get<Product>(`${ProductDomain}/${productId}`);
+>(ActionType.CreateComment, async (newComment, { extra: api }) => {
+  const { data } = await api.post<CommentResponse>(`${CommentDomain}/`, newComment);
   return data;
 });

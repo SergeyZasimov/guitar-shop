@@ -1,6 +1,4 @@
 import { createAction } from '@reduxjs/toolkit';
-import { ActionType, AppRoute } from '../../app.constant';
+import { ActionType } from '../../app.constant';
 
-export const redirectToRoute = createAction<AppRoute>(
-  ActionType.RedirectToRoute
-);
+export const redirectBack = createAction<void>(ActionType.RedirectBack);
