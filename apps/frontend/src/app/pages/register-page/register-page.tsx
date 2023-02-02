@@ -1,9 +1,9 @@
 import { NewUser, UserField } from '@guitar-shop/core';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AppRoute } from '../../app.constant';
 import { useAppDispatch } from '../../hooks/store.hooks';
 import { loginUser, registerUser } from '../../store/features/user/api-actions';
+import { AppRoute } from '../../utils';
 
 
 export function AuthPage() {

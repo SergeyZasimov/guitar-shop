@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../utils';
 
 // TODO: href
 export function Footer() {
@@ -5,13 +7,19 @@ export function Footer() {
     <footer className="footer">
       <div className="container">
         <div className="footer__container">
-          <div className="footer__logo-wrapper"><a className="footer__logo logo"><img className="logo__img" width="70" height="70" src="./img/svg/logo.svg" alt="Логотип" /></a>
+          <div className="footer__logo-wrapper">
+            <Link to={ AppRoute.Root } className="footer__logo logo">
+              <img className="logo__img" width="70" height="70" src="./img/svg/logo.svg" alt="Логотип" />
+            </Link>
             <div className="socials footer__socials">
               <ul className="socials__list">
-                <li className="socials-item"><a className="socials__link" href="https://www.skype.com/" aria-label="Мы в skype">
-                  <svg className="socials__icon" width="24" height="24" aria-hidden="true">
-                    <use xlinkHref="#icon-skype"></use>
-                  </svg></a></li>
+                <li className="socials-item">
+                  <a className="socials__link" href="https://www.skype.com/" aria-label="Мы в skype">
+                    <svg className="socials__icon" width="24" height="24" aria-hidden="true">
+                      <use xlinkHref="#icon-skype"></use>
+                    </svg>
+                  </a>
+                </li>
                 <li className="socials-item"><a className="socials__link" href="https://www.vsco.co/" aria-label="Мы в vsco">
                   <svg className="socials__icon" width="24" height="24" aria-hidden="true">
                     <use xlinkHref="#icon-vsco"></use>

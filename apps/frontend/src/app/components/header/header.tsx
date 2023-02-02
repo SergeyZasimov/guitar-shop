@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
-import { AppRoute } from '../../app.constant';
 import { useAppSelector } from '../../hooks/store.hooks';
 import { getUser } from '../../store/features/user/user-slice';
+import { AppRoute } from '../../utils';
 
 export function Header(): JSX.Element {
   const user = useAppSelector(getUser);
@@ -26,14 +26,14 @@ export function Header(): JSX.Element {
               <li className="main-nav__item">
                 <NavLink
                   className={ ({ isActive }) => isActive ? "link main-nav__link link--current" : "link main-nav__link" }
-                  to="#"
+                  to={AppRoute.NotFound}
                 >Где купить?
                 </NavLink>
               </li>
               <li className="main-nav__item">
                 <NavLink
                   className={ ({ isActive }) => isActive ? "link main-nav__link link--current" : "link main-nav__link" }
-                  to="#"
+                  to={AppRoute.NotFound}
                 >О компании
                 </NavLink>
               </li>

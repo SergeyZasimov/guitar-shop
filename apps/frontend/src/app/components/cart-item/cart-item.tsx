@@ -2,9 +2,10 @@ import { formatPrice } from '@guitar-shop/core';
 import { EntityId } from '@reduxjs/toolkit';
 import { ChangeEvent, useRef, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { AppRoute, GUITAR_TYPE_EXPRESSION } from '../../app.constant';
+import { GUITAR_TYPE_EXPRESSION } from '../../app.constant';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { decrQuantity, getCartItem, incQuantity, updateQuantity } from '../../store/features/cart/cart-slice';
+import { AppRoute } from '../../utils';
 
 export interface CartItemProps {
   cartItemId: EntityId;

@@ -1,7 +1,7 @@
 import { formatPrice } from '@guitar-shop/core';
 import { EntityId } from '@reduxjs/toolkit';
 import { useEffect, useState } from 'react';
-import { CartDeleteModal, CartItem, CartSuccessSendModal } from '../../components';
+import { Breadcrumbs, CartDeleteModal, CartItem, CartSuccessSendModal } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { sendOrder } from '../../store/features/cart/api-actions';
 import { getCart, getCartItemsIds, getSendStatus, resetSendStatus } from '../../store/features/cart/cart-slice';
@@ -62,14 +62,7 @@ export function CartPage(): JSX.Element {
       <main className="page-content">
         <div className="container">
           <h1 className="title title--bigger page-content__title">Корзина</h1>
-          <ul className="breadcrumbs page-content__breadcrumbs page-content__breadcrumbs--on-cart-page">
-            <li className="breadcrumbs__item"><a className="link" href="./main.html">Главная</a>
-            </li>
-            <li className="breadcrumbs__item"><a className="link" href="./main.html">Каталог</a>
-            </li>
-            <li className="breadcrumbs__item"><a className="link">Корзина</a>
-            </li>
-          </ul>
+          <Breadcrumbs />
           <div className="cart">
             {
               cartItemsIds.map(id =>

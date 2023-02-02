@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
-import { AppRoute, ModalClass } from '../../app.constant';
+import { ModalClass } from '../../app.constant';
 import { ModalProps } from '../../types/component.type';
+import { AppRoute } from '../../utils';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
 export interface EnterModalProps extends ModalProps { }

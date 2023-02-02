@@ -1,6 +1,7 @@
 import { Product, formatPrice } from '@guitar-shop/core';
 import { Link } from 'react-router-dom';
-import { AppRoute, RatingStarsLocation } from '../../app.constant';
+import { RatingStarsLocation } from '../../app.constant';
+import { AppRoute } from '../../utils';
 import { RatingStars } from '../rating-stars/rating-stars';
 
 export interface ProductCardProps {

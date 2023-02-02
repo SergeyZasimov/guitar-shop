@@ -1,15 +1,34 @@
+import { Link, useLocation } from 'react-router-dom';
+import { AppRoute, BreadcrumbsPaths, BreadcrumbsSpelling } from '../../utils';
 
-export interface BreadcrumbsProps { }
+export function Breadcrumbs(): JSX.Element {
+  const { pathname } = useLocation();
 
-export function Breadcrumbs(props: BreadcrumbsProps) {
+  const currPath = BreadcrumbsPaths.find((item) => pathname.split('/').includes(item.slice(1))) as keyof typeof BreadcrumbsSpelling;
+
   return (
-    <ul className="breadcrumbs page-content__breadcrumbs">
-      <li className="breadcrumbs__item"><a className="link" href="./main.html">Главная</a>
+    <ul
+      className={ `breadcrumbs page-content__breadcrumbs ${pathname.includes(AppRoute.Cart) && 'page-content__breadcrumbs--on-cart-page'}` }
+    >
+      <li className="breadcrumbs__item">
+        <Link
+          className="link"
+          to={ pathname === AppRoute.Root ? '#' : AppRoute.Root }
+        >
+          Каталог
+        </Link>
       </li>
-      <li className="breadcrumbs__item"><a className="link">Каталог</a>
-      </li>
+      {
+        currPath &&
+        <li className="breadcrumbs__item">
+          <Link
+            className="link"
+            to={ pathname.includes(currPath) ? '#' : currPath }
+          >
+            { BreadcrumbsSpelling[ currPath ] }
+          </Link>
+        </li>
+      }
     </ul>
   );
 }
-
-export default Breadcrumbs;

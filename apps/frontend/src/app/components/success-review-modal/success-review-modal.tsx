@@ -1,8 +1,9 @@
 import { PropsWithChildren } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppRoute, ModalClass } from '../../app.constant';
+import { ModalClass } from '../../app.constant';
 import { ModalProps } from '../../types';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
+import { AppRoute } from '../../utils';
 
 export interface SuccessReviewModalProps extends ModalProps { }
 

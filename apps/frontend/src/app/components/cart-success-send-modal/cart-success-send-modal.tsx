@@ -1,7 +1,8 @@
 import { PropsWithChildren } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AppRoute, ModalClass } from '../../app.constant';
+import { ModalClass } from '../../app.constant';
 import { ModalProps } from '../../types';
+import { AppRoute } from '../../utils';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
 export interface CartSuccessSendModalProps extends ModalProps { }

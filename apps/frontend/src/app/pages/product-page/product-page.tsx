@@ -1,12 +1,13 @@
+import { formatPrice } from '@guitar-shop/core';
 import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { AppRoute, GUITAR_TYPE_EXPRESSION, RatingStarsLocation } from '../../app.constant';
-import { CartAddModal, CartSuccessAddModal, CommentAddModal, CommentsList, EnterModal, RatingStars, SuccessReviewModal } from '../../components';
+import { GUITAR_TYPE_EXPRESSION, RatingStarsLocation } from '../../app.constant';
+import { Breadcrumbs, CartAddModal, CartSuccessAddModal, CommentAddModal, CommentsList, EnterModal, RatingStars, SuccessReviewModal } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { fetchComments, fetchProduct } from '../../store/features/product/api-actions';
 import { getComments, getProduct } from '../../store/features/product/product-slice';
 import { getUser } from '../../store/features/user/user-slice';
-import { formatPrice } from '@guitar-shop/core';
+import { AppRoute } from '../../utils';
 
 export function ProductPage(): JSX.Element {
   const { productId } = useParams();
@@ -73,14 +74,7 @@ export function ProductPage(): JSX.Element {
       <main className="page-content">
         <div className="container">
           <h1 className="page-content__title title title--bigger">Товар</h1>
-          <ul className="breadcrumbs page-content__breadcrumbs">
-            <li className="breadcrumbs__item"><a className="link" href="./main.html">Главная</a>
-            </li>
-            <li className="breadcrumbs__item"><a className="link" href="./main.html">Каталог</a>
-            </li>
-            <li className="breadcrumbs__item"><a className="link">Товар</a>
-            </li>
-          </ul>
+          <Breadcrumbs />
           <div className="product-container">
             <img className="product-container__img" src={ product.photo } width="90" height="235" alt={ product.title } />
             <div className="product-container__info-wrapper">

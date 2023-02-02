@@ -18,6 +18,7 @@ export enum StoreNamespace {
   ProductStore = 'product',
   UserStore = 'user',
   CartStore = 'cart',
+  BreadcrumbStore = 'breadcrumb',
 }
 
 export const RATING_EXPRESSION = [
@@ -46,14 +47,6 @@ export enum ActionType {
   FetchComments = 'comment/fetchComments',
   CreateComment = 'comment/createComments',
   SendOrder = 'cart/sendOrder',
-}
-
-export enum AppRoute {
-  Root = '/',
-  Register = '/register',
-  Login = '/login',
-  Cart = '/cart',
-  Product = '/product',
 }
 
 export const INITIAL_USER_STATE: User = {
