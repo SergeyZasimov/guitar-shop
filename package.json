@@ -4,7 +4,9 @@
   "license": "MIT",
   "scripts": {
     "docker:up": "cd ./apps/backend && docker-compose up -d",
-    "cli": "nx run backend:cli-build && node dist/apps/backend/cli/main.js"
+    "cli": "nx run backend:cli-build && node dist/apps/backend/cli/main.js",
+    "start:backend": "nx run backend:serve",
+    "start:frontend:dev": "nx run frontend:serve:development"
   },
   "private": true,
   "dependencies": {
