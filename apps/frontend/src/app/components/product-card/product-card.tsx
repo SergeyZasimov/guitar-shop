@@ -1,6 +1,8 @@
 import { Product, formatPrice } from '@guitar-shop/core';
 import { Link } from 'react-router-dom';
 import { RatingStarsLocation } from '../../app.constant';
+import { useAppSelector } from '../../hooks/store.hooks';
+import { getCartItemsIds } from '../../store/features/cart/cart-slice';
 import { AppRoute } from '../../utils';
 import { RatingStars } from '../rating-stars/rating-stars';
 
@@ -11,6 +13,8 @@ export interface ProductCardProps {
 
 export function ProductCard({ product, onAddProductClick }: ProductCardProps): JSX.Element {
   const { photo, title, totalRating, price, commentsCount } = product;
+
+  const cart = useAppSelector(getCartItemsIds);
 
   return (
     <div className="product-card">
@@ -28,12 +32,18 @@ export function ProductCard({ product, onAddProductClick }: ProductCardProps): J
       </div>
       <div className="product-card__buttons">
         <Link className="button button--mini" to={ `${AppRoute.Product}/${product.id}` }>Подробнее</Link>
-        <a
-          className="button button--red button--mini button--add-to-cart"
-          onClick={ () => onAddProductClick(product) }
-        >
-          Купить
-        </a>
+        {
+          cart.includes(product.id as string) ?
+            <a
+              className="button button--red-border button--mini button--in-cart"
+              onClick={ () => onAddProductClick(product) }
+            >В Корзине</a> :
+
+            <a
+              className="button button--red button--mini button--add-to-cart"
+              onClick={ () => onAddProductClick(product) }
+            > Купить </a>
+        }
       </div>
     </div>
   );

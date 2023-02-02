@@ -1,13 +1,18 @@
 import { Link, NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/store.hooks';
+import { getCartItemsIds } from '../../store/features/cart/cart-slice';
 import { getUser } from '../../store/features/user/user-slice';
 import { AppRoute } from '../../utils';
 
 export function Header(): JSX.Element {
   const user = useAppSelector(getUser);
+  const cart = useAppSelector(getCartItemsIds);
 
   return (
-    <header className={ `header ${user && "header--logged-empty"}` } id="header">
+    <header
+      className={ `header ${user && !cart.length && "header--logged-empty"} ${user && cart.length && "header--logged"}` }
+      id="header"
+    >
       <div className="container">
         <div className="header__wrapper">
           <Link to={ AppRoute.Root } className="header__logo logo">
@@ -26,14 +31,14 @@ export function Header(): JSX.Element {
               <li className="main-nav__item">
                 <NavLink
                   className={ ({ isActive }) => isActive ? "link main-nav__link link--current" : "link main-nav__link" }
-                  to={AppRoute.NotFound}
+                  to={ AppRoute.NotFound }
                 >Где купить?
                 </NavLink>
               </li>
               <li className="main-nav__item">
                 <NavLink
                   className={ ({ isActive }) => isActive ? "link main-nav__link link--current" : "link main-nav__link" }
-                  to={AppRoute.NotFound}
+                  to={ AppRoute.NotFound }
                 >О компании
                 </NavLink>
               </li>
@@ -52,7 +57,7 @@ export function Header(): JSX.Element {
               <svg className="header__cart-icon" width="14" height="14" aria-hidden="true">
                 <use xlinkHref="#icon-basket"></use>
               </svg>
-              <span className="header__cart-count">2</span>
+              <span className="header__cart-count">{ cart.length }</span>
             </Link>
           </div>
         </div>
