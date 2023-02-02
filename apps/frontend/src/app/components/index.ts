@@ -13,6 +13,7 @@ export * from './enter-modal/enter-modal';
 export * from './footer/footer';
 export * from './header/header';
 export * from './layout/layout';
+export * from './loader/loader';
 export * from './modal-overlay/modal-overlay';
 export * from './pagination/pagination';
 export * from './product-card/product-card';

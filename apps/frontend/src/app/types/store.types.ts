@@ -21,14 +21,15 @@ export enum LoadingStatus {
 export type ProductState = {
   products: Product[];
   product: Product | null;
-  status: LoadingStatus;
+  productLoadingStatus: LoadingStatus;
+  commentLoadingStatus: LoadingStatus;
   isError: boolean;
   comments: CommentResponse[];
 };
 
 export type UserState = {
   user: User | null;
-  status: LoadingStatus;
+  loadingStatus: LoadingStatus;
   error: string;
 };
 

@@ -13,7 +13,8 @@ import {
 const initialState: ProductState = {
   products: [],
   product: null,
-  status: LoadingStatus.Idle,
+  productLoadingStatus: LoadingStatus.Idle,
+  commentLoadingStatus: LoadingStatus.Idle,
   isError: false,
   comments: [],
 };
@@ -24,17 +25,33 @@ export const productSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.productLoadingStatus = LoadingStatus.Loading;
+      })
       .addCase(fetchProducts.fulfilled, (state, { payload }) => {
         state.products = payload;
+        state.productLoadingStatus = LoadingStatus.Succeeded;
+      })
+      .addCase(queryProducts.pending, (state) => {
+        state.productLoadingStatus = LoadingStatus.Loading;
       })
       .addCase(queryProducts.fulfilled, (state, { payload }) => {
         state.products = payload;
+        state.productLoadingStatus = LoadingStatus.Succeeded;
+      })
+      .addCase(fetchProduct.pending, (state) => {
+        state.productLoadingStatus = LoadingStatus.Loading;
       })
       .addCase(fetchProduct.fulfilled, (state, { payload }) => {
         state.product = payload;
+        state.productLoadingStatus = LoadingStatus.Succeeded;
+      })
+      .addCase(fetchComments.pending, (state) => {
+        state.commentLoadingStatus = LoadingStatus.Loading;
       })
       .addCase(fetchComments.fulfilled, (state, { payload }) => {
         state.comments = payload;
+        state.commentLoadingStatus = LoadingStatus.Succeeded;
       })
       .addCase(createComment.fulfilled, (state, { payload }) => {
         state.product = payload.product;
@@ -53,3 +70,9 @@ export const getProduct = (state: State): Product | null =>
 
 export const getComments = (state: State): CommentResponse[] =>
   state[StoreNamespace.ProductStore].comments;
+
+export const getProductLoadingStatus = (state: State): LoadingStatus =>
+  state[StoreNamespace.ProductStore].productLoadingStatus;
+
+export const getCommentLoadingStatus = (state: State): LoadingStatus =>
+  state[StoreNamespace.ProductStore].commentLoadingStatus;

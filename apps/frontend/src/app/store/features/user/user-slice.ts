@@ -6,7 +6,7 @@ import { checkUser, loginUser } from './api-actions';
 
 const initialState: UserState = {
   user: null,
-  status: LoadingStatus.Idle,
+  loadingStatus: LoadingStatus.Idle,
   error: '',
 };
 
