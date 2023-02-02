@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { AppRoute, GUITAR_TYPE_EXPRESSION, RatingStarsLocation } from '../../app.constant';
-import { CartAddModal, CommentAddModal, CommentsList, EnterModal, RatingStars, SuccessReviewModal } from '../../components';
+import { CartAddModal, CartSuccessAddModal, CommentAddModal, CommentsList, EnterModal, RatingStars, SuccessReviewModal } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { fetchComments, fetchProduct } from '../../store/features/product/api-actions';
 import { getComments, getProduct } from '../../store/features/product/product-slice';
 import { getUser } from '../../store/features/user/user-slice';
-import { formatPrice } from '../../utils';
+import { formatPrice } from '@guitar-shop/core';
 
 export function ProductPage(): JSX.Element {
   const { productId } = useParams();
@@ -22,7 +22,7 @@ export function ProductPage(): JSX.Element {
   const [ isEnterModalOpen, setIsEnterModalOpen ] = useState<boolean>(false);
   const [ isSuccessReviewModalOpen, setIsSuccessReviewModalOpen ] = useState<boolean>(false);
   const [ isCartAddModalOpen, setIsCartAddModalOpen ] = useState<boolean>(false);
-
+  const [ isCartAddSuccessModalShow, setIsCartAddSuccessModalShow ] = useState<boolean>(false);
 
   const handleOpenAddCommentClick = (): void => {
     if (!user) {
@@ -31,27 +31,6 @@ export function ProductPage(): JSX.Element {
     }
     setIsAddCommentModalOpen(true);
   };
-
-  const handleCloseAddReviewModalClick = () => {
-    setIsAddCommentModalOpen(false);
-  };
-
-  const handleCloseEnterModalClick = () => {
-    setIsEnterModalOpen(false);
-  };
-
-  const handleSuccessReviewModalShow = () => {
-    setIsSuccessReviewModalOpen(true);
-  };
-
-  const handleCloseSuccessReviewModalClick = () => {
-    setIsSuccessReviewModalOpen(false);
-  };
-
-  const handleCloseCartAddModalClick = () => {
-    setIsCartAddModalOpen(false);
-  };
-
 
   useEffect(() => {
     if (typeof productId === 'string') {
@@ -68,23 +47,28 @@ export function ProductPage(): JSX.Element {
     <>
       <EnterModal
         isOpen={ isEnterModalOpen }
-        onClickCloseModal={ handleCloseEnterModalClick }
+        onClickCloseModal={ () => setIsEnterModalOpen(false) }
       />
       <CommentAddModal
         productId={ product.id }
         productTitle={ product.title }
         isOpen={ isAddCommentModalOpen }
-        onClickCloseModal={ handleCloseAddReviewModalClick }
-        onSuccessReview={ handleSuccessReviewModalShow }
+        onClickCloseModal={ () => setIsAddCommentModalOpen(false) }
+        onSuccessReview={ () => setIsSuccessReviewModalOpen(true) }
       />
       <SuccessReviewModal
         isOpen={ isSuccessReviewModalOpen }
-        onClickCloseModal={ handleCloseSuccessReviewModalClick }
+        onClickCloseModal={ () => setIsSuccessReviewModalOpen(false) }
       />
       <CartAddModal
         isOpen={ isCartAddModalOpen }
-        onClickCloseModal={ handleCloseCartAddModalClick }
+        onClickCloseModal={ () => setIsCartAddModalOpen(false) }
         product={ product }
+        onSuccessAdd={ () => setIsCartAddSuccessModalShow(true) }
+      />
+      <CartSuccessAddModal
+        isOpen={ isCartAddSuccessModalShow }
+        onClickCloseModal={ () => setIsCartAddSuccessModalShow(false) }
       />
       <main className="page-content">
         <div className="container">

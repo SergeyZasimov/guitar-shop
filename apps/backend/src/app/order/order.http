@@ -5,16 +5,16 @@
 ### Create Order
 POST {{baseUrl}}/orders {{protocol}}
 Content-Type: {{contentType}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q2MGE2ZWExMjI1ZjIxMDE5OTkyOWMiLCJ1c2VyTmFtZSI6IkpvaG4gU21pdGgiLCJlbWFpbCI6InRlc3RAZW1haWwubG9jYWwiLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwiaWF0IjoxNjc0OTk5NTMzLCJleHAiOjE2NzUwMDMxMzN9.82HZlTUAKsowwaMci_rcGD2yCNrpNiEHw6yLrFFLIiM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2Q5MDNjYWQ0OWFjZDkyMWI1MjNiOGQiLCJ1c2VyTmFtZSI6ImpvaG4gc21pdGgiLCJlbWFpbCI6InRlc3RAdXNlci5jb20iLCJyb2xlIjoi0L_QvtC70YzQt9C-0LLQsNGC0LXQu9GMIiwiaWF0IjoxNjc1MzE1Nzc2LCJleHAiOjE2NzUzMTkzNzZ9.ZoTfrOd_UO_59gWsoBmT3i2jXDxAS9XPLCUNap_NV-I
 
 {
   "orderList": [
     {
-      "product": "63d519e0cfb70f20f8055c1d",
+      "product": "63d89a2ac8a662656eb3879a",
       "quantity": 2
     },
     {
-      "product": "63d519e0cfb70f20f8055c1f",
+      "product": "63d89a29c8a662656eb38788",
       "quantity": 2
     }
   ]

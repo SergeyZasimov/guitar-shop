@@ -18,13 +18,6 @@ export const checkValueInCollection = <T>(collection: T[], value: T) => {
     : collection.concat(value);
 };
 
-export const formatPrice = (price: number | undefined): string => {
-  if (price) {
-    return price.toLocaleString('ru-RU');
-  }
-  return '';
-};
-
 export const formateDate = (date: Date | undefined) => {
   return dayjs(date).locale('ru').format('D MMMM');
 };

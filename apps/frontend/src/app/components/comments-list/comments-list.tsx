@@ -1,7 +1,7 @@
 import { CommentResponse } from '@guitar-shop/core';
 import { useState } from 'react';
-import { CommentItem } from '../comment-item/comment-item';
 import { COMMENT_LIST_OFFSET } from '../../app.constant';
+import { CommentItem } from '../comment-item/comment-item';
 
 
 export interface CommentsListProps {
@@ -20,7 +20,6 @@ export function CommentsList({ comments, onClickAddComment }: CommentsListProps)
   };
 
   const handleButtonUpClick = () => {
-    console.log('up');
     window.scrollTo(0, 0);
   };
 

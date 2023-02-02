@@ -1,16 +1,17 @@
+import { formatPrice } from '@guitar-shop/core';
 import { EntityId } from '@reduxjs/toolkit';
 import { ChangeEvent, useRef, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AppRoute, GUITAR_TYPE_EXPRESSION } from '../../app.constant';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { decrQuantity, deleteCartItem, getCartItem, incQuantity, updateQuantity } from '../../store/features/cart/cart-slice';
-import { formatPrice } from '../../utils';
+import { decrQuantity, getCartItem, incQuantity, updateQuantity } from '../../store/features/cart/cart-slice';
 
 export interface CartItemProps {
   cartItemId: EntityId;
+  onDeleteClick: (cartItemId: EntityId) => void;
 }
 
-export function CartItem({ cartItemId }: CartItemProps): JSX.Element {
+export function CartItem({ cartItemId, onDeleteClick }: CartItemProps): JSX.Element {
   const cartItem = useAppSelector(state => getCartItem(state, cartItemId));
 
   if (!cartItem) {
@@ -33,6 +34,14 @@ export function CartItem({ cartItemId }: CartItemProps): JSX.Element {
     }));
   };
 
+  const handleDecrQuantity = () => {
+    if (quantity === 1) {
+      onDeleteClick(cartItemId);
+      return;
+    }
+    dispatch(decrQuantity(cartItemId));
+  };
+
   const handleQuantityBlur = () => {
     if (inputRef.current) {
       inputRef.current.value = '';
@@ -46,7 +55,7 @@ export function CartItem({ cartItemId }: CartItemProps): JSX.Element {
         className="cart-item__close-button button-cross"
         type="button"
         aria-label="Удалить"
-        onClick={ () => dispatch(deleteCartItem(cartItemId)) }
+        onClick={ () => onDeleteClick(cartItemId) }
       >
         <span className="button-cross__icon"></span>
         <span className="cart-item__close-button-interactive-area"></span>
@@ -72,7 +81,7 @@ export function CartItem({ cartItemId }: CartItemProps): JSX.Element {
         <button
           className="quantity__button"
           aria-label="Уменьшить количество"
-          onClick={ () => dispatch(decrQuantity(cartItemId)) }
+          onClick={ () => handleDecrQuantity() }
         >
           <svg width="8" height="8" aria-hidden="true">
             <use xlinkHref="#icon-minus"></use>

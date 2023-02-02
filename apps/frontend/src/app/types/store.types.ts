@@ -32,8 +32,11 @@ export type UserState = {
   error: string;
 };
 
+export type CartState = {
+  sendOrderStatus: LoadingStatus;
+};
+
 export type CartCommodity = {
   product: Product;
   quantity: number;
 };
-

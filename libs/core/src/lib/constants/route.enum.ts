@@ -2,7 +2,7 @@ export enum RouteDomain {
   Auth = 'auth',
   ProductDomain = 'products',
   CommentDomain = 'comments',
-  Order = 'orders',
+  OrderDomain = 'orders',
 }
 
 export enum RoutePath {

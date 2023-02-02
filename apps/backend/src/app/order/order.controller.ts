@@ -24,10 +24,10 @@ import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderService } from './order.service';
 import { OrderRdo } from './rdo/order.rdo';
 
-const { Order } = RouteDomain;
+const { OrderDomain } = RouteDomain;
 const { OrderId } = RouteParam;
 
-@Controller(Order)
+@Controller(OrderDomain)
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
@@ -36,11 +36,8 @@ export class OrderController {
   async createOrder(
     @Body() dto: CreateOrderDto,
     @GetCurrentUser(RequestUser.Sub) userId: string
-  ): Promise<Order> {
-    return fillObject(
-      OrderRdo,
-      await this.orderService.createOrder(userId, dto)
-    );
+  ): Promise<void> {
+    await this.orderService.createOrder(userId, dto);
   }
 
   @UseGuards(JwtAuthGuard)

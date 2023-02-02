@@ -45,6 +45,7 @@ export enum ActionType {
   CheckUser = 'user/checkStatus',
   FetchComments = 'comment/fetchComments',
   CreateComment = 'comment/createComments',
+  SendOrder = 'cart/sendOrder',
 }
 
 export enum AppRoute {
