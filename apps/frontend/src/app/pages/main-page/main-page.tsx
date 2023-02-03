@@ -1,53 +1,20 @@
-import { DEFAULT_PRODUCT_QUERY, PriceRange, ProductQuery, QueryField } from '@guitar-shop/core';
+import { PriceRange, ProductQuery } from '@guitar-shop/core';
 import { useEffect, useState } from 'react';
 import { Breadcrumbs, CatalogFilter, CatalogSort, Pagination, ProductList } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { queryProducts } from '../../store/features/product/api-actions';
 import { getProducts } from '../../store/features/product/product-slice';
-import { FilterProperty, FilterPropertyValue } from '../../types/component.type';
-import { checkValueInCollection, createQueryString } from '../../utils';
+import { createQueryString } from '../../utils';
 
-export function MainPage() {
+export function MainPage(): JSX.Element {
   const products = useAppSelector(getProducts);
   const dispatch = useAppDispatch();
 
   const [ query, setQuery ] = useState<ProductQuery>({});
+  const [ isFilterChange, setIsFilterChange ] = useState<boolean>(false);
 
-  const [ sort, setSort ] = useState({
-    [ QueryField.SortType ]: DEFAULT_PRODUCT_QUERY[ QueryField.SortType ],
-    [ QueryField.SortingOption ]: DEFAULT_PRODUCT_QUERY[ QueryField.SortingOption ]
-  });
-
-
-
-  const handleFilterChange = (
-    property: FilterProperty,
-    value: FilterPropertyValue
-  ): void => {
-    let newQuery = { ...query };
-    let filterCollection: typeof value[] = query[ property ] || [];
-    if (filterCollection) {
-      filterCollection = checkValueInCollection<typeof value>(filterCollection, value);
-      if (filterCollection.length === 0) {
-        delete newQuery[ property ];
-      } else {
-        newQuery = { ...newQuery, [ property ]: filterCollection };
-      }
-    }
-    setQuery({ ...newQuery });
-  };
-
-  const handleSortChange = (newQuery: ProductQuery): void => {
-    setSort({ ...sort, ...newQuery });
-    setQuery({ ...query, ...newQuery });
-  };
-
-  const handleResetFilters = () => {
-    setSort({
-      [ QueryField.SortType ]: DEFAULT_PRODUCT_QUERY[ QueryField.SortType ],
-      [ QueryField.SortingOption ]: DEFAULT_PRODUCT_QUERY[ QueryField.SortingOption ]
-    });
-    setQuery({});
+  const handleSortChange = (newSort: ProductQuery): void => {
+    setQuery({ ...query, ...newSort });
   };
 
   const handlePageChange = (page: number) => {
@@ -58,32 +25,52 @@ export function MainPage() {
     setQuery({ ...query, priceRange });
   };
 
+  const handleFiltersChange = (newFilters: ProductQuery) => {
+    setIsFilterChange(true);
+    setQuery({ ...query, ...newFilters });
+  };
 
+  const handleReset = () => {
+    setQuery({});
+  };
 
   useEffect(() => {
     dispatch(queryProducts(createQueryString({ ...query })));
   }, [ query ]);
+
+  useEffect(() => {
+    if (isFilterChange) {
+      setIsFilterChange(false);
+    }
+  }, [ isFilterChange ]);
 
   return (
     <>
       <main className="page-content">
         <div className="container">
           <h1 className="page-content__title title title--bigger">Каталог гитар</h1>
+
           <Breadcrumbs />
+
           <div className="catalog">
+
             <CatalogFilter
               onPriceRangeChange={ handlePriceRangeChange }
-              onFilterChange={ handleFilterChange }
-              onResetFilters={ handleResetFilters }
+              onFiltersChange={ handleFiltersChange }
+              onReset={ handleReset }
             />
 
             <CatalogSort
-              sortOption={ sort[ QueryField.SortingOption ] }
-              sortType={ sort[ QueryField.SortType ] }
               onSortChange={ handleSortChange }
             />
+
             <ProductList products={ products } />
-            <Pagination onPageClick={ handlePageChange } />
+
+            <Pagination
+              isFilterChange={ isFilterChange }
+              onPageClick={ handlePageChange }
+            />
+
           </div>
         </div>
       </main>
@@ -91,4 +78,3 @@ export function MainPage() {
   );
 }
 
-export default MainPage;;;

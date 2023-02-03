@@ -1,22 +1,36 @@
 import { ProductQuery, ProductSortingOption, QueryField, SortType } from '@guitar-shop/core';
+import { useState } from 'react';
+
+export const DEFAULT_CUSTOMER_SORT = {
+  TYPE: SortType.Desc,
+  OPTION: ProductSortingOption.Price
+};
 
 export interface CatalogSortProps {
-  sortOption: ProductSortingOption;
-  sortType: SortType;
-  onSortChange: (newQuery: ProductQuery) => void;
+  onSortChange: (newSort: ProductQuery) => void;
 }
 
-export function CatalogSort({ sortOption, sortType, onSortChange }: CatalogSortProps): JSX.Element {
+export function CatalogSort({ onSortChange }: CatalogSortProps): JSX.Element {
+
+  const [ sort, setSort ] = useState<ProductQuery>({
+    [ QueryField.SortType ]: DEFAULT_CUSTOMER_SORT.TYPE,
+    [ QueryField.SortingOption ]: DEFAULT_CUSTOMER_SORT.OPTION
+  });
+
+  const handleSortChange = (newSort: ProductQuery) => {
+    setSort({ ...sort, ...newSort });
+    onSortChange(newSort);
+  };
 
   const setSortOptionActive = (option: ProductSortingOption): string => {
-    return (sortOption !== ProductSortingOption.AddedAt && sortOption === option)
+    return (sort.sortingOption !== ProductSortingOption.AddedAt && sort.sortingOption === option)
       ?
       'catalog-sort__type-button--active'
       : '';
   };
 
   const setSortTypeActive = (type: SortType): string => {
-    return (sortOption !== ProductSortingOption.AddedAt && sortType === type)
+    return (sort.sortingOption !== ProductSortingOption.AddedAt && sort.sortType === type)
       ?
       'catalog-sort__order-button--active'
       : '';
@@ -30,12 +44,12 @@ export function CatalogSort({ sortOption, sortType, onSortChange }: CatalogSortP
         <button
           className={ `catalog-sort__type-button ${setSortOptionActive(ProductSortingOption.Price)}` }
           aria-label="по цене"
-          onClick={ () => onSortChange({ [ QueryField.SortingOption ]: ProductSortingOption.Price }) }
+          onClick={ () => handleSortChange({ [ QueryField.SortingOption ]: ProductSortingOption.Price }) }
         >по цене</button>
         <button
           className={ `catalog-sort__type-button ${setSortOptionActive(ProductSortingOption.Rating)}` }
           aria-label="по популярности"
-          onClick={ () => onSortChange({ [ QueryField.SortingOption ]: ProductSortingOption.Rating }) }
+          onClick={ () => handleSortChange({ [ QueryField.SortingOption ]: ProductSortingOption.Rating }) }
         >по популярности</button>
       </div>
 
@@ -43,12 +57,12 @@ export function CatalogSort({ sortOption, sortType, onSortChange }: CatalogSortP
         <button
           className={ `catalog-sort__order-button catalog-sort__order-button--up ${setSortTypeActive(SortType.Asc)}` }
           aria-label="По возрастанию"
-          onClick={ () => onSortChange({ [ QueryField.SortType ]: SortType.Asc }) }
+          onClick={ () => handleSortChange({ [ QueryField.SortType ]: SortType.Asc }) }
         ></button>
         <button
           className={ `catalog-sort__order-button catalog-sort__order-button--down ${setSortTypeActive(SortType.Desc)}` }
           aria-label="По убыванию"
-          onClick={ () => onSortChange({ [ QueryField.SortType ]: SortType.Desc }) }
+          onClick={ () => handleSortChange({ [ QueryField.SortType ]: SortType.Desc }) }
         ></button>
       </div>
 

@@ -7,9 +7,10 @@ const { ACTIVE_PAGE_NUMBER, BUTTONS_COUNT, PRODUCT_CARDS_COUNT } = DEFAULT_PAGIN
 
 export interface PaginationProps {
   onPageClick: (page: number) => void;
+  isFilterChange: boolean;
 }
 
-export function Pagination({ onPageClick }: PaginationProps): JSX.Element {
+export function Pagination({ onPageClick, isFilterChange }: PaginationProps): JSX.Element {
 
   const totalProductsCount = useAppSelector(getTotalProductsCount);
 
@@ -26,6 +27,12 @@ export function Pagination({ onPageClick }: PaginationProps): JSX.Element {
   useEffect(() => {
     onPageClick(currentPage);
   }, [ currentPage ]);
+
+  useEffect(() => {
+    if (isFilterChange) {
+      setCurrentPage(ACTIVE_PAGE_NUMBER);
+    }
+  }, [ isFilterChange ]);
 
   return (
     <div className="pagination page-content__pagination">

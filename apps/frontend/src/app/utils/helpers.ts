@@ -4,11 +4,15 @@ import 'dayjs/locale/ru';
 export const createQueryString = (query: Record<string, unknown>): string => {
   return `${Object.entries(query)
     .map(([key, value]) => {
-      if (value instanceof Array) {
+      if (value instanceof Array && value.length > 0) {
         return `${key}=${value.join(',')}`;
       }
-      return `${key}=${value}`;
+
+      if (!(value instanceof Array)) {
+        return `${key}=${value}`;
+      }
     })
+    .filter((item) => Boolean(item))
     .join('&')} `;
 };
 

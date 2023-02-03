@@ -16,9 +16,10 @@ const debounce = (callback: any, timeoutDelay = DEFAULT_PRICE_CHANGE_TIMEOUT) =>
 
 export interface PriceRangeFilterProps {
   onPriceRangeChange: (priceRange: PriceRange) => void;
+  isShouldReset: boolean;
 }
 
-export function PriceRangeFilter({ onPriceRangeChange }: PriceRangeFilterProps): JSX.Element {
+export function PriceRangeFilter({ onPriceRangeChange, isShouldReset }: PriceRangeFilterProps): JSX.Element {
   const minProductPrice = useAppSelector(getMinProductPrice);
   const maxProductPrice = useAppSelector(getMaxProductPrice);
 
@@ -42,6 +43,12 @@ export function PriceRangeFilter({ onPriceRangeChange }: PriceRangeFilterProps):
 
     validatePriceRange();
   };
+
+  useEffect(() => {
+    if (isShouldReset) {
+      setPriceRange([ null, null ]);
+    }
+  }, [ isShouldReset ]);
 
   useEffect(() => {
     if (isValidPriceRange) {
@@ -80,5 +87,3 @@ export function PriceRangeFilter({ onPriceRangeChange }: PriceRangeFilterProps):
     </fieldset>
   );
 }
-
-// price >= minProductPrice && price <= maxProductPrice
