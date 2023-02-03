@@ -3,6 +3,7 @@ import {
   DbCollection,
   Product,
   ProductField,
+  SortType,
 } from '@guitar-shop/core';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
@@ -32,24 +33,63 @@ export class ProductRepository extends CrudRepository<ProductModel> {
     // TODO: убрать
     // console.log(query);
 
-    const filterCondition = {};
+    const filterCondition = [];
+
+    guitarType &&
+      filterCondition.push({ $expr: { $in: ['$guitarType', guitarType] } });
 
     stringsNumber &&
-      (filterCondition[ProductField.StringsNumber] = stringsNumber);
-
-    guitarType && (filterCondition[ProductField.GuitarType] = guitarType);
-
-    priceRange &&
-      (filterCondition[ProductField.Price] = {
-        $gte: priceRange[0],
-        $lte: priceRange[1],
+      filterCondition.push({
+        $expr: { $in: ['$stringsNumber', stringsNumber] },
       });
 
-    return this.productModel
-      .find(filterCondition)
-      .sort({ [sortingOption]: sortType })
-      .limit(limit)
-      .skip(limit * (page - 1));
+    priceRange &&
+      filterCondition.push({
+        $expr: {
+          $and: [
+            { $gte: ['$price', priceRange[0]] },
+            { $lte: ['$price', priceRange[1]] },
+          ],
+        },
+      });
+
+    // console.log(JSON.stringify(filterCondition));
+
+    return this.productModel.aggregate([
+      {
+        $lookup: {
+          from: 'products',
+          pipeline: [
+            filterCondition.length
+              ? {
+                  $match: {
+                    $and: filterCondition,
+                  },
+                }
+              : { $match: {} },
+          ],
+          as: 'products',
+        },
+      },
+      {
+        $addFields: {
+          totalProductsCount: { $size: '$products' },
+          minPrice: { $min: '$products.price' },
+          maxPrice: { $max: '$products.price' },
+        },
+      },
+      { $unset: 'products' },
+      filterCondition.length
+        ? {
+            $match: {
+              $and: filterCondition,
+            },
+          }
+        : { $match: {} },
+      { $sort: { [sortingOption]: sortType === SortType.Asc ? 1 : -1 } },
+      { $skip: limit * (page - 1) },
+      { $limit: limit },
+    ]);
   }
 
   async updateRating(id: string): Promise<void> {

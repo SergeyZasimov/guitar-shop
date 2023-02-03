@@ -31,6 +31,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { PRODUCT_VALIDATION_MESSAGE } from './product.constant';
 import { ProductService } from './product.service';
 import { ProductRdo } from './rdo/product.rdo';
+import { ProductsRdo } from './rdo/products.rdo';
 
 const { ProductDomain } = RouteDomain;
 const { UploadPhoto } = RoutePath;
@@ -50,7 +51,10 @@ export class ProductController {
 
   @Get('')
   async getProducts(@Query() query: ProductsQueryDto) {
-    return fillObject(ProductRdo, await this.productService.getProducts(query));
+    return fillObject(
+      ProductsRdo,
+      await this.productService.getProducts(query)
+    );
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)

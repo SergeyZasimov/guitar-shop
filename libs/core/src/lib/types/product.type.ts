@@ -14,6 +14,10 @@ export enum ProductField {
   CreatedAt = 'createdAt',
   AddedAt = 'addedAt',
   CommentsCount = 'commentsCount',
+  Products = 'products',
+  TotalProductsCount = 'totalProductsCount',
+  MinPrice = 'minPrice',
+  MaxPrice = 'maxPrice',
 }
 
 export type Product = {
@@ -29,6 +33,9 @@ export type Product = {
   [ProductField.TotalRating]?: number;
   [ProductField.CreatedAt]?: Date;
   [ProductField.CommentsCount]?: number;
+  [ProductField.TotalProductsCount]?: number;
+  [ProductField.MinPrice]?: number;
+  [ProductField.MaxPrice]?: number;
 };
 
 export type NewProduct = Pick<
@@ -40,3 +47,10 @@ export type NewProduct = Pick<
   | ProductField.StringsNumber
   | ProductField.Price
 >;
+
+export type ProductsResponse = {
+  [ProductField.Products]: Product[];
+  [ProductField.TotalProductsCount]: number;
+  [ProductField.MinPrice]: number;
+  [ProductField.MaxPrice]: number;
+};

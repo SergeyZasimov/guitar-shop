@@ -4,7 +4,6 @@
   position: relative;
   width: 80px;
   height: 80px;
-  text-align: center;
 }
 .lds-hourglass:after {
   content: ' ';

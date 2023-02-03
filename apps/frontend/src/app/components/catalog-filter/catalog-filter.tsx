@@ -1,5 +1,7 @@
-import { AVAILABLE_GUITAR_TYPE, AVAILABLE_STRINGS_NUMBERS, GUITAR_COLLECTION, QueryField } from '@guitar-shop/core';
+import { AVAILABLE_GUITAR_TYPE, AVAILABLE_STRINGS_NUMBERS, GUITAR_COLLECTION, QueryField, formatPrice } from '@guitar-shop/core';
 import { ChangeEvent } from 'react';
+import { useAppSelector } from '../../hooks/store.hooks';
+import { getMaxProductPrice, getMinProductPrice } from '../../store/features/product/product-slice';
 import { FilterProperty, FilterPropertyValue } from '../../types/component.type';
 
 export interface CatalogFilterProps {
@@ -9,6 +11,10 @@ export interface CatalogFilterProps {
 }
 
 export function CatalogFilter({ onFilterChange, onPriceRangeChange, onResetFilters }: CatalogFilterProps): JSX.Element {
+
+  const minProductPrice = useAppSelector(getMinProductPrice);
+  const maxProductPrice = useAppSelector(getMaxProductPrice);
+
   return (
     <form className="catalog-filter">
       <h2 className="title title--bigger catalog-filter__title">Фильтр</h2>
@@ -19,7 +25,7 @@ export function CatalogFilter({ onFilterChange, onPriceRangeChange, onResetFilte
             <label className="visually-hidden">Минимальная цена</label>
             <input
               type="number"
-              placeholder="1 000"
+              placeholder={ formatPrice(minProductPrice) }
               id="priceMin"
               name="от"
               onInput={ (evt: ChangeEvent<HTMLInputElement>) => onPriceRangeChange(parseInt(evt.target.value), 0) }
@@ -29,7 +35,7 @@ export function CatalogFilter({ onFilterChange, onPriceRangeChange, onResetFilte
             <label className="visually-hidden">Максимальная цена</label>
             <input
               type="number"
-              placeholder="30 000"
+              placeholder={ formatPrice(maxProductPrice) }
               id="priceMax"
               name="до"
               onInput={ (evt: ChangeEvent<HTMLInputElement>) => onPriceRangeChange(parseInt(evt.target.value), 1) }

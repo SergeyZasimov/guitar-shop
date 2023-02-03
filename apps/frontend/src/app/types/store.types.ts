@@ -25,6 +25,9 @@ export type ProductState = {
   commentLoadingStatus: LoadingStatus;
   isError: boolean;
   comments: CommentResponse[];
+  totalProductsCount: number;
+  minPrice: number;
+  maxPrice: number;
 };
 
 export type UserState = {

@@ -9,6 +9,12 @@ export const MAX_RATING = 5;
 export const COMMENT_LIST_OFFSET = 3;
 export const DEFAULT_ADD_TO_CART_QUANTITY = 1;
 
+export const DEFAULT_PAGINATION = {
+  BUTTONS_COUNT: 3,
+  PRODUCT_CARDS_COUNT: 9,
+  ACTIVE_PAGE_NUMBER: 1,
+};
+
 export const AUTHORIZATION = {
   FIELD: 'Authorization',
   BEARER: 'Bearer',

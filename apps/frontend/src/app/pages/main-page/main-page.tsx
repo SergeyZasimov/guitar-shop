@@ -1,6 +1,6 @@
 import { DEFAULT_PRODUCT_QUERY, PriceRange, ProductQuery, QueryField } from '@guitar-shop/core';
 import { useEffect, useState } from 'react';
-import { Breadcrumbs, CartAddModal, CatalogFilter, CatalogSort, Pagination, ProductList } from '../../components';
+import { Breadcrumbs, CatalogFilter, CatalogSort, Pagination, ProductList } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { queryProducts } from '../../store/features/product/api-actions';
 import { getProducts } from '../../store/features/product/product-slice';
@@ -60,6 +60,10 @@ export function MainPage() {
     setQuery({});
   };
 
+  const handlePageChange = (page: number) => {
+    setQuery({ ...query, page });
+  };
+
 
 
   useEffect(() => {
@@ -85,7 +89,7 @@ export function MainPage() {
               onSortChange={ handleSortChange }
             />
             <ProductList products={ products } />
-            <Pagination />
+            <Pagination onPageClick={ handlePageChange } />
           </div>
         </div>
       </main>

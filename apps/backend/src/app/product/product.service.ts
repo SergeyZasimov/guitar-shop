@@ -1,4 +1,9 @@
-import { Comment, Product } from '@guitar-shop/core';
+import {
+  Comment,
+  Product,
+  ProductField,
+  ProductsResponse,
+} from '@guitar-shop/core';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AppOption, ConfigNamespace } from '../app.constant';
@@ -25,8 +30,14 @@ export class ProductService {
     return this.productRepository.create(productEntity);
   }
 
-  async getProducts(query: ProductsQueryDto): Promise<Product[]> {
-    return this.productRepository.find(query);
+  async getProducts(query: ProductsQueryDto): Promise<ProductsResponse> {
+    const result = await this.productRepository.find(query);
+    return {
+      [ProductField.Products]: result,
+      [ProductField.TotalProductsCount]: result[0]?.totalProductsCount || 0,
+      [ProductField.MinPrice]: result[0]?.minPrice || 0,
+      [ProductField.MaxPrice]: result[0]?.maxPrice || 0,
+    };
   }
 
   async getProduct(id: string): Promise<Product> {
