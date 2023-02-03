@@ -1,6 +1,6 @@
-import { Comment, CommentResponse, User } from '@guitar-shop/core';
+import { CommentResponse, User } from '@guitar-shop/core';
 import { RatingStarsLocation } from '../../app.constant';
-import { formateDate } from '../../utils';
+import { formateCommentDate } from '../../utils';
 import { RatingStars } from '../rating-stars/rating-stars';
 
 export interface CommentItemProps {
@@ -15,7 +15,7 @@ export function CommentItem({ comment }: CommentItemProps) {
     <div className="review">
       <div className="review__wrapper">
         <h4 className="review__title review__title--author title title--lesser">{ userName }</h4>
-        <span className="review__date">{ formateDate(createdAt) }</span>
+        <span className="review__date">{ formateCommentDate(createdAt) }</span>
       </div>
       <div className="rate review__rating-panel">
         <RatingStars

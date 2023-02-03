@@ -40,6 +40,6 @@ export class ProductRdo implements Product {
   @Expose()
   [ProductField.CommentsCount]: number;
 
-  @Expose({ name: ProductField.CreatedAt })
-  [ProductField.AddedAt]: Date;
+  @Expose()
+  [ProductField.CreatedAt]: Date;
 }

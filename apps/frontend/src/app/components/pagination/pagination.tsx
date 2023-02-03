@@ -1,48 +1,39 @@
-import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import { DEFAULT_PAGINATION } from '../../app.constant';
 import { useAppSelector } from '../../hooks/store.hooks';
 import { getTotalProductsCount } from '../../store/features/product/product-slice';
+import { AppRoute } from '../../utils';
 
 const { ACTIVE_PAGE_NUMBER, BUTTONS_COUNT, PRODUCT_CARDS_COUNT } = DEFAULT_PAGINATION;
 
 export interface PaginationProps {
+  currentPage: number;
+  location: string;
   onPageClick: (page: number) => void;
-  isFilterChange: boolean;
 }
 
-export function Pagination({ onPageClick, isFilterChange }: PaginationProps): JSX.Element {
-
+export function Pagination({ onPageClick, location, currentPage }: PaginationProps): JSX.Element {
   const totalProductsCount = useAppSelector(getTotalProductsCount);
 
   const totalPagesCount = Math.ceil(totalProductsCount / PRODUCT_CARDS_COUNT);
 
   const pagesLength = totalPagesCount < BUTTONS_COUNT ? totalPagesCount : BUTTONS_COUNT;
 
-  const [ currentPage, setCurrentPage ] = useState<number>(ACTIVE_PAGE_NUMBER);
-
-  const handlePageClick = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
-
-  useEffect(() => {
-    onPageClick(currentPage);
-  }, [ currentPage ]);
-
-  useEffect(() => {
-    if (isFilterChange) {
-      setCurrentPage(ACTIVE_PAGE_NUMBER);
-    }
-  }, [ isFilterChange ]);
+  const paginationClassName = classNames({
+    'pagination': true,
+    'page-content__pagination': location === AppRoute.Root,
+    'product-list__pagination': location === AppRoute.Commodities
+  });
 
   return (
-    <div className="pagination page-content__pagination">
+    <div className={ paginationClassName }>
       <ul className="pagination__list">
         {
           currentPage !== ACTIVE_PAGE_NUMBER && totalProductsCount !== 0 &&
           <li className="pagination__page pagination__page--prev" id="prev">
             <a
               className="link pagination__page-link"
-              onClick={ () => setCurrentPage(currentPage - 1) }
+              onClick={ () => onPageClick(currentPage - 1) }
             >Назад
             </a>
           </li>
@@ -62,7 +53,7 @@ export function Pagination({ onPageClick, isFilterChange }: PaginationProps): JS
               >
                 <a
                   className="link pagination__page-link"
-                  onClick={ () => handlePageClick(pageNumber) }
+                  onClick={ () => onPageClick(pageNumber) }
                 >
                   { pageNumber }
                 </a>
@@ -75,7 +66,7 @@ export function Pagination({ onPageClick, isFilterChange }: PaginationProps): JS
           <li className="pagination__page pagination__page--next" id="next">
             <a
               className="link pagination__page-link"
-              onClick={ () => setCurrentPage(currentPage + 1) }
+              onClick={ () => onPageClick(currentPage + 1) }
             >
               Далее
             </a>

@@ -10,22 +10,14 @@ import { ActionType } from '../../../app.constant';
 import { AsyncThunkOptionField } from '../../../types/store.types';
 
 const { ProductDomain, CommentDomain } = RouteDomain;
-const { FetchProducts, QueryProducts, FetchProduct } = ActionType;
+const { FetchProducts, FetchProduct } = ActionType;
+
 
 export const fetchProducts = createAsyncThunk<
   ProductsResponse,
-  undefined,
-  AsyncThunkOptionField
->(FetchProducts, async (_, { extra: api }) => {
-  const { data } = await api.get<ProductsResponse>(ProductDomain);
-  return data;
-});
-
-export const queryProducts = createAsyncThunk<
-  ProductsResponse,
   string,
   AsyncThunkOptionField
->(QueryProducts, async (queryString, { extra: api }) => {
+>(FetchProducts, async (queryString, { extra: api }) => {
   // TODO: log
   // console.log(queryString);
   const { data } = await api.get<ProductsResponse>(

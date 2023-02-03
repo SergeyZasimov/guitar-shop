@@ -1,4 +1,9 @@
-import { User } from '@guitar-shop/core';
+import {
+  ProductSortingOption,
+  QueryField,
+  SortType,
+  User,
+} from '@guitar-shop/core';
 
 export const BACKEND_URL = 'http://localhost:3333/api/';
 
@@ -13,6 +18,21 @@ export const DEFAULT_PAGINATION = {
   BUTTONS_COUNT: 3,
   PRODUCT_CARDS_COUNT: 9,
   ACTIVE_PAGE_NUMBER: 1,
+};
+
+export const DEFAULT_CUSTOMER_SORT = {
+  TYPE: SortType.Desc,
+  OPTION: ProductSortingOption.Price,
+};
+
+export const DEFAULT_ADMIN_SORT = {
+  TYPE: SortType.Desc,
+  OPTION: ProductSortingOption.AddedAt,
+};
+
+export const DEFAULT_FILTERS_STATE = {
+  [QueryField.GuitarTypeFilter]: [],
+  [QueryField.StringsNumberFilter]: [],
 };
 
 export const AUTHORIZATION = {
@@ -46,7 +66,6 @@ export enum ActionType {
   RedirectBack = 'app/redirectBack',
   FetchProducts = 'product/fetchProducts',
   FetchProduct = 'product/fetchProduct',
-  QueryProducts = 'product/query',
   RegisterUser = 'user/register',
   LoginUser = 'user/login',
   CheckUser = 'user/checkStatus',

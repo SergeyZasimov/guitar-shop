@@ -7,7 +7,6 @@ import {
   fetchComments,
   fetchProduct,
   fetchProducts,
-  queryProducts,
 } from './api-actions';
 
 const initialState: ProductState = {
@@ -36,14 +35,6 @@ export const productSlice = createSlice({
         state.totalProductsCount = payload.totalProductsCount;
         state.minPrice = payload.minPrice;
         state.maxPrice = payload.maxPrice;
-        state.productLoadingStatus = LoadingStatus.Succeeded;
-      })
-      .addCase(queryProducts.pending, (state) => {
-        state.productLoadingStatus = LoadingStatus.Loading;
-      })
-      .addCase(queryProducts.fulfilled, (state, { payload }) => {
-        state.products = payload.products;
-        state.totalProductsCount = payload.totalProductsCount;
         state.productLoadingStatus = LoadingStatus.Succeeded;
       })
       .addCase(fetchProduct.pending, (state) => {

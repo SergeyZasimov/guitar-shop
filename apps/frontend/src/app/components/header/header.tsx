@@ -1,3 +1,5 @@
+import { UserRole } from '@guitar-shop/core';
+import classnames from 'classnames';
 import { Link, NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/store.hooks';
 import { getCartItemsIds } from '../../store/features/cart/cart-slice';
@@ -8,9 +10,16 @@ export function Header(): JSX.Element {
   const user = useAppSelector(getUser);
   const cart = useAppSelector(getCartItemsIds);
 
+  const headerClass = classnames({
+    'header': true,
+    'header--logged-empty': user && !cart.length,
+    'header--logged': user && cart.length,
+    'header--admin': user && user.role === UserRole.Admin
+  });
+
   return (
     <header
-      className={ `header ${user && !cart.length && "header--logged-empty"} ${user && cart.length && "header--logged"}` }
+      className={ headerClass }
       id="header"
     >
       <div className="container">
@@ -28,20 +37,45 @@ export function Header(): JSX.Element {
                 >Каталог
                 </NavLink>
               </li>
-              <li className="main-nav__item">
-                <NavLink
-                  className={ ({ isActive }) => isActive ? "link main-nav__link link--current" : "link main-nav__link" }
-                  to={ AppRoute.NotFound }
-                >Где купить?
-                </NavLink>
-              </li>
-              <li className="main-nav__item">
-                <NavLink
-                  className={ ({ isActive }) => isActive ? "link main-nav__link link--current" : "link main-nav__link" }
-                  to={ AppRoute.NotFound }
-                >О компании
-                </NavLink>
-              </li>
+              { !user || user?.role === UserRole.Customer ?
+                <>
+                  <li className="main-nav__item">
+                    <NavLink
+                      className={ ({ isActive }) => isActive ? "link main-nav__link link--current" : "link main-nav__link" }
+                      to={ AppRoute.NotFound }
+                    >
+                      Где купить?
+                    </NavLink>
+                  </li>
+                  <li className="main-nav__item">
+                    <NavLink
+                      className={ ({ isActive }) => isActive ? "link main-nav__link link--current" : "link main-nav__link" }
+                      to={ AppRoute.NotFound }
+                    >
+                      О компании
+                    </NavLink>
+                  </li>
+                </>
+                :
+                <>
+                  <li className="main-nav__item">
+                    <NavLink
+                      className={ ({ isActive }) => isActive ? "link main-nav__link link--current" : "link main-nav__link" }
+                      to="#"
+                    >
+                      Список заказов
+                    </NavLink>
+                  </li>
+                  <li className="main-nav__item">
+                    <NavLink
+                      className={ ({ isActive }) => isActive ? "link main-nav__link link--current" : "link main-nav__link" }
+                      to={ AppRoute.Commodities }
+                    >
+                      Список товаров
+                    </NavLink>
+                  </li>
+                </>
+              }
             </ul>
           </nav>
           <div className="header__container">

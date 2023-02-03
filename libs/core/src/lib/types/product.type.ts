@@ -12,7 +12,6 @@ export enum ProductField {
   Price = 'price',
   TotalRating = 'totalRating',
   CreatedAt = 'createdAt',
-  AddedAt = 'addedAt',
   CommentsCount = 'commentsCount',
   Products = 'products',
   TotalProductsCount = 'totalProductsCount',

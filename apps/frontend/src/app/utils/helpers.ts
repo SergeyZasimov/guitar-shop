@@ -22,6 +22,10 @@ export const checkValueInCollection = <T>(collection: T[], value: T) => {
     : collection.concat(value);
 };
 
-export const formateDate = (date: Date | undefined) => {
+export const formateCommentDate = (date: Date | undefined) => {
   return dayjs(date).locale('ru').format('D MMMM');
+};
+
+export const formateAdminCommoditiesDate = (date: Date | undefined) => {
+  return dayjs(date).locale('ru').format('DD.MM.YYYY');
 };

@@ -1,8 +1,5 @@
-import { AVAILABLE_GUITAR_TYPE, AVAILABLE_STRINGS_NUMBERS, GUITAR_COLLECTION, GuitarType, PriceRange, ProductQuery, QueryField, StringsNumber } from '@guitar-shop/core';
-import { useEffect, useState } from 'react';
+import { AVAILABLE_GUITAR_TYPE, AVAILABLE_STRINGS_NUMBERS, GUITAR_COLLECTION, GuitarType, ProductQuery, QueryField, StringsNumber } from '@guitar-shop/core';
 import { FilterProperty, FilterPropertyValue } from '../../types/component.type';
-import { checkValueInCollection } from '../../utils';
-import { PriceRangeFilter } from '../price-range-filter/price-range-filter';
 
 const FILTER_CONSTRAINTS = {
   acoustic: [ '6', '7', '12' ],
@@ -10,49 +7,12 @@ const FILTER_CONSTRAINTS = {
   ukulele: [ '4' ]
 };
 
-const initialFilterState = {
-  [ QueryField.GuitarTypeFilter ]: [],
-  [ QueryField.StringsNumberFilter ]: []
-};
-
 export interface CatalogFilterProps {
-  onFiltersChange: (newFilters: ProductQuery) => void;
-  onPriceRangeChange: (priceRange: PriceRange) => void;
-  onReset: () => void;
+  filters: ProductQuery;
+  onFiltersChange: (property: FilterProperty, value: FilterPropertyValue) => void;
 }
 
-export function CatalogFilter({ onFiltersChange, onPriceRangeChange, onReset }: CatalogFilterProps): JSX.Element {
-
-  const [ filters, setFilters ] = useState<ProductQuery>(initialFilterState);
-
-  const [ isPriceShouldReset, setIsPriceShouldReset ] = useState<boolean>(false);
-
-  const handleResetClick = () => {
-    setIsPriceShouldReset(true);
-    setFilters(initialFilterState);
-    onReset();
-  };
-
-  const handleFilterChange = (
-    property: FilterProperty,
-    value: FilterPropertyValue
-  ): void => {
-    let newFilter = { ...filters };
-    let filterCollection: typeof value[] = filters[ property ] || [];
-    filterCollection = checkValueInCollection<typeof value>(filterCollection, value);
-    newFilter = { ...newFilter, [ property ]: filterCollection };
-    setFilters({ ...newFilter });
-  };
-
-  useEffect(() => {
-    onFiltersChange(filters);
-  }, [ filters ]);
-
-  useEffect(() => {
-    if (isPriceShouldReset) {
-      setIsPriceShouldReset(false);
-    }
-  }, [ isPriceShouldReset ]);
+export function CatalogFilter({ onFiltersChange, filters }: CatalogFilterProps): JSX.Element {
 
   const setStingsNumberFilterDisabled = (stringNumber: StringsNumber) =>
     filters.guitarType &&
@@ -65,14 +25,7 @@ export function CatalogFilter({ onFiltersChange, onPriceRangeChange, onReset }: 
     !(filters.stringsNumber.some((stringsNumber) => FILTER_CONSTRAINTS[ guitarType ].includes(stringsNumber)));
 
   return (
-    <form className="catalog-filter">
-      <h2 className="title title--bigger catalog-filter__title">Фильтр</h2>
-
-      <PriceRangeFilter
-        onPriceRangeChange={ onPriceRangeChange }
-        isShouldReset={ isPriceShouldReset }
-      />
-
+    <>
       <fieldset className="catalog-filter__block">
         <legend className="catalog-filter__block-title">Тип гитар</legend>
         {
@@ -83,7 +36,7 @@ export function CatalogFilter({ onFiltersChange, onPriceRangeChange, onReset }: 
                 type="checkbox"
                 id={ type }
                 name={ type }
-                onChange={ () => handleFilterChange(QueryField.GuitarTypeFilter, type) }
+                onChange={ () => onFiltersChange(QueryField.GuitarTypeFilter, type) }
                 disabled={ setGuitarTypeFilterDisabled(type) }
               />
               <label htmlFor={ type }>{ GUITAR_COLLECTION[ type ] }</label>
@@ -102,7 +55,7 @@ export function CatalogFilter({ onFiltersChange, onPriceRangeChange, onReset }: 
                 type="checkbox"
                 id={ `${stringNumber}-strings` }
                 name={ `${stringNumber}-strings` }
-                onChange={ () => handleFilterChange(QueryField.StringsNumberFilter, stringNumber) }
+                onChange={ () => onFiltersChange(QueryField.StringsNumberFilter, stringNumber) }
                 disabled={ setStingsNumberFilterDisabled(stringNumber) }
               />
               <label htmlFor={ `${stringNumber}-strings` }>{ stringNumber }</label>
@@ -110,12 +63,6 @@ export function CatalogFilter({ onFiltersChange, onPriceRangeChange, onReset }: 
           ))
         }
       </fieldset>
-
-      <button
-        className="catalog-filter__reset-btn button button--black-border button--medium"
-        type="reset"
-        onClick={ handleResetClick }
-      >Очистить</button>
-    </form>
+    </>
   );
 }
