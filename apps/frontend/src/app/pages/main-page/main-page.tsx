@@ -18,17 +18,7 @@ export function MainPage() {
     [ QueryField.SortingOption ]: DEFAULT_PRODUCT_QUERY[ QueryField.SortingOption ]
   });
 
-  const [ priceRange, setPriceRange ] = useState<PriceRange>([ null, null ]);
 
-  const handlePriceRangeChange = (price: number, index: number) => {
-    const newPrice = isNaN(price) ? null : price;
-    setPriceRange((prevState: PriceRange) => {
-      prevState[ index ] = newPrice;
-      return [ ...prevState ];
-    });
-    const newQuery = { [ QueryField.PriceRange ]: priceRange };
-    setQuery({ ...query, ...newQuery });
-  };
 
   const handleFilterChange = (
     property: FilterProperty,
@@ -62,6 +52,10 @@ export function MainPage() {
 
   const handlePageChange = (page: number) => {
     setQuery({ ...query, page });
+  };
+
+  const handlePriceRangeChange = (priceRange: PriceRange) => {
+    setQuery({ ...query, priceRange });
   };
 
 

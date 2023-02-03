@@ -1,48 +1,19 @@
-import { AVAILABLE_GUITAR_TYPE, AVAILABLE_STRINGS_NUMBERS, GUITAR_COLLECTION, QueryField, formatPrice } from '@guitar-shop/core';
-import { ChangeEvent } from 'react';
-import { useAppSelector } from '../../hooks/store.hooks';
-import { getMaxProductPrice, getMinProductPrice } from '../../store/features/product/product-slice';
+import { AVAILABLE_GUITAR_TYPE, AVAILABLE_STRINGS_NUMBERS, GUITAR_COLLECTION, PriceRange, QueryField } from '@guitar-shop/core';
 import { FilterProperty, FilterPropertyValue } from '../../types/component.type';
+import { PriceRangeFilter } from '../price-range-filter/price-range-filter';
 
 export interface CatalogFilterProps {
   onFilterChange: (property: FilterProperty, value: FilterPropertyValue) => void;
-  onPriceRangeChange: (price: number, index: number) => void;
+  onPriceRangeChange: (priceRange: PriceRange) => void;
   onResetFilters: () => void;
 }
 
 export function CatalogFilter({ onFilterChange, onPriceRangeChange, onResetFilters }: CatalogFilterProps): JSX.Element {
 
-  const minProductPrice = useAppSelector(getMinProductPrice);
-  const maxProductPrice = useAppSelector(getMaxProductPrice);
-
   return (
     <form className="catalog-filter">
       <h2 className="title title--bigger catalog-filter__title">Фильтр</h2>
-      <fieldset className="catalog-filter__block">
-        <legend className="catalog-filter__block-title">Цена, ₽</legend>
-        <div className="catalog-filter__price-range">
-          <div className="form-input">
-            <label className="visually-hidden">Минимальная цена</label>
-            <input
-              type="number"
-              placeholder={ formatPrice(minProductPrice) }
-              id="priceMin"
-              name="от"
-              onInput={ (evt: ChangeEvent<HTMLInputElement>) => onPriceRangeChange(parseInt(evt.target.value), 0) }
-            />
-          </div>
-          <div className="form-input">
-            <label className="visually-hidden">Максимальная цена</label>
-            <input
-              type="number"
-              placeholder={ formatPrice(maxProductPrice) }
-              id="priceMax"
-              name="до"
-              onInput={ (evt: ChangeEvent<HTMLInputElement>) => onPriceRangeChange(parseInt(evt.target.value), 1) }
-            />
-          </div>
-        </div>
-      </fieldset>
+      <PriceRangeFilter onPriceRangeChange={ onPriceRangeChange } />
       <fieldset className="catalog-filter__block">
         <legend className="catalog-filter__block-title">Тип гитар</legend>
         {

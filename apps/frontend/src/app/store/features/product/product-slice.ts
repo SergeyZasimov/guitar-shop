@@ -44,8 +44,6 @@ export const productSlice = createSlice({
       .addCase(queryProducts.fulfilled, (state, { payload }) => {
         state.products = payload.products;
         state.totalProductsCount = payload.totalProductsCount;
-        state.minPrice = payload.minPrice;
-        state.maxPrice = payload.maxPrice;
         state.productLoadingStatus = LoadingStatus.Succeeded;
       })
       .addCase(fetchProduct.pending, (state) => {
