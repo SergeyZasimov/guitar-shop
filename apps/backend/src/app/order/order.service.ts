@@ -1,4 +1,4 @@
-import { Order, OrderField, OrderItem } from '@guitar-shop/core';
+import { ApiQuery, Order, OrderField, OrderItem } from '@guitar-shop/core';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { NotifyService } from '../notify/notify.service';
 import { ProductService } from '../product/product.service';
@@ -35,8 +35,8 @@ export class OrderService {
     return newOrder;
   }
 
-  async getOrders(): Promise<Order[]> {
-    return this.orderRepository.find();
+  async getOrders(query: ApiQuery): Promise<Order[]> {
+    return this.orderRepository.find(query);
   }
 
   async getOrder(orderId: string): Promise<Order> {

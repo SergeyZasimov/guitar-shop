@@ -53,8 +53,6 @@ export class ProductRepository extends CrudRepository<ProductModel> {
         },
       });
 
-    // console.log(JSON.stringify(filterCondition));
-
     return this.productModel.aggregate([
       {
         $lookup: {

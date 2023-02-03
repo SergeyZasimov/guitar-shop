@@ -1,9 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { Layout, PrivateRoute } from './components';
-import { AuthPage, CartPage, CommoditiesPage, MainPage, NotFoundPage, ProductPage } from './pages';
+import { AuthPage, CartPage, CommoditiesPage, MainPage, NotFoundPage, OrderPage, OrdersPage, ProductPage } from './pages';
 import { AppRoute } from './utils';
-
-
 
 export function App() {
   return (
@@ -20,6 +18,16 @@ export function App() {
         <Route path={ AppRoute.Commodities } element={
           <PrivateRoute>
             <CommoditiesPage />
+          </PrivateRoute>
+        } />
+        <Route path={ AppRoute.Orders } element={
+          <PrivateRoute>
+            <OrdersPage />
+          </PrivateRoute>
+        } />
+        <Route path={ `${AppRoute.Orders}/:orderId` } element={
+          <PrivateRoute>
+            <OrderPage />
           </PrivateRoute>
         } />
         <Route path={ AppRoute.NotFound } element={ <NotFoundPage /> } />

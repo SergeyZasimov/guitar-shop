@@ -1,10 +1,10 @@
-import { Order, OrderField } from '@guitar-shop/core';
+import { ApiQuery, Order, OrderField } from '@guitar-shop/core';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
+import { CrudRepository } from '../interfaces/repository.abstract';
 import { ProductModel } from '../product/product.model';
 import { OrderModel } from './order.model';
-import { CrudRepository } from '../interfaces/repository.abstract';
 
 @Injectable()
 export class OrderRepository extends CrudRepository<OrderModel> {
@@ -26,14 +26,21 @@ export class OrderRepository extends CrudRepository<OrderModel> {
     ]);
   }
 
-  async find(): Promise<Order[]> {
-    return this.orderModel.find().populate([
-      OrderField.User,
-      {
-        path: `${OrderField.OrderList}.${OrderField.Product}`,
-        model: `${ProductModel.name}`,
-      },
-    ]);
+  async find(query: ApiQuery): Promise<Order[]> {
+    const { sortType, sortingOption, limit, page } = query;
+
+    return this.orderModel
+      .find()
+      .sort({ [sortingOption]: sortType })
+      .skip(limit * (page - 1))
+      .limit(limit)
+      .populate([
+        OrderField.User,
+        {
+          path: `${OrderField.OrderList}.${OrderField.Product}`,
+          model: `${ProductModel.name}`,
+        },
+      ]);
   }
 
   public async findOne(

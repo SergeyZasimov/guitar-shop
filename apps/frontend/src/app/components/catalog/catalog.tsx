@@ -1,9 +1,8 @@
-import { PriceRange, ProductQuery, QueryField } from '@guitar-shop/core';
+import { ApiQuery, PriceRange, QueryField } from '@guitar-shop/core';
 import { useEffect, useState } from 'react';
 import { DEFAULT_ADMIN_SORT, DEFAULT_CUSTOMER_SORT, DEFAULT_PAGINATION } from '../../app.constant';
-import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
+import { useAppDispatch } from '../../hooks/store.hooks';
 import { fetchProducts } from '../../store/features/product/api-actions';
-import { getProducts } from '../../store/features/product/product-slice';
 import { FilterProperty, FilterPropertyValue } from '../../types';
 import { AppRoute, checkValueInCollection, createQueryString } from '../../utils';
 import { CatalogFilter } from '../catalog-filter/catalog-filter';
@@ -19,14 +18,13 @@ export interface CatalogProps {
 }
 
 export function Catalog({ location }: CatalogProps) {
-  const products = useAppSelector(getProducts);
   const dispatch = useAppDispatch();
 
   const initialSort = location === AppRoute.Root
     ? DEFAULT_CUSTOMER_SORT
     : DEFAULT_ADMIN_SORT;
 
-  const initialQuery: ProductQuery = {
+  const initialQuery: ApiQuery = {
     page: DEFAULT_PAGINATION.ACTIVE_PAGE_NUMBER,
     sortType: initialSort.TYPE,
     sortingOption: initialSort.OPTION,
@@ -34,7 +32,7 @@ export function Catalog({ location }: CatalogProps) {
     stringsNumber: [],
   };
 
-  const [ query, setQuery ] = useState<ProductQuery>(initialQuery);
+  const [ query, setQuery ] = useState<ApiQuery>(initialQuery);
   const [ isPriceShouldReset, setIsPriceShouldReset ] = useState<boolean>(false);
 
 
@@ -48,7 +46,7 @@ export function Catalog({ location }: CatalogProps) {
     setQuery({ ...query, ...newFilter, page: DEFAULT_PAGINATION.ACTIVE_PAGE_NUMBER });
   };
 
-  const handleSortChange = (newSort: ProductQuery) => {
+  const handleSortChange = (newSort: ApiQuery) => {
     setQuery({ ...query, ...newSort });
   };
 
@@ -110,11 +108,9 @@ export function Catalog({ location }: CatalogProps) {
 
         {
           location === AppRoute.Commodities
-            ? <CommoditiesList products={ products } />
-            : <ProductList products={ products } />
+            ? <CommoditiesList />
+            : <ProductList />
         }
-
-
       </div>
 
       {

@@ -1,11 +1,11 @@
 import {
+  ApiQuery,
   DEFAULT_PRODUCT_QUERY,
   GuitarType,
   PriceRange,
-  ProductQuery,
-  ProductSortingOption,
   QueryField,
   SortType,
+  SortingOption,
   StringsNumber,
 } from '@guitar-shop/core';
 import { Transform } from 'class-transformer';
@@ -25,7 +25,7 @@ const {
   PRICE_RANGE_NOT_VALID,
 } = PRODUCT_VALIDATION_MESSAGE;
 
-export class ProductsQueryDto implements ProductQuery {
+export class ProductsQueryDto implements ApiQuery {
   @IsInt({ message: LIMIT_NOT_VALID })
   @Transform(({ value }) => parseInt(value))
   @IsOptional()
@@ -46,9 +46,9 @@ export class ProductsQueryDto implements ProductQuery {
   @IsOptional()
   [QueryField.StringsNumberFilter]?: StringsNumber[];
 
-  @IsEnum(ProductSortingOption, { message: SORTING_OPTION_NOT_VALID })
+  @IsEnum(SortingOption, { message: SORTING_OPTION_NOT_VALID })
   @IsOptional()
-  [QueryField.SortingOption]?: ProductSortingOption =
+  [QueryField.SortingOption]?: SortingOption =
     DEFAULT_PRODUCT_QUERY[QueryField.SortingOption];
 
   @IsEnum(SortType, { message: SORTING_TYPE_NOT_VALID })

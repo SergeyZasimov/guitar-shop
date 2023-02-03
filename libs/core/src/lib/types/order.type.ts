@@ -27,6 +27,7 @@ export type OrderSummary = {
 
 export type Order = {
   [OrderField._Id]?: string;
+  [OrderField.Id]?: string;
   [OrderField.User]: string;
   [OrderField.OrderList]: OrderItem[];
   [OrderField.OrderSummary]?: OrderSummary;

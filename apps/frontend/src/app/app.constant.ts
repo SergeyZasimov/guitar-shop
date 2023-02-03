@@ -1,9 +1,4 @@
-import {
-  ProductSortingOption,
-  QueryField,
-  SortType,
-  User,
-} from '@guitar-shop/core';
+import { QueryField, SortType, SortingOption, User } from '@guitar-shop/core';
 
 export const BACKEND_URL = 'http://localhost:3333/api/';
 
@@ -22,12 +17,12 @@ export const DEFAULT_PAGINATION = {
 
 export const DEFAULT_CUSTOMER_SORT = {
   TYPE: SortType.Desc,
-  OPTION: ProductSortingOption.Price,
+  OPTION: SortingOption.Price,
 };
 
 export const DEFAULT_ADMIN_SORT = {
   TYPE: SortType.Desc,
-  OPTION: ProductSortingOption.AddedAt,
+  OPTION: SortingOption.AddedAt,
 };
 
 export const DEFAULT_FILTERS_STATE = {
@@ -44,7 +39,7 @@ export enum StoreNamespace {
   ProductStore = 'product',
   UserStore = 'user',
   CartStore = 'cart',
-  BreadcrumbStore = 'breadcrumb',
+  OrderStore = 'order',
 }
 
 export const RATING_EXPRESSION = [
@@ -72,6 +67,7 @@ export enum ActionType {
   FetchComments = 'comment/fetchComments',
   CreateComment = 'comment/createComments',
   SendOrder = 'cart/sendOrder',
+  FetchOrders = 'order/fetchOrders',
 }
 
 export const INITIAL_USER_STATE: User = {

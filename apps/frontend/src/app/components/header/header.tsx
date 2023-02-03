@@ -61,7 +61,7 @@ export function Header(): JSX.Element {
                   <li className="main-nav__item">
                     <NavLink
                       className={ ({ isActive }) => isActive ? "link main-nav__link link--current" : "link main-nav__link" }
-                      to="#"
+                      to={ AppRoute.Orders }
                     >
                       Список заказов
                     </NavLink>

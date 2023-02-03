@@ -11,7 +11,7 @@ export enum QueryField {
   PriceRange = 'priceRange',
 }
 
-export enum ProductSortingOption {
+export enum SortingOption {
   Price = ProductField.Price,
   Rating = ProductField.TotalRating,
   AddedAt = ProductField.CreatedAt,
@@ -23,12 +23,12 @@ export enum SortType {
 
 export type PriceRange = [number | null, number | null];
 
-export type ProductQuery = {
+export type ApiQuery = {
   [QueryField.Limit]?: number;
   [QueryField.Page]?: number;
   [QueryField.GuitarTypeFilter]?: GuitarType[];
   [QueryField.StringsNumberFilter]?: StringsNumber[];
-  [QueryField.SortingOption]?: ProductSortingOption;
+  [QueryField.SortingOption]?: SortingOption;
   [QueryField.SortType]?: SortType;
   [QueryField.PriceRange]?: PriceRange;
 };

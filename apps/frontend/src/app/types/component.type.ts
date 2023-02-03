@@ -1,13 +1,13 @@
 import {
+  ApiQuery,
   GuitarType,
-  ProductQuery,
   QueryField,
   StringsNumber,
 } from '@guitar-shop/core';
 import { ModalClass } from '../app.constant';
 
 export type FilterProperty = keyof Pick<
-  ProductQuery,
+  ApiQuery,
   QueryField.GuitarTypeFilter | QueryField.StringsNumberFilter
 >;
 

@@ -1,4 +1,4 @@
-import { AVAILABLE_GUITAR_TYPE, AVAILABLE_STRINGS_NUMBERS, GUITAR_COLLECTION, GuitarType, ProductQuery, QueryField, StringsNumber } from '@guitar-shop/core';
+import { AVAILABLE_GUITAR_TYPE, AVAILABLE_STRINGS_NUMBERS, ApiQuery, GUITAR_COLLECTION, GuitarType, QueryField, StringsNumber } from '@guitar-shop/core';
 import { FilterProperty, FilterPropertyValue } from '../../types/component.type';
 
 const FILTER_CONSTRAINTS = {
@@ -8,7 +8,7 @@ const FILTER_CONSTRAINTS = {
 };
 
 export interface CatalogFilterProps {
-  filters: ProductQuery;
+  filters: ApiQuery;
   onFiltersChange: (property: FilterProperty, value: FilterPropertyValue) => void;
 }
 

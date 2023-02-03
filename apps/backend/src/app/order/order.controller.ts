@@ -14,6 +14,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { GetCurrentUser } from '../decorators/get-current-user.decorator';
@@ -21,6 +22,7 @@ import { Role } from '../decorators/role.decorator';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { RoleGuard } from '../guards/role.guard';
 import { CreateOrderDto } from './dto/create-order.dto';
+import { OrdersQueryDto } from './dto/orders-query.dto';
 import { OrderService } from './order.service';
 import { OrderRdo } from './rdo/order.rdo';
 
@@ -43,9 +45,10 @@ export class OrderController {
   @UseGuards(JwtAuthGuard)
   @Get('')
   async getOrders(
-    @GetCurrentUser(UserField.Role) role: string
+    @GetCurrentUser(UserField.Role) role: string,
+    @Query() query: OrdersQueryDto
   ): Promise<Order> {
-    return fillObject(OrderRdo, await this.orderService.getOrders(), role);
+    return fillObject(OrderRdo, await this.orderService.getOrders(query), role);
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)
