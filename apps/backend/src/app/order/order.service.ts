@@ -65,6 +65,33 @@ export class OrderService {
     return order;
   }
 
+  async deleteProductFromOrder(
+    orderId: string,
+    productId: string
+  ): Promise<Order> {
+    const order = await this.orderRepository.findOnePureOrder({ _id: orderId });
+
+    if (!order) {
+      throw new NotFoundException(ORDER_NOT_FOUND);
+    }
+
+    const existOrder = order.toJSON();
+
+    const updateOrderList = existOrder.orderList.filter(
+      (item: OrderItem) => item.product !== productId
+    );
+
+    const newOrderEntity = new OrderEntity({
+      user: existOrder.user,
+      orderList: updateOrderList,
+    });
+
+    return this.orderRepository.findOneAndUpdate(
+      { _id: orderId },
+      newOrderEntity
+    );
+  }
+
   private async getPricesForOrderList(
     orderList: OrderItem[]
   ): Promise<OrderItem[]> {

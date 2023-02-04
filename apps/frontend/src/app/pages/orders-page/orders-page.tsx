@@ -2,8 +2,7 @@ import { ApiQuery, QueryField, SortingOption, SortType } from '@guitar-shop/core
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { DEFAULT_PAGINATION } from '../../app.constant';
-import { Breadcrumbs, CatalogSort, Pagination } from '../../components';
-import { OrderCard } from '../../components/order-card/order-card';
+import { Breadcrumbs, CatalogSort, OrdersList, Pagination } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { fetchOrders } from '../../store/features/orders/api-actions';
 import { getOrders, getTotalOrdersCount } from '../../store/features/orders/order-slice';
@@ -11,12 +10,11 @@ import { createQueryString } from '../../utils';
 
 export interface OrdersPageProps { }
 
-export function OrdersPage(props: OrdersPageProps): JSX.Element {
+export function OrdersPage(): JSX.Element {
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
   const orders = useAppSelector(getOrders);
   const totalOrdersCount = useAppSelector(getTotalOrdersCount);
-
 
   const initialQuery: ApiQuery = {
     page: DEFAULT_PAGINATION.ACTIVE_PAGE_NUMBER,
@@ -38,7 +36,6 @@ export function OrdersPage(props: OrdersPageProps): JSX.Element {
     dispatch(fetchOrders(createQueryString({ ...query })));
   }, [ query ]);
 
-
   return (
     <main className="page-content orders__main">
       <section className="orders">
@@ -50,11 +47,7 @@ export function OrdersPage(props: OrdersPageProps): JSX.Element {
             sort={ { [ QueryField.SortType ]: query.sortType, [ QueryField.SortingOption ]: query.sortingOption } }
             onSortChange={ handleSortChange }
           />
-          <ul className="orders__list">
-            {
-              orders.map((order) => <OrderCard key={ order.id } order={ order } />)
-            }
-          </ul>
+          <OrdersList orders={ orders } />
           <Pagination
             length={ totalOrdersCount }
             location={ pathname }

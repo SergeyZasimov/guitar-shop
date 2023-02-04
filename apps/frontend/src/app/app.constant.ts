@@ -70,6 +70,8 @@ export enum ActionType {
   SendOrder = 'cart/sendOrder',
   FetchOrders = 'order/fetchOrders',
   FetchOrder = 'order/fetchOrder',
+  DeleteOrder = 'order/deleteOrder',
+  DeleteProductFromOrder = 'order/deleteProductFromOrder',
 }
 
 export const INITIAL_USER_STATE: User = {

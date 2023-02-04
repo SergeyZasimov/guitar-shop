@@ -24,3 +24,26 @@ export const fetchOrder = createAsyncThunk<
   const { data } = await api.get<Order>(`${OrderDomain}/${orderId}`);
   return data;
 });
+
+export const deleteOrder = createAsyncThunk<
+  Order,
+  string,
+  AsyncThunkOptionField
+>(ActionType.DeleteOrder, async (orderId, { extra: api }) => {
+  const { data } = await api.delete<Order>(`${OrderDomain}/${orderId}`);
+  return data;
+});
+
+export const deleteProductFromOrder = createAsyncThunk<
+  Order,
+  { orderId: string; productId: string },
+  AsyncThunkOptionField
+>(
+  ActionType.DeleteProductFromOrder,
+  async ({ orderId, productId }, { extra: api }) => {
+    const { data } = await api.patch<Order>(`${OrderDomain}/${orderId}`, {
+      productId,
+    });
+    return data;
+  }
+);

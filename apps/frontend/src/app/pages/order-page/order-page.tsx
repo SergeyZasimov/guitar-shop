@@ -1,10 +1,10 @@
 import { OrderItem, Product, formatPrice } from '@guitar-shop/core';
-import { useEffect } from 'react';
+import { MouseEvent, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GUITAR_TYPE_EXPRESSION } from '../../app.constant';
 import { Breadcrumbs } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { fetchOrder } from '../../store/features/orders/api-actions';
+import { deleteOrder, deleteProductFromOrder, fetchOrder } from '../../store/features/orders/api-actions';
 import { getOrder } from '../../store/features/orders/order-slice';
 import { AppRoute, formatOrderId, formateAdminDate } from '../../utils';
 
@@ -16,6 +16,20 @@ export function OrderPage(): JSX.Element {
   const order = useAppSelector(getOrder);
   const navigate = useNavigate();
 
+  const handleDeleteProductClick = (evt: MouseEvent) => {
+    const target = evt.target as HTMLElement;
+    if (target.classList.contains('button-cross')) {
+      if (order?.orderList.length === 1) {
+        dispatch(deleteOrder(order.id as string));
+        navigate(AppRoute.Orders);
+      } else {
+        const productId = target.dataset.id;
+        if (order?.id && productId) {
+          dispatch(deleteProductFromOrder({ orderId: order.id, productId }));
+        }
+      }
+    }
+  };
 
   useEffect(() => {
     if (typeof orderId === 'string') {
@@ -56,7 +70,7 @@ export function OrderPage(): JSX.Element {
               </tr>
             </tfoot>
           </table>
-          <ul className="order__list order-list">
+          <ul className="order__list order-list" onClick={ (evt) => handleDeleteProductClick(evt) }>
             {
               order.orderList.map(({ product, quantity, cost }: OrderItem) => (
                 <li
@@ -85,6 +99,7 @@ export function OrderPage(): JSX.Element {
                     className="order-list__button button-cross"
                     type="button"
                     aria-label="Закрыть"
+                    data-id={ (product as Product).id }
                   >
                     <span className="button-cross__icon"></span>
                   </button>

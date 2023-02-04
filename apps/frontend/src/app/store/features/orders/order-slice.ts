@@ -1,7 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { Order } from '@guitar-shop/core';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { StoreNamespace } from '../../../app.constant';
 import { LoadingStatus, OrderState, State } from '../../../types';
-import { fetchOrder, fetchOrders } from './api-actions';
+import {
+  deleteOrder,
+  deleteProductFromOrder,
+  fetchOrder,
+  fetchOrders,
+} from './api-actions';
 
 const initialState: OrderState = {
   orders: [],
@@ -22,7 +28,21 @@ export const orderSlice = createSlice({
       })
       .addCase(fetchOrder.fulfilled, (state, { payload }) => {
         state.order = payload;
-      });
+      })
+      .addCase(
+        deleteOrder.fulfilled,
+        (state, { payload }: PayloadAction<Order>) => {
+          state.orders = state.orders.filter(
+            (order) => order.id !== payload.id
+          );
+        }
+      )
+      .addCase(
+        deleteProductFromOrder.fulfilled,
+        (state, { payload }: PayloadAction<Order>) => {
+          state.order = payload;
+        }
+      );
   },
 });
 

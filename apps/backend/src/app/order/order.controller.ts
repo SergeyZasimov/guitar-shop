@@ -14,6 +14,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -22,10 +23,12 @@ import { GetCurrentUser } from '../decorators/get-current-user.decorator';
 import { Role } from '../decorators/role.decorator';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { RoleGuard } from '../guards/role.guard';
+import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { CreateOrderDto } from './dto/create-order.dto';
+import { DeleteProductFromOrderDto } from './dto/delete-product-from-order.dto';
 import { OrdersQueryDto } from './dto/orders-query.dto';
 import { OrderService } from './order.service';
-import { OrderRdo, OrderResponseRdo } from './rdo/order.rdo';
+import { OrderRdo, OrdersResponseRdo } from './rdo/order.rdo';
 
 const { OrderDomain } = RouteDomain;
 const { OrderId } = RouteParam;
@@ -50,7 +53,7 @@ export class OrderController {
     @Query() query: OrdersQueryDto
   ): Promise<OrderResponse> {
     return fillObject(
-      OrderResponseRdo,
+      OrdersResponseRdo,
       await this.orderService.getOrders(query),
       role
     );
@@ -60,7 +63,7 @@ export class OrderController {
   @Role(UserRole.Admin)
   @Get(`:${OrderId}`)
   async getOrder(
-    @Param(OrderId) id: string,
+    @Param(OrderId, MongoidValidationPipe) id: string,
     @GetCurrentUser(UserField.Role) role: string
   ): Promise<Order> {
     return fillObject(OrderRdo, await this.orderService.getOrder(id), role);
@@ -68,8 +71,26 @@ export class OrderController {
 
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Role(UserRole.Admin)
+  @Patch(`:${OrderId}`)
+  async deleteProductFromOrder(
+    @Param(OrderId, MongoidValidationPipe) orderId: string,
+    @Body() { productId }: DeleteProductFromOrderDto,
+    @GetCurrentUser(UserField.Role) role: string
+  ) {
+    return fillObject(
+      OrderRdo,
+      await this.orderService.deleteProductFromOrder(orderId, productId),
+      role
+    );
+  }
+
+  @UseGuards(JwtAuthGuard, RoleGuard)
+  @Role(UserRole.Admin)
   @Delete(`:${OrderId}`)
-  async deleteOrder(@Param(OrderId) id: string): Promise<Order> {
-    return this.orderService.deleteOrder(id);
+  async deleteOrder(
+    @Param(OrderId) id: string,
+    @GetCurrentUser(UserField.Role) role: string
+  ): Promise<Order> {
+    return fillObject(OrderRdo, await this.orderService.deleteOrder(id), role);
   }
 }

@@ -1,7 +1,7 @@
 import { ApiQuery, Order, OrderField, SortType } from '@guitar-shop/core';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { FilterQuery, Model } from 'mongoose';
+import { FilterQuery, Model, UpdateQuery } from 'mongoose';
 import { CrudRepository } from '../interfaces/repository.abstract';
 import { ProductModel } from '../product/product.model';
 import { OrderModel } from './order.model';
@@ -17,8 +17,10 @@ export class OrderRepository extends CrudRepository<OrderModel> {
   public async create(
     entityCreateData: Partial<OrderModel>
   ): Promise<OrderModel> {
-    return (await super.create(entityCreateData)).populate([
-      OrderField.User,
+    const result = await super.create(entityCreateData);
+
+    return this.orderModel.populate(result, [
+      { path: OrderField.User },
       {
         path: `${OrderField.OrderList}.${OrderField.Product}`,
         model: `${ProductModel.name}`,
@@ -74,5 +76,29 @@ export class OrderRepository extends CrudRepository<OrderModel> {
       ]);
     }
     return order;
+  }
+
+  async findOnePureOrder(
+    entityFilterQuery: FilterQuery<OrderModel>
+  ): Promise<OrderModel> {
+    return super.findOne(entityFilterQuery);
+  }
+
+  public async findOneAndUpdate(
+    entityFilterQuery: FilterQuery<OrderModel>,
+    entityUpdateData: UpdateQuery<Partial<OrderModel>>
+  ): Promise<OrderModel> {
+    const result = await super.findOneAndUpdate(
+      entityFilterQuery,
+      entityUpdateData
+    );
+
+    return this.orderModel.populate(result, [
+      { path: OrderField.User },
+      {
+        path: `${OrderField.OrderList}.${OrderField.Product}`,
+        model: `${ProductModel.name}`,
+      },
+    ]);
   }
 }

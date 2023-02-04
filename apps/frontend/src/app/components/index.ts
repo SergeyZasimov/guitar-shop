@@ -18,6 +18,7 @@ export * from './header/header';
 export * from './layout/layout';
 export * from './loader/loader';
 export * from './modal-overlay/modal-overlay';
+export * from './orders-list/orders-list';
 export * from './pagination/pagination';
 export * from './private-route/private-route';
 export * from './product-card/product-card';

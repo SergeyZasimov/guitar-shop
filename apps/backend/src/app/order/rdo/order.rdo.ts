@@ -55,7 +55,7 @@ export class OrderRdo implements Order {
   [OrderField.CreateAt]: Date;
 }
 
-export class OrderResponseRdo implements OrderResponse {
+export class OrdersResponseRdo implements OrderResponse {
   @Expose()
   @Type(() => OrderRdo)
   [OrderField.Orders]: Order[];
