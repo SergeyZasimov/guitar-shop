@@ -7,6 +7,7 @@ const initialState: OrderState = {
   orders: [],
   order: null,
   orderLoadingStatus: LoadingStatus.Idle,
+  totalOrdersCount: 0,
 };
 
 export const orderSlice = createSlice({
@@ -15,7 +16,8 @@ export const orderSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchOrders.fulfilled, (state, { payload }) => {
-      state.orders = payload;
+      state.orders = payload.orders;
+      state.totalOrdersCount = payload.totalOrdersCount;
     });
   },
 });
@@ -30,3 +32,6 @@ export const getOrder = (state: State) =>
 
 export const getOrderLoadingStatus = (state: State) =>
   state[StoreNamespace.OrderStore].orderLoadingStatus;
+
+export const getTotalOrdersCount = (state: State) =>
+  state[StoreNamespace.OrderStore].totalOrdersCount;

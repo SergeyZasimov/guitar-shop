@@ -28,26 +28,50 @@ export function CatalogSort({ onSortChange, location, sort }: CatalogSortProps):
       <h2 className="catalog-sort__title">Сортировать:</h2>
 
       <div className="catalog-sort__type">
+
         {
-          location === AppRoute.Commodities &&
+          location !== AppRoute.Root &&
           <button
             className={ `catalog-sort__type-button ${setSortOptionActive(SortingOption.AddedAt)}` }
             aria-label="по цене"
             onClick={ () => onSortChange({ [ QueryField.SortingOption ]: SortingOption.AddedAt }) }
-          >по дате
+          >
+            по дате
           </button>
         }
-        <button
-          className={ `catalog-sort__type-button ${setSortOptionActive(SortingOption.Price)}` }
-          aria-label="по цене"
-          onClick={ () => onSortChange({ [ QueryField.SortingOption ]: SortingOption.Price }) }
-        >по цене</button>
-        <button
-          className={ `catalog-sort__type-button ${setSortOptionActive(SortingOption.Rating)}` }
-          aria-label="по популярности"
-          onClick={ () => onSortChange({ [ QueryField.SortingOption ]: SortingOption.Rating }) }
-        >по популярности</button>
+
+        {
+          location === AppRoute.Orders
+            ?
+            <button
+              className={ `catalog-sort__type-button ${setSortOptionActive(SortingOption.TotalCost)}` }
+              aria-label="по цене"
+              onClick={ () => onSortChange({ [ QueryField.SortingOption ]: SortingOption.TotalCost }) }
+            >
+              по цене
+            </button>
+            :
+            <button
+              className={ `catalog-sort__type-button ${setSortOptionActive(SortingOption.Price)}` }
+              aria-label="по цене"
+              onClick={ () => onSortChange({ [ QueryField.SortingOption ]: SortingOption.Price }) }
+            >
+              по цене
+            </button>
+        }
+
+        {
+          location === AppRoute.Root &&
+          <button
+            className={ `catalog-sort__type-button ${setSortOptionActive(SortingOption.Rating)}` }
+            aria-label="по популярности"
+            onClick={ () => onSortChange({ [ QueryField.SortingOption ]: SortingOption.Rating }) }
+          >
+            по популярности
+          </button>
+        }
       </div>
+
 
       <div className="catalog-sort__order">
         <button

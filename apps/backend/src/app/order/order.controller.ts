@@ -1,5 +1,6 @@
 import {
   Order,
+  OrderResponse,
   RequestUser,
   RouteDomain,
   RouteParam,
@@ -24,7 +25,7 @@ import { RoleGuard } from '../guards/role.guard';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrdersQueryDto } from './dto/orders-query.dto';
 import { OrderService } from './order.service';
-import { OrderRdo } from './rdo/order.rdo';
+import { OrderRdo, OrderResponseRdo } from './rdo/order.rdo';
 
 const { OrderDomain } = RouteDomain;
 const { OrderId } = RouteParam;
@@ -47,8 +48,12 @@ export class OrderController {
   async getOrders(
     @GetCurrentUser(UserField.Role) role: string,
     @Query() query: OrdersQueryDto
-  ): Promise<Order> {
-    return fillObject(OrderRdo, await this.orderService.getOrders(query), role);
+  ): Promise<OrderResponse> {
+    return fillObject(
+      OrderResponseRdo,
+      await this.orderService.getOrders(query),
+      role
+    );
   }
 
   @UseGuards(JwtAuthGuard, RoleGuard)

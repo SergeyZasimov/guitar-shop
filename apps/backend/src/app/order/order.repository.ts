@@ -1,4 +1,4 @@
-import { ApiQuery, Order, OrderField } from '@guitar-shop/core';
+import { ApiQuery, Order, OrderField, SortType } from '@guitar-shop/core';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
@@ -29,18 +29,34 @@ export class OrderRepository extends CrudRepository<OrderModel> {
   async find(query: ApiQuery): Promise<Order[]> {
     const { sortType, sortingOption, limit, page } = query;
 
-    return this.orderModel
-      .find()
-      .sort({ [sortingOption]: sortType })
-      .skip(limit * (page - 1))
-      .limit(limit)
-      .populate([
-        OrderField.User,
-        {
-          path: `${OrderField.OrderList}.${OrderField.Product}`,
-          model: `${ProductModel.name}`,
+    const result = await this.orderModel.aggregate([
+      {
+        $lookup: {
+          from: 'orders',
+          pipeline: [],
+          as: 'orders',
         },
-      ]);
+      },
+      {
+        $addFields: {
+          [OrderField.TotalOrdersCount]: { $size: '$orders' },
+        },
+      },
+      { $unset: 'orders' },
+      { $sort: { [sortingOption]: sortType === SortType.Asc ? 1 : -1 } },
+      { $skip: limit * (page - 1) },
+      { $limit: limit },
+    ]);
+
+    await this.orderModel.populate(result, [
+      { path: OrderField.User },
+      {
+        path: `${OrderField.OrderList}.${OrderField.Product}`,
+        model: `${ProductModel.name}`,
+      },
+    ]);
+
+    return result;
   }
 
   public async findOne(

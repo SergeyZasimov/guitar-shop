@@ -26,6 +26,6 @@ export const formateCommentDate = (date: Date | undefined) => {
   return dayjs(date).locale('ru').format('D MMMM');
 };
 
-export const formateAdminCommoditiesDate = (date: Date | undefined) => {
+export const formateAdminDate = (date: Date | undefined) => {
   return dayjs(date).locale('ru').format('DD.MM.YYYY');
 };

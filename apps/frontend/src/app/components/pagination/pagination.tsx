@@ -7,15 +7,15 @@ import { AppRoute } from '../../utils';
 const { ACTIVE_PAGE_NUMBER, BUTTONS_COUNT, PRODUCT_CARDS_COUNT } = DEFAULT_PAGINATION;
 
 export interface PaginationProps {
+  length: number;
   currentPage: number;
   location: string;
   onPageClick: (page: number) => void;
 }
 
-export function Pagination({ onPageClick, location, currentPage }: PaginationProps): JSX.Element {
-  const totalProductsCount = useAppSelector(getTotalProductsCount);
+export function Pagination({ onPageClick, location, currentPage, length }: PaginationProps): JSX.Element {
 
-  const totalPagesCount = Math.ceil(totalProductsCount / PRODUCT_CARDS_COUNT);
+  const totalPagesCount = Math.ceil(length / PRODUCT_CARDS_COUNT);
 
   const pagesLength = totalPagesCount < BUTTONS_COUNT ? totalPagesCount : BUTTONS_COUNT;
 
@@ -29,7 +29,7 @@ export function Pagination({ onPageClick, location, currentPage }: PaginationPro
     <div className={ paginationClassName }>
       <ul className="pagination__list">
         {
-          currentPage !== ACTIVE_PAGE_NUMBER && totalProductsCount !== 0 &&
+          currentPage !== ACTIVE_PAGE_NUMBER && length !== 0 &&
           <li className="pagination__page pagination__page--prev" id="prev">
             <a
               className="link pagination__page-link"
@@ -62,7 +62,7 @@ export function Pagination({ onPageClick, location, currentPage }: PaginationPro
           })
         }
         {
-          currentPage !== totalPagesCount && totalProductsCount !== 0 &&
+          currentPage !== totalPagesCount && length !== 0 &&
           <li className="pagination__page pagination__page--next" id="next">
             <a
               className="link pagination__page-link"

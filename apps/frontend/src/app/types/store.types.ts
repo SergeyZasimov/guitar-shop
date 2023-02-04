@@ -44,6 +44,7 @@ export type OrderState = {
   orders: Order[];
   order: Order | null;
   orderLoadingStatus: LoadingStatus;
+  totalOrdersCount: number;
 };
 
 export type CartCommodity = {

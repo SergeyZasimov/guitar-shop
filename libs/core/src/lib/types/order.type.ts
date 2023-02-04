@@ -11,6 +11,8 @@ export enum OrderField {
   OrderList = 'orderList',
   OrderSummary = 'orderSummary',
   CreateAt = 'createdAt',
+  TotalOrdersCount = 'totalOrdersCount',
+  Orders = 'orders',
 }
 
 export type OrderItem = {
@@ -32,6 +34,7 @@ export type Order = {
   [OrderField.OrderList]: OrderItem[];
   [OrderField.OrderSummary]?: OrderSummary;
   [OrderField.CreateAt]?: Date;
+  [OrderField.TotalOrdersCount]?: number;
 };
 
 export type NewOrder = Pick<Order, OrderField.OrderList>;
@@ -40,3 +43,8 @@ export type NewOrderItem = Pick<
   OrderItem,
   OrderField.Product | OrderField.Quantity
 >;
+
+export type OrderResponse = {
+  [OrderField.Orders]: Order[];
+  [OrderField.TotalOrdersCount]: number;
+};

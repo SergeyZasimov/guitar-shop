@@ -1,8 +1,9 @@
 import { ApiQuery, PriceRange, QueryField } from '@guitar-shop/core';
 import { useEffect, useState } from 'react';
 import { DEFAULT_ADMIN_SORT, DEFAULT_CUSTOMER_SORT, DEFAULT_PAGINATION } from '../../app.constant';
-import { useAppDispatch } from '../../hooks/store.hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { fetchProducts } from '../../store/features/product/api-actions';
+import { getTotalProductsCount } from '../../store/features/product/product-slice';
 import { FilterProperty, FilterPropertyValue } from '../../types';
 import { AppRoute, checkValueInCollection, createQueryString } from '../../utils';
 import { CatalogFilter } from '../catalog-filter/catalog-filter';
@@ -19,6 +20,7 @@ export interface CatalogProps {
 
 export function Catalog({ location }: CatalogProps) {
   const dispatch = useAppDispatch();
+  const totalProductsCount = useAppSelector(getTotalProductsCount);
 
   const initialSort = location === AppRoute.Root
     ? DEFAULT_CUSTOMER_SORT
@@ -123,6 +125,7 @@ export function Catalog({ location }: CatalogProps) {
       }
 
       <Pagination
+        length={ totalProductsCount }
         currentPage={ query.page as number }
         location={ location }
         onPageClick={ handlePageChange }
@@ -130,4 +133,5 @@ export function Catalog({ location }: CatalogProps) {
     </>
   );
 }
+
 

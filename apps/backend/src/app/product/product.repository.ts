@@ -36,7 +36,11 @@ export class ProductRepository extends CrudRepository<ProductModel> {
     const filterCondition = [];
 
     guitarType &&
-      filterCondition.push({ $expr: { $in: ['$guitarType', guitarType] } });
+      filterCondition.push({
+        $expr: {
+          $in: ['$guitarType', guitarType],
+        },
+      });
 
     stringsNumber &&
       filterCondition.push({

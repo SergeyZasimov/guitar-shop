@@ -1,4 +1,3 @@
-import { ProductField } from '.';
 import { GuitarType, StringsNumber } from '../constants';
 
 export enum QueryField {
@@ -12,10 +11,12 @@ export enum QueryField {
 }
 
 export enum SortingOption {
-  Price = ProductField.Price,
-  Rating = ProductField.TotalRating,
-  AddedAt = ProductField.CreatedAt,
+  Price = 'price',
+  Rating = 'totalRating',
+  AddedAt = 'createdAt',
+  TotalCost = 'orderSummary.totalCost',
 }
+
 export enum SortType {
   Asc = 'asc',
   Desc = 'desc',

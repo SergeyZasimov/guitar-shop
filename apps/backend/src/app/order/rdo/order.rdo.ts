@@ -2,6 +2,7 @@ import {
   Order,
   OrderField,
   OrderItem,
+  OrderResponse,
   OrderSummary,
   UserRole,
 } from '@guitar-shop/core';
@@ -51,4 +52,13 @@ export class OrderRdo implements Order {
 
   @Expose()
   [OrderField.CreateAt]: Date;
+}
+
+export class OrderResponseRdo implements OrderResponse {
+  @Expose()
+  @Type(() => OrderRdo)
+  [OrderField.Orders]: Order[];
+
+  @Expose()
+  [OrderField.TotalOrdersCount]: number;
 }

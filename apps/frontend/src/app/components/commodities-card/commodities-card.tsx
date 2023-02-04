@@ -1,6 +1,6 @@
 import { Product, formatPrice } from '@guitar-shop/core';
 import { RatingStarsLocation } from '../../app.constant';
-import { formateAdminCommoditiesDate } from '../../utils';
+import { formateAdminDate } from '../../utils';
 import { RatingStars } from '../rating-stars/rating-stars';
 
 export interface CommoditiesCardProps {
@@ -20,7 +20,7 @@ export function CommoditiesCard({ product }: CommoditiesCardProps) {
               location={ RatingStarsLocation.Product }
             />
           </div>
-          <p className="catalog-item__data-date">Дата добавления { formateAdminCommoditiesDate(product.createdAt) }</p>
+          <p className="catalog-item__data-date">Дата добавления { formateAdminDate(product.createdAt) }</p>
           <p className="catalog-item__data-price">{ formatPrice(product.price) } ₽</p>
         </div>
       </div>

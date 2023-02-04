@@ -6,7 +6,7 @@ import { Breadcrumbs, CatalogSort, Pagination } from '../../components';
 import { OrderCard } from '../../components/order-card/order-card';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { fetchOrders } from '../../store/features/orders/api-actions';
-import { getOrders } from '../../store/features/orders/order-slice';
+import { getOrders, getTotalOrdersCount } from '../../store/features/orders/order-slice';
 import { createQueryString } from '../../utils';
 
 export interface OrdersPageProps { }
@@ -15,6 +15,8 @@ export function OrdersPage(props: OrdersPageProps): JSX.Element {
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
   const orders = useAppSelector(getOrders);
+  const totalOrdersCount = useAppSelector(getTotalOrdersCount);
+
 
   const initialQuery: ApiQuery = {
     page: DEFAULT_PAGINATION.ACTIVE_PAGE_NUMBER,
@@ -54,6 +56,7 @@ export function OrdersPage(props: OrdersPageProps): JSX.Element {
             }
           </ul>
           <Pagination
+            length={ totalOrdersCount }
             location={ pathname }
             currentPage={ query.page as number }
             onPageClick={ handlePageChange }
