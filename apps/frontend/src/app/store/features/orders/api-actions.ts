@@ -1,4 +1,4 @@
-import { OrderResponse, RouteDomain } from '@guitar-shop/core';
+import { Order, OrderResponse, RouteDomain } from '@guitar-shop/core';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionType } from '../../../app.constant';
 import { AsyncThunkOptionField } from '../../../types';
@@ -10,7 +10,17 @@ export const fetchOrders = createAsyncThunk<
   string,
   AsyncThunkOptionField
 >(ActionType.FetchOrders, async (queryString, { extra: api }) => {
-  console.log(queryString);
-  const { data } = await api.get<OrderResponse>(`${OrderDomain}?${queryString}`);
+  const { data } = await api.get<OrderResponse>(
+    `${OrderDomain}?${queryString}`
+  );
+  return data;
+});
+
+export const fetchOrder = createAsyncThunk<
+  Order,
+  string,
+  AsyncThunkOptionField
+>(ActionType.FetchOrder, async (orderId, { extra: api }) => {
+  const { data } = await api.get<Order>(`${OrderDomain}/${orderId}`);
   return data;
 });

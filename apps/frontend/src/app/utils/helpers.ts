@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
+import { DEFAULT_ORDER_FORMAT_ID_LENGTH } from '../app.constant';
 
 export const createQueryString = (query: Record<string, unknown>): string => {
   return `${Object.entries(query)
@@ -28,4 +29,8 @@ export const formateCommentDate = (date: Date | undefined) => {
 
 export const formateAdminDate = (date: Date | undefined) => {
   return dayjs(date).locale('ru').format('DD.MM.YYYY');
+};
+
+export const formatOrderId = (id: string) => {
+  return id.slice(id.length - DEFAULT_ORDER_FORMAT_ID_LENGTH);
 };

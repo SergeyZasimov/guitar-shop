@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { StoreNamespace } from '../../../app.constant';
 import { LoadingStatus, OrderState, State } from '../../../types';
-import { fetchOrders } from './api-actions';
+import { fetchOrder, fetchOrders } from './api-actions';
 
 const initialState: OrderState = {
   orders: [],
@@ -15,10 +15,14 @@ export const orderSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchOrders.fulfilled, (state, { payload }) => {
-      state.orders = payload.orders;
-      state.totalOrdersCount = payload.totalOrdersCount;
-    });
+    builder
+      .addCase(fetchOrders.fulfilled, (state, { payload }) => {
+        state.orders = payload.orders;
+        state.totalOrdersCount = payload.totalOrdersCount;
+      })
+      .addCase(fetchOrder.fulfilled, (state, { payload }) => {
+        state.order = payload;
+      });
   },
 });
 

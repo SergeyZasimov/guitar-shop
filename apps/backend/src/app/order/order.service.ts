@@ -71,7 +71,7 @@ export class OrderService {
     return await Promise.all(
       orderList.map(async (item: OrderItem): Promise<OrderItem> => {
         const product = await this.productService.checkProductExist(
-          item.product
+          item.product as string
         );
         return {
           ...item,

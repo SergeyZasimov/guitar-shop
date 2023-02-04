@@ -1,3 +1,5 @@
+import { Product } from './product.type';
+
 export enum OrderField {
   _Id = '_id',
   Id = 'id',
@@ -16,7 +18,7 @@ export enum OrderField {
 }
 
 export type OrderItem = {
-  [OrderField.Product]: string;
+  [OrderField.Product]: Product | string;
   [OrderField.Price]?: number;
   [OrderField.Quantity]: number;
   [OrderField.Cost]?: number;

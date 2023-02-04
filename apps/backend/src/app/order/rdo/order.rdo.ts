@@ -4,6 +4,7 @@ import {
   OrderItem,
   OrderResponse,
   OrderSummary,
+  Product,
   UserRole,
 } from '@guitar-shop/core';
 import { Expose, Transform, Type } from 'class-transformer';
@@ -13,7 +14,7 @@ import { ProductRdo } from '../../product/rdo/product.rdo';
 export class OrderItemRdo implements OrderItem {
   @Expose()
   @Type(() => ProductRdo)
-  [OrderField.Product]: string;
+  [OrderField.Product]: Product;
 
   @Expose()
   [OrderField.Price]: number;

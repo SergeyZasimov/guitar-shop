@@ -8,6 +8,7 @@ export const ACCESS_TOKEN_KEY_NAME = 'guitar-shop-token';
 export const MAX_RATING = 5;
 export const COMMENT_LIST_OFFSET = 3;
 export const DEFAULT_ADD_TO_CART_QUANTITY = 1;
+export const DEFAULT_ORDER_FORMAT_ID_LENGTH = 10;
 
 export const DEFAULT_PAGINATION = {
   BUTTONS_COUNT: 3,
@@ -68,6 +69,7 @@ export enum ActionType {
   CreateComment = 'comment/createComments',
   SendOrder = 'cart/sendOrder',
   FetchOrders = 'order/fetchOrders',
+  FetchOrder = 'order/fetchOrder',
 }
 
 export const INITIAL_USER_STATE: User = {
