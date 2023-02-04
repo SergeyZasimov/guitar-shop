@@ -10,16 +10,19 @@ import { ActionType } from '../../../app.constant';
 import { AsyncThunkOptionField } from '../../../types/store.types';
 
 const { ProductDomain, CommentDomain } = RouteDomain;
-const { FetchProducts, FetchProduct } = ActionType;
-
+const {
+  FetchProducts,
+  FetchProduct,
+  DeleteProduct,
+  CreateProduct,
+  UpdateProduct,
+} = ActionType;
 
 export const fetchProducts = createAsyncThunk<
   ProductsResponse,
   string,
   AsyncThunkOptionField
 >(FetchProducts, async (queryString, { extra: api }) => {
-  // TODO: log
-  // console.log(queryString);
   const { data } = await api.get<ProductsResponse>(
     `${ProductDomain}?${queryString}`
   );
@@ -30,8 +33,17 @@ export const fetchProduct = createAsyncThunk<
   Product,
   string,
   AsyncThunkOptionField
->(FetchProduct, async (productId, { extra: api }) => {
+>(DeleteProduct, async (productId, { extra: api }) => {
   const { data } = await api.get<Product>(`${ProductDomain}/${productId}`);
+  return data;
+});
+
+export const deleteProduct = createAsyncThunk<
+  Product,
+  string,
+  AsyncThunkOptionField
+>(FetchProduct, async (productId, { extra: api }) => {
+  const { data } = await api.delete<Product>(`${ProductDomain}/${productId}`);
   return data;
 });
 

@@ -1,9 +1,10 @@
 import { CommentResponse, Product } from '@guitar-shop/core';
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { StoreNamespace } from '../../../app.constant';
 import { LoadingStatus, ProductState, State } from '../../../types/store.types';
 import {
   createComment,
+  deleteProduct,
   fetchComments,
   fetchProduct,
   fetchProducts,
@@ -44,6 +45,14 @@ export const productSlice = createSlice({
         state.product = payload;
         state.productLoadingStatus = LoadingStatus.Succeeded;
       })
+      .addCase(
+        deleteProduct.fulfilled,
+        (state, { payload }: PayloadAction<Product>) => {
+          state.products = state.products.filter(
+            (product) => product.id !== payload.id
+          );
+        }
+      )
       .addCase(fetchComments.pending, (state) => {
         state.commentLoadingStatus = LoadingStatus.Loading;
       })

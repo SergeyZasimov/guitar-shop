@@ -1,5 +1,7 @@
 import { Product, formatPrice } from '@guitar-shop/core';
 import { RatingStarsLocation } from '../../app.constant';
+import { useAppDispatch } from '../../hooks/store.hooks';
+import { deleteProduct } from '../../store/features/product/api-actions';
 import { formateAdminDate } from '../../utils';
 import { RatingStars } from '../rating-stars/rating-stars';
 
@@ -8,6 +10,12 @@ export interface CommoditiesCardProps {
 }
 
 export function CommoditiesCard({ product }: CommoditiesCardProps) {
+  const dispatch = useAppDispatch();
+
+  const handleDeleteProductClick = (productId: string) => {
+    dispatch(deleteProduct(productId));
+  };
+
   return (
     <li className="catalog-item">
       <div className="catalog-item__data">
@@ -36,6 +44,7 @@ export function CommoditiesCard({ product }: CommoditiesCardProps) {
           className="button button--small button--black-border"
           type="submit"
           aria-label="Удалить товар"
+          onClick={ () => handleDeleteProductClick(product.id as string) }
         >
           Удалить
         </button>

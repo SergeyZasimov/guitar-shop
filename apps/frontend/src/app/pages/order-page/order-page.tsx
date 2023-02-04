@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { GUITAR_TYPE_EXPRESSION } from '../../app.constant';
 import { Breadcrumbs } from '../../components';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
-import { deleteOrder, deleteProductFromOrder, fetchOrder } from '../../store/features/orders/api-actions';
+import { deleteProductFromOrder, fetchOrder } from '../../store/features/orders/api-actions';
 import { getOrder } from '../../store/features/orders/order-slice';
 import { AppRoute, formatOrderId, formateAdminDate } from '../../utils';
 
@@ -19,14 +19,9 @@ export function OrderPage(): JSX.Element {
   const handleDeleteProductClick = (evt: MouseEvent) => {
     const target = evt.target as HTMLElement;
     if (target.classList.contains('button-cross')) {
-      if (order?.orderList.length === 1) {
-        dispatch(deleteOrder(order.id as string));
-        navigate(AppRoute.Orders);
-      } else {
-        const productId = target.dataset.id;
-        if (order?.id && productId) {
-          dispatch(deleteProductFromOrder({ orderId: order.id, productId }));
-        }
+      const productId = target.dataset.id;
+      if (order?.id && productId) {
+        dispatch(deleteProductFromOrder({ orderId: order.id, productId }));
       }
     }
   };
