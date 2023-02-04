@@ -60,6 +60,7 @@ export const GUITAR_TYPE_EXPRESSION = {
 
 export enum ActionType {
   RedirectBack = 'app/redirectBack',
+  RedirectToRoute = 'app/redirectToRoute',
   FetchProducts = 'product/fetchProducts',
   FetchProduct = 'product/fetchProduct',
   CreateProduct = 'product/createProduct',

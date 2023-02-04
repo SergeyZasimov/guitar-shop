@@ -1,5 +1,6 @@
 import { ApiQuery, PriceRange, QueryField } from '@guitar-shop/core';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { DEFAULT_ADMIN_SORT, DEFAULT_CUSTOMER_SORT, DEFAULT_PAGINATION } from '../../app.constant';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { fetchProducts } from '../../store/features/product/api-actions';
@@ -21,6 +22,7 @@ export interface CatalogProps {
 export function Catalog({ location }: CatalogProps) {
   const dispatch = useAppDispatch();
   const totalProductsCount = useAppSelector(getTotalProductsCount);
+  const navigate = useNavigate();
 
   const initialSort = location === AppRoute.Root
     ? DEFAULT_CUSTOMER_SORT
@@ -119,6 +121,7 @@ export function Catalog({ location }: CatalogProps) {
         location === AppRoute.Commodities &&
         <button
           className="button product-list__button button--red button--big"
+          onClick={ () => navigate(AppRoute.NewProduct) }
         >
           Добавить новый товар
         </button>

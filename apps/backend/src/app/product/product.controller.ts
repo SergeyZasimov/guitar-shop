@@ -1,7 +1,6 @@
 import {
   RouteDomain,
   RouteParam,
-  RoutePath,
   UserRole,
   fillObject,
 } from '@guitar-shop/core';
@@ -34,7 +33,6 @@ import { ProductRdo } from './rdo/product.rdo';
 import { ProductsRdo } from './rdo/products.rdo';
 
 const { ProductDomain } = RouteDomain;
-const { UploadPhoto } = RoutePath;
 const { ProductId } = RouteParam;
 const { PHOTO_REQUIRED } = PRODUCT_VALIDATION_MESSAGE;
 
@@ -42,27 +40,12 @@ const { PHOTO_REQUIRED } = PRODUCT_VALIDATION_MESSAGE;
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @UseInterceptors(PhotoFilterInterceptor())
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Role(UserRole.Admin)
   @Post('')
-  async create(@Body() dto: CreateProductDto) {
-    return fillObject(ProductRdo, await this.productService.create(dto));
-  }
-
-  @Get('')
-  async getProducts(@Query() query: ProductsQueryDto) {
-    return fillObject(
-      ProductsRdo,
-      await this.productService.getProducts(query)
-    );
-  }
-
-  @UseGuards(JwtAuthGuard, RoleGuard)
-  @Role(UserRole.Admin)
-  @UseInterceptors(PhotoFilterInterceptor())
-  @Patch(`:${ProductId}/${UploadPhoto}`)
-  async uploadPhoto(
-    @Param(ProductId, MongoidValidationPipe) id: string,
+  async create(
+    @Body() dto: CreateProductDto,
     @UploadedFile(
       new ParseFilePipe({
         exceptionFactory() {
@@ -74,7 +57,15 @@ export class ProductController {
   ) {
     return fillObject(
       ProductRdo,
-      await this.productService.uploadPhoto(id, file.filename)
+      await this.productService.create(dto, file.filename)
+    );
+  }
+
+  @Get('')
+  async getProducts(@Query() query: ProductsQueryDto) {
+    return fillObject(
+      ProductsRdo,
+      await this.productService.getProducts(query)
     );
   }
 

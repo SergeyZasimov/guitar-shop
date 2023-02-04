@@ -7,6 +7,7 @@ export const AppRoute = {
   NotFound: '*',
   Commodities: '/commodities',
   Orders: '/orders',
+  NewProduct: '/new-product',
 } as const;
 
 export const RouteNames = Object.values(AppRoute);

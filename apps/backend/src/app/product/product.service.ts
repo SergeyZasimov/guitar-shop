@@ -6,7 +6,14 @@ import {
 } from '@guitar-shop/core';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AppOption, ConfigNamespace } from '../app.constant';
+import { unlink } from 'fs/promises';
+import { join } from 'path';
+import {
+  AppOption,
+  ConfigNamespace,
+  MulterOption,
+  StaticOption,
+} from '../app.constant';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductsQueryDto } from './dto/products-query.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -14,8 +21,10 @@ import { ProductExceptionMessage } from './product.constant';
 import { ProductEntity } from './product.entity';
 import { ProductRepository } from './product.repository';
 
-const { App } = ConfigNamespace;
+const { App, Static, Multer } = ConfigNamespace;
 const { Host, Port } = AppOption;
+const { StaticDirectory } = StaticOption;
+const { Storage } = MulterOption;
 const { NotFound } = ProductExceptionMessage;
 
 @Injectable()
@@ -25,8 +34,11 @@ export class ProductService {
     private readonly configService: ConfigService
   ) {}
 
-  async create(dto: CreateProductDto): Promise<Product> {
-    const productEntity = new ProductEntity(dto);
+  async create(dto: CreateProductDto, photo: string): Promise<Product> {
+    const productEntity = new ProductEntity({
+      ...dto,
+      photo: this.setPhotoPath(photo),
+    });
     return this.productRepository.create(productEntity);
   }
 
@@ -55,22 +67,18 @@ export class ProductService {
     if (!product) {
       throw new NotFoundException(NotFound);
     }
+
+    const staticFolder = this.configService.get<string>(
+      `${Static}.${StaticDirectory}`
+    );
+    const uploadFolder = this.configService.get<string>(`${Multer}.${Storage}`);
+
+    const photoPath = join(
+      `${staticFolder}/${uploadFolder}/${product.photo.split('/').at(-1)}`
+    );
+    await unlink(photoPath);
+
     return product;
-  }
-
-  async uploadPhoto(id: string, photo: string): Promise<Product> {
-    const host = this.configService.get<string>(`${App}.${Host}`);
-    const port = this.configService.get<string>(`${App}.${Port}`);
-
-    // TODO: перенести в entity
-    const photoPath = `http://${host}:${port}/${photo}`;
-
-    const existProduct = await this.checkProductExist(id);
-    const updatedProduct = new ProductEntity({
-      ...existProduct,
-      photo: photoPath,
-    });
-    return this.productRepository.findOneAndUpdate({ id }, updatedProduct);
   }
 
   public async checkProductExist(id: string): Promise<Product> {
@@ -84,5 +92,12 @@ export class ProductService {
   public async updateRating(comment: Comment): Promise<void> {
     const { product } = comment;
     await this.productRepository.updateRating(product);
+  }
+
+  private setPhotoPath(photo: string): string {
+    const host = this.configService.get<string>(`${App}.${Host}`);
+    const port = this.configService.get<string>(`${App}.${Port}`);
+
+    return `http://${host}:${port}/${photo}`;
   }
 }

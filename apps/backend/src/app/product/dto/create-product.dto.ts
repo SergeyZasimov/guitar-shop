@@ -4,6 +4,7 @@ import {
   ProductField,
   StringsNumber,
 } from '@guitar-shop/core';
+import { Transform } from 'class-transformer';
 import { IsEnum, IsNotEmpty, Length, Max, Min } from 'class-validator';
 import {
   PRODUCT_CONSTRAINT,
@@ -53,6 +54,7 @@ export class CreateProductDto implements NewProduct {
 
   @Max(PRICE.MAX, { message: PRICE_NOT_VALID })
   @Min(PRICE.MIN, { message: PRICE_NOT_VALID })
+  @Transform(({ value }) => parseInt(value))
   @IsNotEmpty({ message: PRICE_REQUIRED })
   [ProductField.Price]: number;
 }

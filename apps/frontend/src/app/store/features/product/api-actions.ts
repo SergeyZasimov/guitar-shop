@@ -7,7 +7,10 @@ import {
 } from '@guitar-shop/core';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionType } from '../../../app.constant';
+import { PostProduct } from '../../../pages';
 import { AsyncThunkOptionField } from '../../../types/store.types';
+import { AppRoute } from '../../../utils';
+import { redirectToRoute } from '../../middlewares/reditect.action';
 
 const { ProductDomain, CommentDomain } = RouteDomain;
 const {
@@ -44,6 +47,21 @@ export const deleteProduct = createAsyncThunk<
   AsyncThunkOptionField
 >(FetchProduct, async (productId, { extra: api }) => {
   const { data } = await api.delete<Product>(`${ProductDomain}/${productId}`);
+  return data;
+});
+
+export const createProduct = createAsyncThunk<
+  Product,
+  PostProduct,
+  AsyncThunkOptionField
+>(CreateProduct, async (formData, { dispatch, extra: api }) => {
+  const { data } = await api.post<Product>(`${ProductDomain}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  dispatch(redirectToRoute(AppRoute.Commodities));
+
   return data;
 });
 

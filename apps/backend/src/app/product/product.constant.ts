@@ -41,7 +41,7 @@ export const PRODUCT_VALIDATION_MESSAGE = {
   PHOTO_REQUIRED: 'Фотография товара - обязательное поле',
   STRINGS_NUMBER_REQUIRED: 'Количество струн - обязательное поле',
   TITLE_LENGTH_NOT_VALID: `Наименование товара должно быть строкой длиной от ${PRODUCT_CONSTRAINT.TITLE.MIN} до ${PRODUCT_CONSTRAINT.TITLE.MAX} символов`,
-  DESCRIPTION_LENGTH_NOT_VALID: `Наименование товара должно быть строкой длиной от ${PRODUCT_CONSTRAINT.DESCRIPTION.MIN} до ${PRODUCT_CONSTRAINT.DESCRIPTION.MAX} символов`,
+  DESCRIPTION_LENGTH_NOT_VALID: `Описание товара должно быть строкой длиной от ${PRODUCT_CONSTRAINT.DESCRIPTION.MIN} до ${PRODUCT_CONSTRAINT.DESCRIPTION.MAX} символов`,
   ARTICLE_NOT_VALID: `Артикул должен быть строкой длиной от ${PRODUCT_CONSTRAINT.ARTICLE.MIN} до ${PRODUCT_CONSTRAINT.ARTICLE.MAX}`,
   PRICE_NOT_VALID: `Цена товара должна быть от ${PRODUCT_CONSTRAINT.PRICE.MIN} до ${PRODUCT_CONSTRAINT.PRICE.MAX}`,
   PHOTO_NOT_VALID: 'Фотография товара должна быть в формате jpg или png',
