@@ -92,3 +92,11 @@ export const getMaxProductPrice = (state: State): number =>
 
 export const getTotalProductsCount = (state: State): number =>
   state[StoreNamespace.ProductStore].totalProductsCount;
+
+export const getProductById = (
+  state: State,
+  productId: string | undefined
+): Product | undefined =>
+  state[StoreNamespace.ProductStore].products.find(
+    (product) => product.id === productId
+  );

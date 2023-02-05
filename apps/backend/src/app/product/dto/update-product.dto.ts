@@ -4,6 +4,7 @@ import {
   ProductField,
   StringsNumber,
 } from '@guitar-shop/core';
+import { Transform } from 'class-transformer';
 import { IsEnum, Length, Max, Min } from 'class-validator';
 import {
   PRODUCT_CONSTRAINT,
@@ -42,5 +43,6 @@ export class UpdateProductDto implements Partial<NewProduct> {
 
   @Max(PRICE.MAX, { message: PRICE_NOT_VALID })
   @Min(PRICE.MIN, { message: PRICE_NOT_VALID })
+  @Transform(({ value }) => parseInt(value))
   [ProductField.Price]?: number;
 }

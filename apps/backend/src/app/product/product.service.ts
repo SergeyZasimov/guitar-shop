@@ -56,9 +56,25 @@ export class ProductService {
     return await this.checkProductExist(id);
   }
 
-  async updateProduct(id: string, dto: UpdateProductDto): Promise<Product> {
+  async updateProduct(
+    id: string,
+    dto: UpdateProductDto,
+    photo?: string
+  ): Promise<Product> {
     const existProduct = await this.checkProductExist(id);
-    const updatedEntity = new ProductEntity({ ...existProduct, ...dto });
+    let updatedEntity;
+
+    if (photo) {
+      await this.deletePhoto(existProduct.photo);
+      updatedEntity = new ProductEntity({
+        ...existProduct,
+        ...dto,
+        photo: this.setPhotoPath(photo),
+      });
+    } else {
+      updatedEntity = new ProductEntity({ ...existProduct, ...dto });
+    }
+    
     return this.productRepository.findOneAndUpdate({ _id: id }, updatedEntity);
   }
 
@@ -68,15 +84,7 @@ export class ProductService {
       throw new NotFoundException(NotFound);
     }
 
-    const staticFolder = this.configService.get<string>(
-      `${Static}.${StaticDirectory}`
-    );
-    const uploadFolder = this.configService.get<string>(`${Multer}.${Storage}`);
-
-    const photoPath = join(
-      `${staticFolder}/${uploadFolder}/${product.photo.split('/').at(-1)}`
-    );
-    await unlink(photoPath);
+    await this.deletePhoto(product.photo);
 
     return product;
   }
@@ -99,5 +107,17 @@ export class ProductService {
     const port = this.configService.get<string>(`${App}.${Port}`);
 
     return `http://${host}:${port}/${photo}`;
+  }
+
+  private async deletePhoto(photo: string): Promise<void> {
+    const staticFolder = this.configService.get<string>(
+      `${Static}.${StaticDirectory}`
+    );
+    const uploadFolder = this.configService.get<string>(`${Multer}.${Storage}`);
+
+    const photoPath = join(
+      `${staticFolder}/${uploadFolder}/${photo.split('/').at(-1)}`
+    );
+    await unlink(photoPath);
   }
 }

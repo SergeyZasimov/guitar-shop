@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import { Layout, PrivateRoute } from './components';
 import { AuthPage, CartPage, CommoditiesPage, MainPage, NewProductPage, NotFoundPage, OrderPage, OrdersPage, ProductPage } from './pages';
+import { EditProductPage } from './pages/edit-product-page/edit-product-page';
 import { AppRoute } from './utils';
 
 export function App() {
@@ -33,6 +34,11 @@ export function App() {
         <Route path={ `${AppRoute.NewProduct}` } element={
           <PrivateRoute>
             <NewProductPage />
+          </PrivateRoute>
+        } />
+        <Route path={ `${AppRoute.EditProduct}/:productId` } element={
+          <PrivateRoute>
+            <EditProductPage />
           </PrivateRoute>
         } />
         <Route path={ AppRoute.NotFound } element={ <NotFoundPage /> } />

@@ -34,3 +34,5 @@ export const formateAdminDate = (date: Date | undefined) => {
 export const formatOrderId = (id: string) => {
   return id.slice(id.length - DEFAULT_ORDER_FORMAT_ID_LENGTH);
 };
+
+

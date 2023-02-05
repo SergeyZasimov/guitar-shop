@@ -18,3 +18,5 @@ export interface ModalProps {
   onClickCloseModal: () => void;
   modalClassName?: ModalClass;
 }
+
+export type PostProduct = Record<string, FormDataEntryValue | null>;

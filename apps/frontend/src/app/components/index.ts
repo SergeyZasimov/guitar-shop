@@ -22,6 +22,7 @@ export * from './orders-list/orders-list';
 export * from './pagination/pagination';
 export * from './private-route/private-route';
 export * from './product-card/product-card';
+export * from './product-form/product-form';
 export * from './product-list/product-list';
 export * from './rating-stars/rating-stars';
 export * from './success-review-modal/success-review-modal';

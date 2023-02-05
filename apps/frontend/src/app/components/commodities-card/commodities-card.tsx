@@ -1,8 +1,9 @@
 import { Product, formatPrice } from '@guitar-shop/core';
+import { useNavigate } from 'react-router-dom';
 import { RatingStarsLocation } from '../../app.constant';
 import { useAppDispatch } from '../../hooks/store.hooks';
 import { deleteProduct } from '../../store/features/product/api-actions';
-import { formateAdminDate } from '../../utils';
+import { AppRoute, formateAdminDate } from '../../utils';
 import { RatingStars } from '../rating-stars/rating-stars';
 
 export interface CommoditiesCardProps {
@@ -11,6 +12,7 @@ export interface CommoditiesCardProps {
 
 export function CommoditiesCard({ product }: CommoditiesCardProps) {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const handleDeleteProductClick = (productId: string) => {
     dispatch(deleteProduct(productId));
@@ -35,8 +37,8 @@ export function CommoditiesCard({ product }: CommoditiesCardProps) {
       <div className="catalog-item__buttons">
         <a
           className="button button--small button--black-border"
-          href="edit-item.html"
           aria-label="Редактировать товар"
+          onClick={ () => navigate(`${AppRoute.EditProduct}/${product.id}`) }
         >
           Редактировать
         </a>

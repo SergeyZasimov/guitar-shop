@@ -7,7 +7,7 @@ import {
 } from '@guitar-shop/core';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ActionType } from '../../../app.constant';
-import { PostProduct } from '../../../pages';
+import { PostProduct } from '../../../types';
 import { AsyncThunkOptionField } from '../../../types/store.types';
 import { AppRoute } from '../../../utils';
 import { redirectToRoute } from '../../middlewares/reditect.action';
@@ -60,6 +60,25 @@ export const createProduct = createAsyncThunk<
       'Content-Type': 'multipart/form-data',
     },
   });
+  dispatch(redirectToRoute(AppRoute.Commodities));
+
+  return data;
+});
+
+export const updateProduct = createAsyncThunk<
+  Product,
+  { formData: PostProduct; productId: string },
+  AsyncThunkOptionField
+>(UpdateProduct, async ({ formData, productId }, { dispatch, extra: api }) => {
+  const { data } = await api.patch<Product>(
+    `${ProductDomain}/${productId}`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
   dispatch(redirectToRoute(AppRoute.Commodities));
 
   return data;

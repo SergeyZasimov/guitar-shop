@@ -74,16 +74,18 @@ export class ProductController {
     return fillObject(ProductRdo, await this.productService.getProduct(id));
   }
 
+  @UseInterceptors(PhotoFilterInterceptor())
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Role(UserRole.Admin)
   @Patch(`:${ProductId}`)
   async updateProduct(
     @Param(ProductId, MongoidValidationPipe) id: string,
-    @Body() dto: UpdateProductDto
+    @Body() dto: UpdateProductDto,
+    @UploadedFile() file: Express.Multer.File
   ) {
     return fillObject(
       ProductRdo,
-      await this.productService.updateProduct(id, dto)
+      await this.productService.updateProduct(id, dto, file?.filename)
     );
   }
 
