@@ -1,5 +1,5 @@
 import { MailerModule } from '@nestjs-modules/mailer';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -19,10 +19,12 @@ import {
   staticOptions,
 } from './config/namespaces';
 import { getStaticConfig } from './config/static.config';
+import { LoggerModule } from './logger/logger.module';
+import { ErrorLoggerMiddleware } from './middlewares/error-logger.middleware';
+import { NotifyModule } from './notify/notify.module';
 import { OrderModule } from './order/order.module';
 import { ProductModule } from './product/product.module';
 import { UserModule } from './user/user.module';
-import { NotifyModule } from './notify/notify.module';
 
 @Module({
   imports: [
@@ -50,8 +52,13 @@ import { NotifyModule } from './notify/notify.module';
     CliModule,
     OrderModule,
     NotifyModule,
+    LoggerModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ErrorLoggerMiddleware).forRoutes('*');
+  }
+}

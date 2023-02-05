@@ -4,7 +4,7 @@ import {
   PipeTransform,
 } from '@nestjs/common';
 import { Types } from 'mongoose';
-import { BAD_MONGOID_ERROR, ONLY_PARAM_PIPE_ERROR } from './pip.constant';
+import { BAD_MONGOID_ERROR, ONLY_PARAM_PIPE_ERROR } from './pipes.constant';
 
 export class MongoidValidationPipe implements PipeTransform {
   transform(value: string, { type }: ArgumentMetadata) {

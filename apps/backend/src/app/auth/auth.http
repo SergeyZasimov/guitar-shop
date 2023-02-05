@@ -8,7 +8,7 @@ Content-Type: {{contentType}}
 
 {
   "userName": "John Smith",
-  "email": "test2@email.local",
+  "email": "test3@email.local",
   "password": "secret"
 }
 
