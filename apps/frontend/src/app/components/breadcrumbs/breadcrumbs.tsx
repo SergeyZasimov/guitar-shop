@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AppRoute, BreadcrumbsTitles } from '../../utils';
 
@@ -8,7 +9,7 @@ export interface BreadcrumbsProps {
   entityTitle?: string;
 }
 
-export function Breadcrumbs({ entityTitle }: BreadcrumbsProps): JSX.Element {
+function Breadcrumbs({ entityTitle }: BreadcrumbsProps): JSX.Element {
   const { pathname } = useLocation();
 
   const breadcrumbs = breadcrumbsPaths.filter((item) => pathname.includes(item));
@@ -65,3 +66,5 @@ export function Breadcrumbs({ entityTitle }: BreadcrumbsProps): JSX.Element {
     </ul>
   );
 }
+
+export default memo(Breadcrumbs);
