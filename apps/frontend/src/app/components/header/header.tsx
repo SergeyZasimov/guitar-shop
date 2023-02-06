@@ -1,6 +1,6 @@
 import { UserRole } from '@guitar-shop/core';
 import classnames from 'classnames';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/store.hooks';
 import { getCartItemsIds } from '../../store/features/cart/cart-slice';
 import { getUser } from '../../store/features/user/user-slice';
@@ -9,6 +9,7 @@ import { AppRoute } from '../../utils';
 export function Header(): JSX.Element {
   const user = useAppSelector(getUser);
   const cart = useAppSelector(getCartItemsIds);
+  const { pathname } = useLocation();
 
   const headerClass = classnames({
     'header': true,
@@ -24,9 +25,9 @@ export function Header(): JSX.Element {
     >
       <div className="container">
         <div className="header__wrapper">
-          <Link to={ AppRoute.Root } className="header__logo logo">
+          <NavLink to={ pathname !== AppRoute.Root ? AppRoute.Root : '#' } className="header__logo logo" end>
             <img className="logo__img" width="70" height="70" src="./img/svg/logo.svg" alt="Логотип" />
-          </Link>
+          </NavLink>
           <nav className="main-nav">
             <ul className="main-nav__list">
               <li className="main-nav__item">

@@ -59,7 +59,7 @@ export function Catalog({ location }: CatalogProps): JSX.Element {
   };
 
   const handlePriceRangeChange = (priceRange: PriceRange) => {
-    setQuery({ ...query, priceRange });
+    setQuery({ ...query, priceRange, page: DEFAULT_PAGINATION.ACTIVE_PAGE_NUMBER });
   };
 
   const handleReset = () => {

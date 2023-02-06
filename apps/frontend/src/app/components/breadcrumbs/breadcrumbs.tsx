@@ -21,7 +21,7 @@ function Breadcrumbs({ entityTitle }: BreadcrumbsProps): JSX.Element {
 
   const breadcrumbsClassName = classNames({
     'breadcrumbs': true,
-    'page-content__breadcrumbs': pathname === AppRoute.Root || pathname.includes(AppRoute.Product),
+    'page-content__breadcrumbs': pathname === AppRoute.Root || pathname.includes(AppRoute.Product) || pathname === AppRoute.Cart,
     'page-content__breadcrumbs--on-cart-page': pathname === AppRoute.Cart,
     'orders__breadcrumps': pathname === AppRoute.Orders
   });
