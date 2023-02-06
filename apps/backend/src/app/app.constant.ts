@@ -5,6 +5,11 @@ export const VALID_PORT = {
   MAX: 65535,
 } as const;
 
+export const LOG_SETTING = {
+  FOLDER: 'logs',
+  ERROR_FILE: 'errors.log'
+} as const;
+
 export const MAIL_TEMPLATE_FOLDER = 'assets';
 
 export enum ConfigNamespace {

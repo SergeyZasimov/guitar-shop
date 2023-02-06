@@ -1,0 +1,1234 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: API сервер для проекта «Guitar Shop»
+  description: Список ресурсов и маршрутов сервера «Guitar Shop»
+
+tags:
+  - name: users
+    description: Пользователи
+  - name: products
+    description: Товары
+  - name: comments
+    description: Комментарии
+  - name: orders
+    description: Заказы
+
+servers:
+  - url: http://localhost:3333/api
+
+paths:
+  /auth/register:
+    post:
+      description: Регистрация пользователя
+      tags:
+        - users
+
+      requestBody:
+        description: Данные для регистрации
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/register_user'
+
+      responses:
+        201:
+          description: Пользователь успешно зарегистрирован
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        400:
+          description: Неверные данные
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_400'
+
+        409:
+          description: Пользователь уже существует
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_409'
+
+  /auth/login:
+    post:
+      description: Авторизация пользователя
+      tags:
+        - users
+
+      requestBody:
+        description: Данные для авторизации пользователя
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/login_user'
+
+      responses:
+        200:
+          description: Успешная авторизация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/auth_user'
+
+        400:
+          description: Неверные данные
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_400'
+
+        404:
+          description: Пользователь не найден
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user_404'
+
+  /auth/check-status:
+    get:
+      security:
+        - BearerAuth: []
+      description: Проверка состояния пользователя
+      tags:
+        - users
+
+      responses:
+        200:
+          description: Возвращает информацию о пользователе
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+
+        401:
+          $ref: '#/components/responses/error_401'
+
+  /products:
+    post:
+      security:
+        - BearerAuth: []
+      description: Создание нового товара
+      tags:
+        - products
+
+      requestBody:
+        description: Данные для создания нового товара
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/create_product'
+
+      responses:
+        201:
+          description: Создание нового товара
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+
+        400:
+          description: Неверные данные
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_product_edit'
+
+        401:
+          $ref: '#/components/responses/error_401'
+
+        403:
+          $ref: '#/components/responses/error_403'
+
+    get:
+      description: Получение списка товаров
+      tags:
+        - products
+      parameters:
+        - in: query
+          name: limit
+          description: Количество возвращаемых товаров
+          allowEmptyValue: true
+          schema:
+            type: number
+            default: 9
+            example: 9
+
+        - in: query
+          name: page
+          description: Номер страницы пагинации
+          allowEmptyValue: true
+          schema:
+            type: number
+            default: 1
+            example: 1
+
+        - in: query
+          name: guitarType
+          description: Тип гитары
+          allowEmptyValue: true
+          schema:
+            type: string
+            example: electric,acoustic
+
+        - in: query
+          name: stringsNumber
+          description: Количество струн
+          allowEmptyValue: true
+          schema:
+            type: string
+            example: 6,12
+
+        - in: query
+          name: priceRange
+          description: Диапазон цен
+          allowEmptyValue: true
+          schema:
+            type: string
+            example: 50000,500000
+
+        - in: query
+          name: sortingOption
+          description: Сортировка
+          allowEmptyValue: true
+          schema:
+            type: string
+            enum:
+              - price
+              - totalRating
+              - createdAt
+            example: price
+
+        - in: query
+          name: sortType
+          description: Направление сортировки
+          allowEmptyValue: true
+          schema:
+            type: string
+            enum:
+              - desc
+              - asc
+            default: desc
+            example: desc
+
+      responses:
+        200:
+          description: Возвращает список товаров
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/product'
+
+                  totalProductsCount:
+                    type: number
+                    example: 30
+
+                  minPrice:
+                    type: number
+                    example: 27692
+
+                  maxPrice:
+                    type: number
+                    example: 985128
+
+  /products/{productId}:
+    get:
+      description: Получение информации о товара
+      tags:
+        - products
+      parameters:
+        - $ref: '#/components/parameters/productId'
+
+      responses:
+        200:
+          description: Возвращает информацию о товаре
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+
+        400:
+          description: Неверный ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_product_id'
+
+        404:
+          $ref: '#/components/responses/not_found'
+
+    patch:
+      description: Редактирование товара
+      tags:
+        - products
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/productId'
+
+      requestBody:
+        description: Данные для создания нового товара
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/update_product'
+
+      responses:
+        200:
+          description: Возвращает информацию о товаре
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+
+        400:
+          description: Неверные данные
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_product_edit'
+
+        401:
+          $ref: '#/components/responses/error_401'
+
+        403:
+          $ref: '#/components/responses/error_403'
+
+        404:
+          $ref: '#/components/responses/not_found'
+
+    delete:
+      description: Удаление товара
+      tags:
+        - products
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/productId'
+
+      responses:
+        200:
+          description: Возвращает информацию о товаре
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/product'
+
+        401:
+          $ref: '#/components/responses/error_401'
+
+        403:
+          $ref: '#/components/responses/error_403'
+
+        404:
+          $ref: '#/components/responses/not_found'
+
+  /comments:
+    post:
+      description: Создание комментария
+      tags:
+        - comments
+      security:
+        - BearerAuth: []
+
+      requestBody:
+        description: Данные для создания комментария
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_comment'
+
+      responses:
+        201:
+          description: Возвращает созданный комментарий
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/comment'
+
+        400:
+          $ref: '#/components/responses/comment_create_error'
+
+        401:
+          $ref: '#/components/responses/error_401'
+
+  /comments/{productId}:
+    get:
+      description: Список комментариев к товару
+      tags:
+        - comments
+      parameters:
+        - $ref: '#/components/parameters/productId'
+
+      responses:
+        200:
+          description: Возвращает список комментариев
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/comment'
+
+        400:
+          description: Неверный ID товара
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error_product_id'
+
+        404:
+          $ref: '#/components/responses/not_found'
+
+  /orders:
+    post:
+      description: Создать заказ
+      tags:
+        - orders
+      security:
+        - BearerAuth: []
+
+      requestBody:
+        description: Данные для создания заказа
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_order'
+
+      responses:
+        201:
+          description: Возвращает пустой ответ
+
+        400:
+          $ref: '#/components/responses/order_create_404'
+
+        401:
+          $ref: '#/components/responses/error_401'
+
+        404:
+          $ref: '#/components/responses/not_found'
+
+    get:
+      description: Список заказов
+      tags:
+        - orders
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: limit
+          description: Количество возвращаемых заказов
+          allowEmptyValue: true
+          schema:
+            type: number
+            default: 9
+            example: 9
+
+        - in: query
+          name: page
+          description: Номер страницы пагинации
+          allowEmptyValue: true
+          schema:
+            type: number
+            default: 1
+            example: 1
+
+        - in: query
+          name: sortingOption
+          description: Сортировка
+          allowEmptyValue: true
+          schema:
+            type: string
+            enum:
+              - price
+              - createdAt
+            example: price
+
+        - in: query
+          name: sortType
+          description: Направление сортировки
+          allowEmptyValue: true
+          schema:
+            type: string
+            enum:
+              - desc
+              - asc
+            default: desc
+            example: desc
+
+      responses:
+        200:
+          description: Возвращает список заказов
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/order'
+
+                  totalOrdersCount:
+                    type: number
+                    example: 3
+
+        400:
+          $ref: '#/components/responses/query_400'
+
+        401:
+          $ref: '#/components/responses/error_401'
+
+        403:
+          $ref: '#/components/responses/error_403'
+
+        404:
+          $ref: '#/components/responses/not_found'
+
+  /orders/{orderId}:
+    get:
+      description: Получение детальной информации о заказе
+      tags:
+        - orders
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/orderId'
+
+      responses:
+        200:
+          description: Возвращает информацию о заказе
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order'
+
+        400:
+          $ref: '#/components/responses/error_not_valid_id'
+
+        401:
+          $ref: '#/components/responses/error_401'
+
+        403:
+          $ref: '#/components/responses/error_403'
+
+        404:
+          $ref: '#/components/responses/not_found'
+
+    patch:
+      description: Удаляет товар из заказа
+      tags:
+        - orders
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/orderId'
+
+      requestBody:
+        description: Информация о товаре
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                productId:
+                  type: string
+                  description: ID товара
+                  example: 63dfe05bb0d8943b036c4591
+
+      responses:
+        200:
+          description: Возвращает обновлённую информацию о заказе
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order'
+
+        400:
+          $ref: '#/components/responses/error_not_valid_id'
+
+        401:
+          $ref: '#/components/responses/error_401'
+
+        403:
+          $ref: '#/components/responses/error_403'
+
+        404:
+          $ref: '#/components/responses/not_found'
+
+    delete:
+      description: Удаление заказа
+      tags:
+        - orders
+      security:
+        - BearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/orderId'
+
+      responses:
+        200:
+          description: Возвращает информацию об удалённом заказе
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/order'
+
+        400:
+          $ref: '#/components/responses/error_not_valid_id'
+
+        401:
+          $ref: '#/components/responses/error_401'
+
+        403:
+          $ref: '#/components/responses/error_403'
+
+        404:
+          $ref: '#/components/responses/not_found'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+
+  schemas:
+    register_user:
+      type: object
+      properties:
+        userName:
+          type: string
+          minLength: 1
+          maxLength: 15
+          example: John Smith
+
+        email:
+          type: string
+          example: test@user.local
+
+        password:
+          type: string
+          minLength: 6
+          maxLength: 12
+          example: secret
+
+      required:
+        - userName
+        - email
+        - password
+
+    login_user:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@user.local
+
+        password:
+          type: string
+          minLength: 6
+          maxLength: 12
+          example: secret
+
+      required:
+        - email
+        - password
+
+    auth_user:
+      type: object
+      properties:
+        user:
+          description: Информация о пользователе
+          type: object
+          properties:
+            id:
+              type: string
+              example: 63dfe05bb0d8943b036c4591
+
+            userName:
+              type: string
+              example: John Smith
+
+            email:
+              type: string
+              example: test@user.local
+
+            role:
+              type: string
+              example: customer
+
+        access_token:
+          type: string
+          description: Токен
+          example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2M2RmZTc4OWIwZDg5NDNiMDM2YzQ1OTUiLCJ1c2VyTmFtZSI6IkpvaG4gU21pdGgiLCJlbWFpbCI6InRlc3RAdXNlci5sb2NhbCIsInJvbGUiOiLQv9C-0LvRjNC30L7QstCw0YLQtdC70YwiLCJpYXQiOjE2NzU2MTk3OTcsImV4cCI6MTY3NTYyMzM5N30.dCx8E7f1VIP-0eTePgakmS-pVpQrZk6bnytjkYg8OzE'
+
+    user:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 63dfe05bb0d8943b036c4591
+
+        userName:
+          type: string
+          example: John Smith
+
+        email:
+          type: string
+          example: test@user.local
+
+        role:
+          type: string
+          example: customer
+
+    user_400:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: '400'
+
+        message:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            example: Пароль должен быть строкой длинной от 6 до 12 символов
+
+        error:
+          type: string
+          example: Bad Request
+
+    user_404:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: '404'
+
+        message:
+          type: string
+          example: Пароль должен быть строкой длинной от 6 до 12 символов
+
+        error:
+          type: string
+          example: Not Found
+
+    user_409:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: '409'
+
+        message:
+          type: string
+          example: Пользователь с таким email уже существует
+
+        error:
+          type: string
+          example: Conflict
+
+    create_product:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 10
+          maxLength: 100
+          example: 'Awesome guitar'
+
+        description:
+          type: string
+          minLength: 20
+          maxLength: 1024
+          example: 'Awesome guitar description'
+
+        guitarType:
+          type: string
+          enum:
+            - acoustic
+            - electric
+            - ukulele
+          example: acoustic
+
+        article:
+          type: string
+          example: 'a12345'
+
+        stringsNumber:
+          type: string
+          enum:
+            - '4'
+            - '6'
+            - '7'
+            - '12'
+          example: 6
+
+        price:
+          type: number
+          minimum: 100
+          maximum: 1000000
+          example: 50000
+
+        photo:
+          type: string
+          format: binary
+
+      required:
+        - title
+        - description
+        - guitarType
+        - article
+        - stringsNumber
+        - price
+        - photo
+
+    update_product:
+      type: object
+      properties:
+        title:
+          type: string
+          minLength: 10
+          maxLength: 100
+          example: 'Awesome guitar'
+
+        description:
+          type: string
+          minLength: 20
+          maxLength: 1024
+          example: 'Awesome guitar description'
+
+        guitarType:
+          type: string
+          enum:
+            - acoustic
+            - electric
+            - ukulele
+          example: acoustic
+
+        article:
+          type: string
+          example: 'a12345'
+
+        stringsNumber:
+          type: string
+          enum:
+            - 4
+            - 6
+            - 7
+            - 12
+          example: 6
+
+        price:
+          type: number
+          minimum: 100
+          maximum: 1000000
+          example: 50000
+
+        photo:
+          type: string
+          format: binary
+
+    product:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 63dfe05bb0d8943b036c4591
+
+        title:
+          type: string
+          example: 'Awesome guitar'
+
+        description:
+          type: string
+          example: 'Awesome guitar description'
+
+        guitarType:
+          type: string
+          example: acoustic
+
+        article:
+          type: string
+          example: 'a12345'
+
+        stringsNumber:
+          type: string
+          example: 6
+
+        price:
+          type: number
+          example: 50000
+
+        photo:
+          type: string
+          example: http://localhost:3333/hWLBPzYoh___0dXh7zFTz.png
+
+        totalRating:
+          type: number
+          example: 4
+
+        commentsCount:
+          type: number
+          example: 10
+
+        createdAt:
+          type: string
+          example: '2023-02-06T03:09:11.354Z'
+
+    error_product_edit:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: '400'
+
+        message:
+          type: array
+          minItems: 1
+          items:
+            type: string
+            example:
+              - Наименование товара должно быть строкой длиной от 10 до 100 символов
+              - Цена товара должна быть от 100 до 1000000
+
+        error:
+          type: string
+          example: Bad Request
+
+    error_product_id:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: '400'
+
+        message:
+          type: string
+          example: Неверный ID товара!
+
+        error:
+          type: string
+          example: Bad Request
+
+    error_object_not_found:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: '404'
+
+        message:
+          type: string
+          example: Объект не найден
+
+        error:
+          type: string
+          example: Not Found
+
+    create_comment:
+      type: object
+      properties:
+        advantages:
+          type: string
+          description: Достоинства
+          minLength: 50
+          maxLength: 100
+          example: У гитары отличный цвет, хороше дерево. У гитары отличный цвет, хороше дерево.
+
+        disadvantages:
+          type: string
+          description: Недостатки
+          minLength: 50
+          maxLength: 100
+          example: Тяжелая, в комплекте нет чехла и ремня. Тяжелая, в комплекте нет чехла и ремня.
+
+        text:
+          type: string
+          description: Текст отзыва
+          minLength: 5
+          maxLength: 1024
+          example: У гитары отличный цвет, хороше дерево. Тяжелая, в комплекте нет чехла и ремня.
+
+        rating:
+          type: number
+          description: Оценка
+          minimum: 1
+          maximum: 5
+          example: 4
+
+        product:
+          type: string
+          description: ID товара
+          example: 63dfe05bb0d8943b036c4591
+
+      required:
+        - advantages
+        - disadvantages
+        - text
+        - rating
+
+    comment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID комментария
+
+        user:
+          $ref: '#/components/schemas/user'
+
+        product:
+          $ref: '#/components/schemas/product'
+
+        advantages:
+          type: string
+          description: Достоинства
+          minLength: 50
+          maxLength: 100
+          example: У гитары отличный цвет, хороше дерево.
+
+        disadvantages:
+          type: string
+          description: Недостатки
+          minLength: 50
+          maxLength: 100
+          example: Тяжелая, в комплекте нет чехла и ремня.
+
+        text:
+          type: string
+          description: Текст отзыва
+          minLength: 5
+          maxLength: 1024
+          example: У гитары отличный цвет, хороше дерево. Тяжелая, в комплекте нет чехла и ремня.
+
+        rating:
+          type: number
+          description: Оценка
+          minimum: 1
+          maximum: 5
+          example: 4
+
+    create_order:
+      type: object
+      properties:
+        orderList:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            properties:
+              product:
+                type: string
+                description: ID товара
+                example: 63dfe05bb0d8943b036c4591
+
+              quantity:
+                type: number
+                description: Количество товара
+                example: 3
+
+    order_item:
+      type: object
+      properties:
+        product:
+          $ref: '#/components/schemas/product'
+
+        price:
+          type: number
+          example: 50000
+
+        quantity:
+          type: number
+          example: 3
+
+        cost:
+          type: number
+          example: 150000
+
+    order_summary:
+      type: object
+      properties:
+        totalQuantity:
+          type: number
+          example: 3
+
+        totalCost:
+          type: number
+          example: 150000
+
+    order:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 63dfe05bb0d8943b036c4591
+
+        user:
+          $ref: '#/components/schemas/user'
+
+        orderList:
+          type: array
+          items:
+            $ref: '#/components/schemas/order_item'
+
+        orderSummary:
+          $ref: '#/components/schemas/order_summary'
+
+        createdAt:
+          type: string
+          example: '2023-02-06T03:09:11.354Z'
+
+  responses:
+    error_401:
+      description: Пользователь не авторизован
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: number
+                example: '401'
+
+              message:
+                type: string
+                example: Unauthorized
+
+    error_403:
+      description: Недостаточно прав пользователя
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: number
+                example: '403'
+
+              message:
+                type: string
+                example: Отказано. Неверная роль пользователя
+
+              error:
+                type: string
+                example: Forbidden
+
+    not_found:
+      description: Товар не найден
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/error_object_not_found'
+
+    comment_create_error:
+      description: Неверные данные
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: number
+                example: '400'
+
+              message:
+                type: array
+                minItems: 1
+                items:
+                  type: string
+                  example: Недостатки товара должны быть строкой длиной от 50 до 100
+
+              error:
+                type: string
+                example: Bad Request
+
+    order_create_404:
+      description: Неверные данные
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: number
+                example: '400'
+
+              message:
+                type: array
+                minItems: 1
+                items:
+                  type: string
+                  example: orderList.0.Неверный ID товара
+
+              error:
+                type: string
+                example: Bad Request
+
+    query_400:
+      description: Неверные данные
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: number
+                example: '400'
+
+              message:
+                type: array
+                minItems: 1
+                items:
+                  type: string
+                  example: Неверное направление сортировки
+
+              error:
+                type: string
+                example: Bad Request
+
+    error_not_valid_id:
+      description: Некорректный ID
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              statusCode:
+                type: number
+                example: '400'
+
+              message:
+                type: string
+                example: Неверный ID
+
+              error:
+                type: string
+                example: Bad Request
+
+  parameters:
+    productId:
+      in: path
+      name: productId
+      description: Id товара
+      required: true
+      schema:
+        type: string
+        example: 63dfe05bb0d8943b036c4591
+
+    orderId:
+      in: path
+      name: orderId
+      description: Id заказа
+      required: true
+      schema:
+        type: string
+        example: 63dfe05bb0d8943b036c4591

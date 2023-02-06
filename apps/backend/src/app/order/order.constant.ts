@@ -15,8 +15,8 @@ export const ORDER_VALIDATION_MESSAGE = {
   PAGE_NOT_VALID: 'Номер страницы должен быть числом',
   SORTING_OPTION_NOT_VALID: 'Неверная сортировка списка заказов',
   SORTING_TYPE_NOT_VALID: 'Неверное направление сортировки',
-};
+} as const;
 
 export const ORDER_EXCEPTION_MESSAGE = {
   ORDER_NOT_FOUND: 'Заказ не найден',
-};
+} as const;

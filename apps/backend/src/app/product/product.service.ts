@@ -74,7 +74,7 @@ export class ProductService {
     } else {
       updatedEntity = new ProductEntity({ ...existProduct, ...dto });
     }
-    
+
     return this.productRepository.findOneAndUpdate({ _id: id }, updatedEntity);
   }
 
@@ -110,14 +110,18 @@ export class ProductService {
   }
 
   private async deletePhoto(photo: string): Promise<void> {
-    const staticFolder = this.configService.get<string>(
-      `${Static}.${StaticDirectory}`
-    );
-    const uploadFolder = this.configService.get<string>(`${Multer}.${Storage}`);
+    if (photo) {
+      const staticFolder = this.configService.get<string>(
+        `${Static}.${StaticDirectory}`
+      );
+      const uploadFolder = this.configService.get<string>(
+        `${Multer}.${Storage}`
+      );
 
-    const photoPath = join(
-      `${staticFolder}/${uploadFolder}/${photo.split('/').at(-1)}`
-    );
-    await unlink(photoPath);
+      const photoPath = join(
+        `${staticFolder}/${uploadFolder}/${photo.split('/').at(-1)}`
+      );
+      await unlink(photoPath);
+    }
   }
 }

@@ -30,9 +30,6 @@ export class ProductRepository extends CrudRepository<ProductModel> {
       priceRange,
     } = query;
 
-    // TODO: убрать
-    // console.log(query);
-
     const filterCondition = [];
 
     guitarType &&

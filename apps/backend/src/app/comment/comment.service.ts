@@ -9,11 +9,15 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 export class CommentService {
   constructor(
     private readonly commentRepository: CommentRepository,
-    private readonly productService: ProductService,
+    private readonly productService: ProductService
   ) {}
 
   async create(userId: string, dto: CreateCommentDto): Promise<Comment> {
-    if (await this.productService.checkProductExist(dto.product)) {
+    const existProduct = await this.productService.checkProductExist(
+      dto.product
+    );
+
+    if (existProduct) {
       const commentEntity = new CommentEntity({
         ...dto,
         [CommentField.Author]: userId,
@@ -25,6 +29,10 @@ export class CommentService {
   }
 
   async getComments(productId: string): Promise<Comment[]> {
-    return this.commentRepository.find(productId);
+    const existProduct = await this.productService.checkProductExist(productId);
+
+    if (existProduct) {
+      return this.commentRepository.find(productId);
+    }
   }
 }

@@ -1,6 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import { LoggerService } from '../logger/logger.service';
+import dayjs from 'dayjs'
 
 @Injectable()
 export class ErrorLoggerMiddleware implements NestMiddleware {
@@ -14,7 +15,7 @@ export class ErrorLoggerMiddleware implements NestMiddleware {
 
       if (statusCode >= 400 && statusCode <= 500) {
         this.logger.error(
-          `${method} ${originalUrl} - ${statusCode} ${statusMessage}  - ${ip} \n`
+          `${dayjs()} - ${method} ${originalUrl} - ${statusCode} ${statusMessage}  - ${ip} \n`
         );
       }
     });

@@ -18,10 +18,11 @@ export const COMMENT_CONSTRAINT = {
     MAX: 5,
   },
 };
-// TODO: заменить на объект DEFAULT
-export const DEFAULT_COMMENT_LIMIT = 50;
 
-export const DEFAULT_COMMENT_SORT_TYPE = SortType.Asc;
+export const DEFAULT_COMMENT_QUERY = {
+  LIMIT: 50,
+  SORT_TYPE: SortType.Desc,
+};
 
 export const COMMENT_VALIDATION_MESSAGE = {
   ADVANTAGES_LENGTH_NOT_VALID: `Достоинства товара должны быть строкой длиной от ${COMMENT_CONSTRAINT.ADVANTAGES.MIN} до ${COMMENT_CONSTRAINT.ADVANTAGES.MAX}`,

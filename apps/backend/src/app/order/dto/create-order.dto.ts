@@ -1,12 +1,6 @@
 import { NewOrder, NewOrderItem, OrderField } from '@guitar-shop/core';
 import { Type } from 'class-transformer';
-import {
-  IsMongoId,
-  IsNotEmpty,
-  Min,
-  ValidateNested,
-  ValidationArguments,
-} from 'class-validator';
+import { IsMongoId, IsNotEmpty, Min, ValidateNested } from 'class-validator';
 import { ORDER_VALIDATION_MESSAGE, QUANTITY_MIN } from '../order.constant';
 
 const {
@@ -19,8 +13,7 @@ const {
 
 export class CreateOrderItemDto implements NewOrderItem {
   @IsMongoId({
-    message: (args: ValidationArguments) => {
-      console.log(args);
+    message: () => {
       return PRODUCT_ID_NOT_VALID;
     },
   })

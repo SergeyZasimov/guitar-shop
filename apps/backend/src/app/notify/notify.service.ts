@@ -20,7 +20,6 @@ export class NotifyService {
     private readonly userRepository: UserRepository
   ) {}
 
-  // TODO: ссылка на вход в закрытую часть?
   async sendRegisterNotify(user: User, password: string): Promise<void> {
     await this.mailerService.sendMail({
       to: user.email,
