@@ -1,4 +1,4 @@
-import { QueryField, SortType, SortingOption, User } from '@guitar-shop/core';
+import { QueryField, SortType, SortingOption } from '@guitar-shop/core';
 
 export const BACKEND_URL = 'http://localhost:3333/api/';
 
@@ -77,11 +77,6 @@ export enum ActionType {
   DeleteOrder = 'order/deleteOrder',
   DeleteProductFromOrder = 'order/deleteProductFromOrder',
 }
-
-export const INITIAL_USER_STATE: User = {
-  userName: '',
-  email: '',
-};
 
 export enum RatingStarsLocation {
   Catalog = 'catalog',

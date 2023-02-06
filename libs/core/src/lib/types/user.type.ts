@@ -26,7 +26,7 @@ export type NewUser = {
   [UserField.Password]: string;
 };
 
-export type LoginUser = Pick<NewUser, UserField.Email>;
+export type LoginUser = Partial<NewUser>;
 
 export type ResponseUser = Omit<
   User,

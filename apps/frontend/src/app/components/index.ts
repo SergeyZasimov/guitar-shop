@@ -26,3 +26,4 @@ export * from './product-form/product-form';
 export * from './product-list/product-list';
 export * from './rating-stars/rating-stars';
 export * from './success-review-modal/success-review-modal';
+export * from './user-form/user-form';

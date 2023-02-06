@@ -23,6 +23,7 @@ export type ProductState = {
   product: Product | null;
   productLoadingStatus: LoadingStatus;
   commentLoadingStatus: LoadingStatus;
+  commentSendingStatus: LoadingStatus;
   isError: boolean;
   comments: CommentResponse[];
   totalProductsCount: number;
@@ -32,8 +33,7 @@ export type ProductState = {
 
 export type UserState = {
   user: User | null;
-  loadingStatus: LoadingStatus;
-  error: string;
+  requestStatus: LoadingStatus;
 };
 
 export type CartState = {

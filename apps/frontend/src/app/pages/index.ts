@@ -1,5 +1,6 @@
 export * from './cart-page/cart-page';
 export * from './commodities-page/commodities-page';
+export * from './login-page/login-page';
 export * from './main-page/main-page';
 export * from './new-product-page/new-product-page';
 export * from './not-found-page/not-found-page';

@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import { Layout, PrivateRoute } from './components';
-import { AuthPage, CartPage, CommoditiesPage, MainPage, NewProductPage, NotFoundPage, OrderPage, OrdersPage, ProductPage } from './pages';
+import { CartPage, CommoditiesPage, LoginPage, MainPage, NewProductPage, NotFoundPage, OrderPage, OrdersPage, ProductPage, RegisterPage } from './pages';
 import { EditProductPage } from './pages/edit-product-page/edit-product-page';
 import { AppRoute } from './utils';
 
@@ -11,8 +11,8 @@ export function App() {
         <Route index
           element={ <MainPage /> }
         />
-        <Route path={ AppRoute.Register } element={ <AuthPage /> } />
-        <Route path={ AppRoute.Login } element={ <AuthPage /> } />
+        <Route path={ AppRoute.Register } element={ <RegisterPage /> } />
+        <Route path={ AppRoute.Login } element={ <LoginPage /> } />
         <Route path={ AppRoute.Cart } element={ <CartPage /> } />
         <Route path={ `${AppRoute.Product}/:productId` } element={ <ProductPage /> } />
         <Route path={ AppRoute.NotFound } element={ <NotFoundPage /> } />

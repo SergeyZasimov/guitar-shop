@@ -15,6 +15,7 @@ const initialState: ProductState = {
   product: null,
   productLoadingStatus: LoadingStatus.Idle,
   commentLoadingStatus: LoadingStatus.Idle,
+  commentSendingStatus: LoadingStatus.Idle,
   isError: false,
   comments: [],
   totalProductsCount: 0,
@@ -60,9 +61,16 @@ export const productSlice = createSlice({
         state.comments = payload;
         state.commentLoadingStatus = LoadingStatus.Succeeded;
       })
+      .addCase(createComment.pending, (state) => {
+        state.commentSendingStatus = LoadingStatus.Loading;
+      })
       .addCase(createComment.fulfilled, (state, { payload }) => {
         state.product = payload.product;
         state.comments.unshift(payload);
+        state.commentSendingStatus = LoadingStatus.Succeeded;
+      })
+      .addCase(createComment.rejected, (state) => {
+        state.commentSendingStatus = LoadingStatus.Failed;
       });
   },
 });
@@ -83,6 +91,9 @@ export const getProductLoadingStatus = (state: State): LoadingStatus =>
 
 export const getCommentLoadingStatus = (state: State): LoadingStatus =>
   state[StoreNamespace.ProductStore].commentLoadingStatus;
+
+export const getCommentSendingStatus = (state: State): LoadingStatus =>
+  state[StoreNamespace.ProductStore].commentSendingStatus;
 
 export const getMinProductPrice = (state: State): number =>
   state[StoreNamespace.ProductStore].minPrice;

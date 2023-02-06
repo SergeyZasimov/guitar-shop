@@ -2,8 +2,10 @@ import { CommentField, NewComment } from '@guitar-shop/core';
 import { ChangeEvent, FormEvent, Fragment, useEffect, useState } from 'react';
 import FocusLock from 'react-focus-lock';
 import { MAX_RATING, ModalClass } from '../../app.constant';
-import { useAppDispatch } from '../../hooks/store.hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { createComment } from '../../store/features/product/api-actions';
+import { getCommentLoadingStatus, getCommentSendingStatus } from '../../store/features/product/product-slice';
+import { LoadingStatus } from '../../types';
 import { ModalProps } from '../../types/component.type';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
@@ -24,6 +26,8 @@ export interface CommentAddModalProps extends ModalProps {
 export function CommentAddModal(props: CommentAddModalProps): JSX.Element {
   const dispatch = useAppDispatch();
 
+  const sendingStatus = useAppSelector(getCommentSendingStatus);
+
   const { productId, productTitle, ...modalProps } = props;
 
   const [ newComment, setNewComment ] = useState<NewComment>(initialNewComment);
@@ -43,13 +47,18 @@ export function CommentAddModal(props: CommentAddModalProps): JSX.Element {
       dispatch(createComment({ ...newComment, product: productId }));
     }
 
-    props.onClickCloseModal();
-    props.onSuccessReview();
   };
 
   useEffect(() => {
     setNewComment(initialNewComment);
   }, [ props.isOpen ]);
+
+  useEffect(() => {
+    if (sendingStatus === LoadingStatus.Succeeded) {
+      props.onClickCloseModal();
+      props.onSuccessReview();
+    }
+  }, [ sendingStatus ]);
 
   return (
     <ModalOverlay { ...modalProps } modalClassName={ ModalClass.Review }>

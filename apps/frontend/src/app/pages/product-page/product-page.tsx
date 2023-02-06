@@ -35,6 +35,14 @@ export function ProductPage(): JSX.Element {
     setIsAddCommentModalOpen(true);
   };
 
+  const handleAddToCartClick = () => {
+    if (user) {
+      setIsCartAddModalOpen(true);
+    } else {
+      setIsEnterModalOpen(true);
+    }
+  };
+
   useEffect(() => {
     if (typeof productId === 'string') {
       dispatch(fetchProduct(productId));
@@ -133,7 +141,7 @@ export function ProductPage(): JSX.Element {
                     <p className="product-container__price-info product-container__price-info--value">{ formatPrice(product?.price) } ₽</p>
                     <a
                       className="button button--red button--big product-container__button"
-                      onClick={ () => setIsCartAddModalOpen(true) }
+                      onClick={ handleAddToCartClick }
                     >Добавить в корзину
                     </a>
                   </div>
