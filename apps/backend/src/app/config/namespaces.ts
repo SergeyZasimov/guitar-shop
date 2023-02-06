@@ -11,7 +11,7 @@ import {
 
 const { Mongodb, Jwt, Multer, App, Static, Mail } = ConfigNamespace;
 
-const { Host, Port } = AppOption;
+const { Host, Port, FrontendDevServerPort } = AppOption;
 
 const { AuthDatabase, DatabaseName, DbHost, Password, DbPort, Username } =
   MongodbOption;
@@ -27,6 +27,7 @@ const { MailFrom, MailHost, MailPort } = MailOption;
 export const appOption = registerAs(App, () => ({
   [Host]: process.env.HOST || 'localhost',
   [Port]: process.env.PORT || 3333,
+  [FrontendDevServerPort]: process.env.FRONTEND_DEV_SERVER || 4200,
 }));
 
 export const mongodbOptions = registerAs(Mongodb, () => ({

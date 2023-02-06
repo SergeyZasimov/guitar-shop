@@ -10,22 +10,36 @@ import {
 } from '@guitar-shop/core';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { AppOption, ConfigNamespace } from '../app.constant';
 import { UserRepository } from '../user/user.repository';
 import { EmailSubject } from './notify.constant';
+
+const { App } = ConfigNamespace;
+const { Host, FrontendDevServerPort } = AppOption;
 
 @Injectable()
 export class NotifyService {
   constructor(
     private readonly mailerService: MailerService,
-    private readonly userRepository: UserRepository
+    private readonly userRepository: UserRepository,
+    private readonly configService: ConfigService
   ) {}
 
   async sendRegisterNotify(user: User, password: string): Promise<void> {
+    const host = this.configService.get<string>(`${App}.${Host}`);
+    const frontPort = this.configService.get<string>(
+      `${App}.${FrontendDevServerPort}`
+    );
+
+    const loginUrl = `http://${host}:${frontPort}/login`;
+
     await this.mailerService.sendMail({
       to: user.email,
       subject: EmailSubject.UserRegister,
       template: './register.hbs',
       context: {
+        loginUrl,
         login: `${user.email}`,
         password: `${password}`,
       },

@@ -24,6 +24,7 @@ export enum ConfigNamespace {
 export enum AppOption {
   Host = 'host',
   Port = 'port',
+  FrontendDevServerPort = 'frontDevServer'
 }
 
 export enum MongodbOption {

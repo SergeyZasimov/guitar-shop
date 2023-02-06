@@ -93,6 +93,13 @@ class EnvironmentsConfig {
   @IsString({ message: StringRequired })
   @IsNotEmpty({ message: Required })
   MAIL_FROM: string;
+
+  @Min(VALID_PORT.MIN, { message: PortNotValid })
+  @Max(VALID_PORT.MAX, { message: PortNotValid })
+  @IsInt({ message: IntRequired })
+  @IsNotEmpty({ message: Required })
+  @IsOptional()
+  FRONTEND_DEV_SERVER: number;
 }
 
 export function validateEnvironments(config: Record<string, unknown>) {
