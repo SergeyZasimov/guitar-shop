@@ -12,7 +12,7 @@
 - создайте тестовые данные - `npm run cli -- --generate 20`, где 20 - это количество данных
 - запустите backend - `npm run start:backend`
 - запустите frontend - `npm run start:frontend:dev`
-- данные для входа с парвами администратора: `email: admin@admin.local, password: admin`
+- данные для входа с правами администратора: `email: admin@admin.local, password: admin`
 
 ### Команды:
 
