@@ -43,7 +43,7 @@ export function OrderPage(): JSX.Element {
           <h1 className="order__title">
             Заказ № { formatOrderId(order.id as string) }
           </h1>
-          <Breadcrumbs />
+          <Breadcrumbs entityTitle={ order.id } />
           <table className="order-table">
             <tbody>
               <tr>

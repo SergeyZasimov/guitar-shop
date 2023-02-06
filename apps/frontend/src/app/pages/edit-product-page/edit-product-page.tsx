@@ -14,7 +14,7 @@ export function EditProductPage(props: EditProductPageProps): JSX.Element {
       <section className="edit-item">
         <div className="container">
           <h1 className="edit-item__title">{ product?.title }</h1>
-          <Breadcrumbs />
+          <Breadcrumbs entityTitle={ product?.title } />
           <ProductForm product={ product } />
         </div>
       </section>

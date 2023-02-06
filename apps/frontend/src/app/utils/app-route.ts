@@ -7,15 +7,14 @@ export const AppRoute = {
   NotFound: '*',
   Commodities: '/commodities',
   Orders: '/orders',
-  NewProduct: '/new-product',
-  EditProduct: '/edit-product'
+  NewProduct: 'new-product',
 } as const;
 
 export const RouteNames = Object.values(AppRoute);
 
-export const BreadcrumbsSpelling = {
-  [AppRoute.Product]: 'Товар',
+export const BreadcrumbsTitles = {
   [AppRoute.Cart]: 'Корзина',
+  [AppRoute.Commodities]: 'Товары',
+  [AppRoute.NewProduct]: 'Новый товар',
+  [AppRoute.Orders]: 'Заказы',
 } as const;
-
-export const BreadcrumbsPaths = Object.keys(BreadcrumbsSpelling);

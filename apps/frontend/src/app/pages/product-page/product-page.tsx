@@ -84,7 +84,7 @@ export function ProductPage(): JSX.Element {
       <main className="page-content">
         <div className="container">
           <h1 className="page-content__title title title--bigger">Товар</h1>
-          <Breadcrumbs />
+          <Breadcrumbs entityTitle={ product?.title } />
           <div className="product-container">
             {
               loadingStatus === LoadingStatus.Loading ?

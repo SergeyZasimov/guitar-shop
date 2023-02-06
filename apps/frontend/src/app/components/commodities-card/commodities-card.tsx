@@ -38,7 +38,7 @@ export function CommoditiesCard({ product }: CommoditiesCardProps) {
         <a
           className="button button--small button--black-border"
           aria-label="Редактировать товар"
-          onClick={ () => navigate(`${AppRoute.EditProduct}/${product.id}`) }
+          onClick={ () => navigate(`${AppRoute.Commodities}/${product.id}`) }
         >
           Редактировать
         </a>

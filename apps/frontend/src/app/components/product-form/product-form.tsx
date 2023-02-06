@@ -73,10 +73,14 @@ export function ProductForm({ product }: ProductFormProps) {
     >
       <div className="add-item__form-left">
         <div className="edit-item-image add-item__form-image">
-          <div className="edit-item-image__image-wrap">
-            <img
-              src={ isImageChange ? photoPath : product?.photo }
-            />
+          <div className="edit-item-image__image-wrap"
+            style={ {
+              backgroundImage: `url(${isImageChange ? photoPath : product?.photo})`,
+              backgroundRepeat: 'no-repeat',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center'
+            }
+            }>
           </div>
           <div className="edit-item-image__btn-wrap">
             <button

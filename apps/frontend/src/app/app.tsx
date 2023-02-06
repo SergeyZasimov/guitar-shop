@@ -16,11 +16,25 @@ export function App() {
         <Route path={ AppRoute.Cart } element={ <CartPage /> } />
         <Route path={ `${AppRoute.Product}/:productId` } element={ <ProductPage /> } />
         <Route path={ AppRoute.NotFound } element={ <NotFoundPage /> } />
-        <Route path={ AppRoute.Commodities } element={
-          <PrivateRoute>
-            <CommoditiesPage />
-          </PrivateRoute>
-        } />
+
+        <Route path={ AppRoute.Commodities }>
+          <Route index element={
+            <PrivateRoute>
+              <CommoditiesPage />
+            </PrivateRoute>
+          } />
+          <Route path={ `${AppRoute.NewProduct}` } element={
+            <PrivateRoute>
+              <NewProductPage />
+            </PrivateRoute>
+          } />
+          <Route path={ `:productId` } element={
+            <PrivateRoute>
+              <EditProductPage />
+            </PrivateRoute>
+          } />
+        </Route>
+
         <Route path={ AppRoute.Orders } element={
           <PrivateRoute>
             <OrdersPage />
@@ -29,16 +43,6 @@ export function App() {
         <Route path={ `${AppRoute.Orders}/:orderId` } element={
           <PrivateRoute>
             <OrderPage />
-          </PrivateRoute>
-        } />
-        <Route path={ `${AppRoute.NewProduct}` } element={
-          <PrivateRoute>
-            <NewProductPage />
-          </PrivateRoute>
-        } />
-        <Route path={ `${AppRoute.EditProduct}/:productId` } element={
-          <PrivateRoute>
-            <EditProductPage />
           </PrivateRoute>
         } />
         <Route path={ AppRoute.NotFound } element={ <NotFoundPage /> } />

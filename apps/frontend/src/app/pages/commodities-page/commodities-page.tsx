@@ -1,9 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { Breadcrumbs, Catalog } from '../../components';
 
-export interface CommoditiesPageProps { }
-
-export function CommoditiesPage(props: CommoditiesPageProps): JSX.Element {
+export function CommoditiesPage(): JSX.Element {
   const { pathname } = useLocation();
   return (
     <main className="page-content">
