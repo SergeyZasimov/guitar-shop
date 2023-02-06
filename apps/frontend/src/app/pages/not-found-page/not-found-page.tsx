@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../utils';
 
-export function NotFoundPage() {
+export function NotFoundPage(): JSX.Element {
   const navigate = useNavigate();
 
   return (

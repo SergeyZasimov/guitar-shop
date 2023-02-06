@@ -3,7 +3,12 @@ import { ModalProps } from '../../types/component.type';
 
 export interface ModalOverlayProps extends ModalProps { }
 
-export function ModalOverlay({ isOpen, onClickCloseModal, children, modalClassName }: PropsWithChildren<ModalOverlayProps>) {
+export function ModalOverlay({
+  isOpen,
+  onClickCloseModal,
+  children,
+  modalClassName
+}: PropsWithChildren<ModalOverlayProps>): JSX.Element {
 
   const onClickEsc = (evt: KeyboardEvent) => {
     if (evt.key === 'Escape') {

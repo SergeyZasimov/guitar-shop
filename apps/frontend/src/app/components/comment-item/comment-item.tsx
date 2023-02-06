@@ -7,7 +7,7 @@ export interface CommentItemProps {
   comment: CommentResponse;
 }
 
-export function CommentItem({ comment }: CommentItemProps) {
+export function CommentItem({ comment }: CommentItemProps): JSX.Element {
   const { author, createdAt, rating, advantages, disadvantages, text } = comment;
   const { userName } = author as User;
 

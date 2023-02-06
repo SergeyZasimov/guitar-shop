@@ -10,8 +10,6 @@ export const AppRoute = {
   NewProduct: 'new-product',
 } as const;
 
-export const RouteNames = Object.values(AppRoute);
-
 export const BreadcrumbsTitles = {
   [AppRoute.Cart]: 'Корзина',
   [AppRoute.Commodities]: 'Товары',

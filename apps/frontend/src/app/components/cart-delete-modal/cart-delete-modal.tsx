@@ -11,7 +11,7 @@ export interface CartDeleteModalProps extends ModalProps {
   cartItemId: EntityId;
 }
 
-export function CartDeleteModal(props: PropsWithChildren<CartDeleteModalProps>) {
+export function CartDeleteModal(props: PropsWithChildren<CartDeleteModalProps>): JSX.Element {
   const { cartItemId, ...overlayProps } = props;
 
   const cartItem = useAppSelector(state => getCartItem(state, cartItemId));

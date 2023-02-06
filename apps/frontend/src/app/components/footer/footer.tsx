@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../utils';
 
-// TODO: href
-export function Footer() {
+export function Footer(): JSX.Element {
   return (
     <footer className="footer">
       <div className="container">
@@ -63,4 +62,3 @@ export function Footer() {
   );
 }
 
-export default Footer;

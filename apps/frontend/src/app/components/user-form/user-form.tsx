@@ -59,7 +59,11 @@ export function UserForm({ user, onInput, onSubmit, isLoginPage }: UserFormProps
             onChange={ onInput }
             required
           />
-          <button className="input-login__button-eye" type="button" onClick={ () => setIsPasswordShow(!isPasswordShow) }>
+          <button
+            className="input-login__button-eye"
+            type="button"
+            onClick={ () => setIsPasswordShow(!isPasswordShow) }
+          >
             <svg width="14" height="8" aria-hidden="true">
               <use xlinkHref="#icon-eye"></use>
             </svg>

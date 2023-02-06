@@ -12,7 +12,7 @@ export interface RatingStarsProps {
   location: keyof typeof STAR_SIZE;
 }
 
-export function RatingStars({ rating, commentsCount, location }: RatingStarsProps) {
+export function RatingStars({ rating, commentsCount, location }: RatingStarsProps): JSX.Element {
 
   const starSize = STAR_SIZE[ location ];
 

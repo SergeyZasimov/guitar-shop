@@ -40,7 +40,12 @@ export function LoginPage(): JSX.Element {
             </Link>
             прямо сейчас
           </p>
-          <UserForm isLoginPage={ true } user={ user } onInput={ handleUserInput } onSubmit={ handleSubmit } />
+          <UserForm
+            isLoginPage={ true }
+            user={ user }
+            onInput={ handleUserInput }
+            onSubmit={ handleSubmit }
+          />
         </section>
       </div>
     </main>

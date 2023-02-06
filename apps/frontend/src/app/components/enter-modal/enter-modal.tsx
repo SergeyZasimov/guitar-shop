@@ -6,8 +6,7 @@ import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
 export interface EnterModalProps extends ModalProps { }
 
-export function EnterModal(props: EnterModalProps) {
-
+export function EnterModal(props: EnterModalProps): JSX.Element {
   return (
     <ModalOverlay { ...props } modalClassName={ ModalClass.Enter }>
       <div className="modal__content">
@@ -30,5 +29,3 @@ export function EnterModal(props: EnterModalProps) {
     </ModalOverlay>
   );
 }
-
-export default EnterModal;

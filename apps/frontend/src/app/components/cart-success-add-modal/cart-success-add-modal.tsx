@@ -7,7 +7,7 @@ import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
 export interface CartSuccessAddModalProps extends ModalProps { }
 
-export function CartSuccessAddModal(props: PropsWithChildren<CartSuccessAddModalProps>) {
+export function CartSuccessAddModal(props: PropsWithChildren<CartSuccessAddModalProps>): JSX.Element {
   const navigate = useNavigate();
 
   const handleToCatalogButtonClick = () => {

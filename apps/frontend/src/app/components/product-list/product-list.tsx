@@ -6,11 +6,9 @@ import { getUser } from '../../store/features/user/user-slice';
 import { LoadingStatus } from '../../types';
 import { CartAddModal } from '../cart-add-modal/cart-add-modal';
 import { CartSuccessAddModal } from '../cart-success-add-modal/cart-success-add-modal';
-import EnterModal from '../enter-modal/enter-modal';
+import { EnterModal } from '../enter-modal/enter-modal';
 import { Loader } from '../loader/loader';
-import ProductCard from '../product-card/product-card';
-
-export interface ProductListProps { }
+import { ProductCard } from '../product-card/product-card';
 
 export function ProductList(): JSX.Element {
   const products = useAppSelector(getProducts);
@@ -67,4 +65,3 @@ export function ProductList(): JSX.Element {
   );
 }
 
-export default ProductList;

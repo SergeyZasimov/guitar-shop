@@ -1,7 +1,5 @@
 import classNames from 'classnames';
 import { DEFAULT_PAGINATION } from '../../app.constant';
-import { useAppSelector } from '../../hooks/store.hooks';
-import { getTotalProductsCount } from '../../store/features/product/product-slice';
 import { AppRoute } from '../../utils';
 
 const { ACTIVE_PAGE_NUMBER, BUTTONS_COUNT, PRODUCT_CARDS_COUNT } = DEFAULT_PAGINATION;

@@ -12,14 +12,14 @@ import { CatalogSort } from '../catalog-sort/catalog-sort';
 import { CommoditiesList } from '../commodities-list/commodities-list';
 import { Pagination } from '../pagination/pagination';
 import { PriceRangeFilter } from '../price-range-filter/price-range-filter';
-import ProductList from '../product-list/product-list';
+import { ProductList } from '../product-list/product-list';
 
 
 export interface CatalogProps {
   location: string;
 }
 
-export function Catalog({ location }: CatalogProps) {
+export function Catalog({ location }: CatalogProps): JSX.Element {
   const dispatch = useAppDispatch();
   const totalProductsCount = useAppSelector(getTotalProductsCount);
   const navigate = useNavigate();

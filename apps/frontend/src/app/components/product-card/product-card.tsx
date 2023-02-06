@@ -49,4 +49,3 @@ export function ProductCard({ product, onAddProductClick }: ProductCardProps): J
   );
 }
 
-export default ProductCard;

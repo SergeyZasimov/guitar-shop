@@ -2,8 +2,6 @@ import { useAppSelector } from '../../hooks/store.hooks';
 import { getProducts } from '../../store/features/product/product-slice';
 import { CommoditiesCard } from '../commodities-card/commodities-card';
 
-export interface CommoditiesListProps { }
-
 export function CommoditiesList(): JSX.Element {
   const products = useAppSelector(getProducts);
 

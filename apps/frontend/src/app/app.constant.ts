@@ -99,7 +99,3 @@ export const SUCCESS_MESSAGE = {
     'Вы успешно зарегистрировались. На почту выслано письмо с логином и паролем.',
   SUCCESS_LOGIN: (login: string) => `Вы успешно вошли под логином ${login}`,
 };
-
-export const ERROR_MESSAGE = {
-  UNAUTHORIZED: 'Вы не авторизированы',
-};

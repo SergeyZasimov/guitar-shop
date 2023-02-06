@@ -12,7 +12,6 @@ import { getToken } from './token.service';
 
 const DISPLAY_STATUS_CODE = new Set([
   HttpStatusCode.BadRequest,
-  // HttpStatusCode.Unauthorized,
   HttpStatusCode.NotFound,
   HttpStatusCode.Conflict,
   HttpStatusCode.Forbidden,

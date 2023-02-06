@@ -4,7 +4,7 @@ import FocusLock from 'react-focus-lock';
 import { MAX_RATING, ModalClass } from '../../app.constant';
 import { useAppDispatch, useAppSelector } from '../../hooks/store.hooks';
 import { createComment } from '../../store/features/product/api-actions';
-import { getCommentLoadingStatus, getCommentSendingStatus } from '../../store/features/product/product-slice';
+import { getCommentSendingStatus } from '../../store/features/product/product-slice';
 import { LoadingStatus } from '../../types';
 import { ModalProps } from '../../types/component.type';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
@@ -68,7 +68,10 @@ export function CommentAddModal(props: CommentAddModalProps): JSX.Element {
           <form className="form-review" onSubmit={ handleSubmit }>
             <div className="form-review__wrapper">
               <h3 className="form-review__title">{ productTitle }</h3>
-              <div><span className="form-review__label form-review__label--required form-review__label--star">Ваша Оценка</span>
+              <div>
+                <span className="form-review__label form-review__label--required form-review__label--star">
+                  Ваша Оценка
+                </span>
                 <div className="rate rate--reverse">
                   {
                     Array.from({ length: MAX_RATING }, (_, index) => {
@@ -94,7 +97,12 @@ export function CommentAddModal(props: CommentAddModalProps): JSX.Element {
                       );
                     })
                   }
-                  <p className="rate__message" style={ { visibility: newComment.rating ? 'hidden' : 'visible' } }>Поставьте оценку</p>
+                  <p
+                    className="rate__message"
+                    style={ { visibility: newComment.rating ? 'hidden' : 'visible' } }
+                  >
+                    Поставьте оценку
+                  </p>
                 </div>
               </div>
             </div>
@@ -111,7 +119,9 @@ export function CommentAddModal(props: CommentAddModalProps): JSX.Element {
               tabIndex={ 1 }
               autoFocus
             />
-            <p className="form-review__warning" style={ { visibility: newComment.advantages ? 'hidden' : 'visible' } }>Заполните поле</p>
+            <p className="form-review__warning" style={ { visibility: newComment.advantages ? 'hidden' : 'visible' } }>
+              Заполните поле
+            </p>
             <label className="form-review__label form-review__label--required" htmlFor="disadv">Недостатки</label>
             <input
               className="form-review__input"
@@ -124,8 +134,12 @@ export function CommentAddModal(props: CommentAddModalProps): JSX.Element {
               required
               tabIndex={ 2 }
             />
-            <p className="form-review__warning" style={ { visibility: newComment.disadvantages ? 'hidden' : 'visible' } }>Заполните поле</p>
-            <label className="form-review__label form-review__label--required form-review__label--textarea" htmlFor="comment">Комментарий</label>
+            <p className="form-review__warning" style={ { visibility: newComment.disadvantages ? 'hidden' : 'visible' } }>
+              Заполните поле
+            </p>
+            <label className="form-review__label form-review__label--required form-review__label--textarea" htmlFor="comment">
+              Комментарий
+            </label>
             <textarea
               className="form-review__input form-review__input--textarea"
               id="comment"
@@ -136,7 +150,9 @@ export function CommentAddModal(props: CommentAddModalProps): JSX.Element {
               required
               tabIndex={ 3 }
             ></textarea>
-            <p className="form-review__warning" style={ { visibility: newComment.text ? 'hidden' : 'visible' } }>Заполните поле</p>
+            <p className="form-review__warning" style={ { visibility: newComment.text ? 'hidden' : 'visible' } }>
+              Заполните поле
+            </p>
             <button className="button button--medium-20 form-review__button" type="submit">Отправить отзыв</button>
           </form>
 
